@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Analyzer | CareerAI</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+</head>
+<body>
+
+    <!-- Header -->
+<div class="header">
+    <div class="header-content">
+        <div class="brand">Career<span>AI</span></div>
+
+        <div class="nav-links">
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'analyze' %}">Analyze</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <!-- existing container wide code here -->
+    <div class="container wide">
+        <h2>Resume Analyzer</h2>
+
+        {% for message in messages %}
+            <div class="message">{{ message }}</div>
+        {% endfor %}
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label class="label">Upload Resume (PDF / DOCX)</label>
+            <input type="file" name="resume" required>
+
+            <label class="label">Paste Job Description</label>
+            <textarea name="job_description" rows="7"
+                  placeholder="Paste job description here..." required></textarea>
+
+            <button type="submit">Analyze Resume</button>
+        </form>
+
+        {% if match_score %}
+        <div class="result-box">
+            <h3>Analysis Result</h3>
+
+            <p class="score">
+                <strong>Resume Match Score:</strong> {{ match_score }} / 100
+            </p>
+
+            <p class="feedback-text">{{ feedback_message }}</p>
+            
+
+            {% if audio_file %}
+                <audio controls style="margin-top: 15px; width: 100%;">
+                    <source src="{{ MEDIA_URL }}{{ audio_file }}?v={{ match_score }}" type="audio/mpeg">
+                    Your browser does not support audio playback.
+                </audio>
+
+                <p style="font-size: 12px; margin-top: 6px;">
+                    Click play to hear AI feedback
+                </p>
+            {% endif %}
+
+
+            {% if missing_skills %}
+                <p><strong>Missing Skills:</strong></p>
+                <ul class="skill-list">
+                    {% for skill in missing_skills %}
+                        <li>{{ skill }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <a class="back-link" href="{% url 'dashboard' %}">← Back to Dashboard</a>
+    </div>
+
+</div>
+
+
+
+
+
+</body>
+</html>

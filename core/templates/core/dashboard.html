@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard | CareerAI</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    <div class="header-content">
+        <div class="brand">Career<span>AI</span></div>
+
+        <div class="nav-links">
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'analyze' %}">Analyze</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="container dashboard">
+        <h2>Welcome {{ request.user.first_name }}</h2>
+        <p>Analyze your resume and get AI-powered career feedback.</p>
+
+        <a href="{% url 'analyze' %}">Analyze Resume</a>
+    </div>
+</div>
+
+</body>
+</html>
