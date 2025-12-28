@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" href="{% static 'core/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
 
@@ -24,6 +25,29 @@
 
     <p>New user? <a href="{% url 'register' %}">Create account</a></p>
 </div>
+
+<footer class="site-footer">
+    <div class="footer-content">
+        <p class="copyright">
+            © 2025 <strong>CareerAI</strong> | Developed by <strong>Naresh Reddy</strong>
+        </p>
+
+        <div class="footer-links">
+            <a href="https://www.linkedin.com/in/iamnaresh06" target="_blank" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+
+            <a href="https://github.com/iamnaresh06" target="_blank" aria-label="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+
+            <a href="mailto:iamnaresh06@gmail.com" aria-label="Email">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+    </div>
+</footer>
+
 
 </body>
 </html>
