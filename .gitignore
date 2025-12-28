@@ -1,0 +1,6 @@
+# Ignore user uploaded files
+media/
+
+# Ignore audio feedback files
+*.mp3
+*.wav
