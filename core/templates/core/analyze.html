@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Resume Analyzer | CareerAI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" href="{% static 'core/style.css' %}">
 </head>
@@ -51,17 +52,21 @@
             </p>
 
             <p class="feedback-text">{{ feedback_message }}</p>
-            
 
-            {% if audio_file %}
-                <audio controls style="margin-top: 15px; width: 100%;">
-                    <source src="{{ MEDIA_URL }}{{ audio_file }}?v={{ match_score }}" type="audio/mpeg">
-                    Your browser does not support audio playback.
-                </audio>
 
-                <p style="font-size: 12px; margin-top: 6px;">
-                    Click play to hear AI feedback
-                </p>
+            {% if audio_url %}
+                <div class="audio-box">
+                    <button id="playPauseBtn" class="play-btn">
+                        ▶ Play AI Feedback
+                    </button>
+
+                    <audio id="aiAudio" preload="none">
+                        <source src="{{ audio_url }}" type="audio/mpeg">
+                        Your browser does not support audio.
+                    </audio>
+
+                    <p class="audio-hint">Tap the button to play or pause AI feedback</p>
+                </div>
             {% endif %}
 
 
@@ -83,6 +88,32 @@
 
 
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const btn = document.getElementById("playPauseBtn");
+        const audio = document.getElementById("aiAudio");
+
+        if (!btn || !audio) return;
+
+        btn.addEventListener("click", function () {
+            if (audio.paused) {
+                audio.play().then(() => {
+                    btn.innerHTML = "⏸ Pause AI Feedback";
+                }).catch(() => {
+                    alert("Tap again to play audio");
+                });
+            } else {
+                audio.pause();
+                btn.innerHTML = "▶ Play AI Feedback";
+            }
+        });
+
+        // When audio finishes, reset button
+        audio.addEventListener("ended", function () {
+            btn.innerHTML = "▶ Play AI Feedback";
+        });
+    });
+    </script>
 
 
 </body>

@@ -285,13 +285,6 @@ audio:hover {
 
 
 
-/* ===== Mobile Tweaks ===== */
-@media (max-width: 480px) {
-    .result-box h3 {
-        font-size: 18px;
-    }
-}
-
 
 /* ===== Responsive (Mobile & Tablet) ===== */
 @media (max-width: 768px) {
@@ -307,6 +300,9 @@ audio:hover {
 
     .container h2 {
         font-size: 20px;
+    }
+    .result-box h3 {
+        font-size: 18px;
     }
 }
 
@@ -357,6 +353,19 @@ textarea {
     margin-top: 20px;
     text-align: center;
     font-weight: 600;
+}
+
+.play-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.play-btn:active {
+    transform: scale(0.98);
 }
 
 /* ===== Mobile Optimization ===== */

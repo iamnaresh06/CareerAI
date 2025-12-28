@@ -14,6 +14,7 @@ from .ml_engine import (
 from .ai_feedback import generate_feedback
 from django.conf import settings
 from .voice_engine import generate_voice
+import os
 
 
 
@@ -98,6 +99,7 @@ def analyze_resume(request):
             messages.error(request, "Please upload resume and paste job description")
             return redirect('analyze')
 
+        # save resume file
         fs = FileSystemStorage()
         filename = fs.save(resume_file.name, resume_file)
         file_path = fs.path(filename)
@@ -123,13 +125,15 @@ def analyze_resume(request):
             missing_skills
         )
 
+        # generate AI voice feedback
         audio_filename = generate_voice(
             feedback_message,
             settings.MEDIA_ROOT,
             request.user.username
         )
 
-
+        # IMPORTANT: build browser-accessible URL
+        audio_url = settings.MEDIA_URL + audio_filename if audio_filename else None
 
         context = {
             'match_score': final_score,
@@ -137,12 +141,9 @@ def analyze_resume(request):
             'text_score': text_score,
             'missing_skills': missing_skills,
             'feedback_message': feedback_message,
-            'audio_file': audio_filename,
-            'MEDIA_URL': settings.MEDIA_URL
+            'audio_url': audio_url,
         }
 
         return render(request, 'core/analyze.html', context)
 
     return render(request, 'core/analyze.html')
-
-
