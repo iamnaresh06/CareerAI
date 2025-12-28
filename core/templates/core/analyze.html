@@ -89,30 +89,43 @@
 
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-        const btn = document.getElementById("playPauseBtn");
-        const audio = document.getElementById("aiAudio");
+            document.addEventListener("DOMContentLoaded", function () {
+            const btn = document.getElementById("playPauseBtn");
+            const audio = document.getElementById("aiAudio");
 
-        if (!btn || !audio) return;
+            if (!btn || !audio) return;
 
-        btn.addEventListener("click", function () {
-            if (audio.paused) {
-                audio.play().then(() => {
-                    btn.innerHTML = "⏸ Pause AI Feedback";
-                }).catch(() => {
-                    alert("Tap again to play audio");
-                });
-            } else {
-                audio.pause();
+            let isPlaying = false;
+
+            btn.addEventListener("click", function () {
+
+                // RESET audio state every time (CRITICAL FIX)
+                if (!isPlaying) {
+                    audio.pause();
+                    audio.currentTime = 0;
+                    audio.load();
+
+                    audio.play()
+                        .then(() => {
+                            isPlaying = true;
+                            btn.innerHTML = "⏸ Pause AI Feedback";
+                        })
+                        .catch(() => {
+                            // silently fail — no alert loop
+                        });
+                } 
+                else {
+                    audio.pause();
+                    isPlaying = false;
+                    btn.innerHTML = "▶ Play AI Feedback";
+                }
+            });
+
+            audio.addEventListener("ended", function () {
+                isPlaying = false;
                 btn.innerHTML = "▶ Play AI Feedback";
-            }
+            });
         });
-
-        // When audio finishes, reset button
-        audio.addEventListener("ended", function () {
-            btn.innerHTML = "▶ Play AI Feedback";
-        });
-    });
     </script>
 
 
