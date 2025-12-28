@@ -56,16 +56,12 @@
 
             {% if audio_url %}
                 <div class="audio-box">
-                    <button id="playPauseBtn" class="play-btn">
-                        ▶ Play AI Feedback
-                    </button>
+                    <p class="audio-hint">Tap play to hear AI feedback</p>
 
-                    <audio id="aiAudio" preload="none">
+                    <audio controls preload="none" style="width: 100%;">
                         <source src="{{ audio_url }}" type="audio/mpeg">
-                        Your browser does not support audio.
+                        Your browser does not support audio playback.
                     </audio>
-
-                    <p class="audio-hint">Tap the button to play or pause AI feedback</p>
                 </div>
             {% endif %}
 
