@@ -14,6 +14,7 @@ from .ml_engine import (
 from .ai_feedback import generate_feedback
 from django.conf import settings
 from .voice_engine import generate_voice
+from django.urls import reverse
 import os
 
 
@@ -133,7 +134,7 @@ def analyze_resume(request):
         )
 
         # IMPORTANT: build browser-accessible URL
-        audio_url = settings.MEDIA_URL + audio_filename if audio_filename else None
+        audio_url = reverse('stream_audio', args=[audio_filename])
 
         context = {
             'match_score': final_score,
@@ -147,3 +148,18 @@ def analyze_resume(request):
         return render(request, 'core/analyze.html', context)
 
     return render(request, 'core/analyze.html')
+
+
+
+from django.http import FileResponse, Http404
+
+def stream_audio(request, filename):
+    audio_path = os.path.join(settings.MEDIA_ROOT, filename)
+
+    if not os.path.exists(audio_path):
+        raise Http404("Audio not found")
+
+    return FileResponse(
+        open(audio_path, 'rb'),
+        content_type='audio/mpeg'
+    )

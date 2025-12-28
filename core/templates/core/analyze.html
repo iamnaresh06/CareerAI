@@ -55,15 +55,13 @@
 
 
             {% if audio_url %}
-                <div class="audio-box">
-                    <p class="audio-hint">Tap play to hear AI feedback</p>
+                <p>Tap play to hear AI feedback</p>
 
-                    <audio controls preload="none" style="width: 100%;">
-                        <source src="{{ audio_url }}" type="audio/mpeg">
-                        Your browser does not support audio playback.
-                    </audio>
-                </div>
+                <audio controls preload="none" style="width:100%;">
+                    <source src="{{ audio_url }}" type="audio/mpeg">
+                </audio>
             {% endif %}
+
 
 
             {% if missing_skills %}
@@ -81,48 +79,6 @@
     </div>
 
 </div>
-
-
-
-    <script>
-            document.addEventListener("DOMContentLoaded", function () {
-            const btn = document.getElementById("playPauseBtn");
-            const audio = document.getElementById("aiAudio");
-
-            if (!btn || !audio) return;
-
-            let isPlaying = false;
-
-            btn.addEventListener("click", function () {
-
-                // RESET audio state every time (CRITICAL FIX)
-                if (!isPlaying) {
-                    audio.pause();
-                    audio.currentTime = 0;
-                    audio.load();
-
-                    audio.play()
-                        .then(() => {
-                            isPlaying = true;
-                            btn.innerHTML = "⏸ Pause AI Feedback";
-                        })
-                        .catch(() => {
-                            // silently fail — no alert loop
-                        });
-                } 
-                else {
-                    audio.pause();
-                    isPlaying = false;
-                    btn.innerHTML = "▶ Play AI Feedback";
-                }
-            });
-
-            audio.addEventListener("ended", function () {
-                isPlaying = false;
-                btn.innerHTML = "▶ Play AI Feedback";
-            });
-        });
-    </script>
 
 
 </body>
