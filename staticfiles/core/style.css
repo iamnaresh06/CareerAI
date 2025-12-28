@@ -1,4 +1,7 @@
-/* ===== Global Reset ===== */
+/* =====================================================
+   GLOBAL RESET & BASE STYLES
+===================================================== */
+
 * {
     margin: 0;
     padding: 0;
@@ -11,8 +14,33 @@ html, body {
     margin: 0;
 }
 
+/* Page background */
+body {
+    min-height: 100vh;
+    background: linear-gradient(120deg, #1d2671, #c33764);
+    animation: fadeIn 0.6s ease-in-out;
 
-/* ===== Brand Header ===== */
+    /* Layout for footer handling */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =====================================================
+   HEADER / NAVBAR
+===================================================== */
+
 .header {
     width: 100%;
     background: #ffffff;
@@ -24,6 +52,7 @@ html, body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     animation: headerDrop 0.5s ease;
 }
+
 @keyframes headerDrop {
     from {
         opacity: 0;
@@ -35,16 +64,15 @@ html, body {
     }
 }
 
-
 .header-content {
     max-width: 1100px;
-    margin: 0 auto;
+    margin: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-/* ===== CareerAI Logo Text ===== */
+/* Brand */
 .brand {
     font-size: 22px;
     font-weight: 800;
@@ -56,7 +84,7 @@ html, body {
     color: #c33764;
 }
 
-/* ===== Header Links ===== */
+/* Navigation links */
 .nav-links a {
     margin-left: 18px;
     font-size: 14px;
@@ -69,12 +97,12 @@ html, body {
     color: #1d2671;
 }
 
-/* ===== Page Content Offset (because header is fixed) ===== */
+/* Header spacing offset */
 .page-content {
     margin-top: 90px;
 }
 
-/* ===== Responsive Header ===== */
+/* Responsive header */
 @media (max-width: 600px) {
     .header-content {
         flex-direction: column;
@@ -91,31 +119,38 @@ html, body {
     }
 }
 
+/* =====================================================
+   MAIN CONTENT WRAPPER (IMPORTANT FIX)
+===================================================== */
 
-
-/* ===== Page Background ===== */
-body {
-    animation: fadeIn 0.6s ease-in-out;
-    min-height: 100vh;
-    background: linear-gradient(120deg, #1d2671, #c33764);
+.main-wrapper {
+    flex: 1;
+    width: 100%;
+    padding: 40px 16px 60px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    padding: 20px;
 }
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(6px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+/* Ensures consistent width for cards/forms */
+.main-wrapper > .container,
+.main-wrapper > .card,
+.main-wrapper > div {
+    width: 100%;
+    max-width: 720px;
+}
+
+/* Mobile spacing */
+@media (max-width: 768px) {
+    .main-wrapper {
+        padding-top: 24px;
+        padding-bottom: 80px;
     }
 }
 
-/* ===== Card Container ===== */
+/* =====================================================
+   CARD / CONTAINER STYLES
+===================================================== */
+
 .container {
     background: #ffffff;
     width: 100%;
@@ -125,30 +160,43 @@ body {
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
+
 .container:hover {
     transform: translateY(-3px);
     box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
 }
 
-/* ===== Headings ===== */
+/* Wide container (Analyzer page) */
+.container.wide {
+    max-width: 650px;
+}
+
+/* Headings */
 .container h2 {
     text-align: center;
     margin-bottom: 20px;
     color: #333;
 }
 
-/* ===== Input Fields ===== */
-.container input {
+/* =====================================================
+   FORMS & INPUTS
+===================================================== */
+
+.label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #444;
+}
+
+.container input,
+textarea {
     width: 100%;
     padding: 12px;
     margin-bottom: 14px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 14px;
-}
-/* ===== Input Focus Animation ===== */
-.container input,
-textarea {
     transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -159,8 +207,14 @@ textarea:focus {
     outline: none;
 }
 
+textarea {
+    resize: vertical;
+}
 
-/* ===== Button ===== */
+/* =====================================================
+   BUTTONS & LINKS
+===================================================== */
+
 .container button {
     width: 100%;
     padding: 12px;
@@ -182,7 +236,6 @@ textarea:focus {
     transform: scale(0.97);
 }
 
-/* ===== Links ===== */
 .container p {
     margin-top: 15px;
     text-align: center;
@@ -195,7 +248,18 @@ textarea:focus {
     font-weight: 600;
 }
 
-/* ===== Messages ===== */
+/* Back link */
+.back-link {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* =====================================================
+   MESSAGES & FEEDBACK
+===================================================== */
+
 .message {
     background: #ffe0e0;
     color: #900;
@@ -206,27 +270,16 @@ textarea:focus {
     text-align: center;
 }
 
-/* ===== Dashboard ===== */
-.dashboard {
-    text-align: center;
-}
+/* =====================================================
+   RESULTS & ANALYSIS
+===================================================== */
 
-.dashboard h2 {
-    margin-bottom: 10px;
-}
-
-.dashboard a {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 18px;
-    background: #c33764;
-    color: white;
-    border-radius: 6px;
-}
-
-
-/* ===== Result Box Animation ===== */
 .result-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f5f7ff;
+    border-radius: 8px;
+    font-size: 14px;
     animation: slideUp 0.5s ease;
 }
 
@@ -246,8 +299,14 @@ textarea:focus {
     color: #1d2671;
 }
 
-.result-box p {
-    line-height: 1.5;
+.score {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.feedback-text {
+    font-weight: 600;
+    margin-bottom: 10px;
 }
 
 .skill-list {
@@ -260,136 +319,23 @@ textarea:focus {
     font-size: 14px;
 }
 
-/* ===== Score Highlight ===== */
-.result-box p strong {
-    color: #c33764;
-}
+/* =====================================================
+   AUDIO PLAYER
+===================================================== */
 
-.score {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-.feedback-text {
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-
-/* ===== Audio Player Highlight ===== */
 audio {
     outline: none;
-    transition: box-shadow 0.3s ease;
     border-radius: 6px;
+    transition: box-shadow 0.3s ease;
 }
 
 audio:hover {
     box-shadow: 0 0 12px rgba(195, 55, 100, 0.35);
 }
 
-
-
-
-
-/* ===== Responsive (Mobile & Tablet) ===== */
-@media (max-width: 768px) {
-    .container {
-        padding: 25px;
-    }
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: 20px;
-    }
-
-    .container h2 {
-        font-size: 20px;
-    }
-    .result-box h3 {
-        font-size: 18px;
-    }
-}
-
-
-
-
-/* ===== Wide Container (Analyzer Page) ===== */
-.container.wide {
-    max-width: 650px;
-}
-
-/* ===== Labels ===== */
-.label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 600;
-    color: #444;
-}
-
-/* ===== Textarea ===== */
-textarea {
-    width: 100%;
-    padding: 12px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    resize: vertical;
-    margin-bottom: 15px;
-    font-size: 14px;
-}
-
-/* ===== Result Box ===== */
-.result-box {
-    margin-top: 20px;
-    padding: 15px;
-    background: #f5f7ff;
-    border-radius: 8px;
-    font-size: 14px;
-}
-
-.jd-preview {
-    margin-top: 8px;
-    color: #333;
-}
-
-/* ===== Back Link ===== */
-.back-link {
-    display: block;
-    margin-top: 20px;
-    text-align: center;
-    font-weight: 600;
-}
-
-.play-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
-    transition: background 0.3s ease;
-}
-
-.play-btn:active {
-    transform: scale(0.98);
-}
-
-/* ===== Mobile Optimization ===== */
-@media (max-width: 600px) {
-    .container.wide {
-        padding: 20px;
-    }
-
-    textarea {
-        font-size: 13px;
-    }
-}
-
-
-
-
-/* =========================
-   Footer Styling (Fixed)
-========================= */
+/* =====================================================
+   FOOTER
+===================================================== */
 
 .site-footer {
     margin-top: auto;
@@ -436,4 +382,95 @@ textarea {
 .footer-links a:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+/* =====================================================
+   RESPONSIVE TWEAKS
+===================================================== */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+    }
+
+    .container h2 {
+        font-size: 20px;
+    }
+
+    .result-box h3 {
+        font-size: 18px;
+    }
+}
+
+
+
+/* =========================
+   DASHBOARD CENTER FIX
+========================= */
+
+.dashboard-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+}
+
+.dashboard-card {
+    background: #ffffff;
+    max-width: 520px;
+    width: 100%;
+    padding: 40px 30px;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+    animation: slideUp 0.5s ease;
+}
+
+.dashboard-card h2 {
+    font-size: 26px;
+    margin-bottom: 14px;
+    color: #333;
+}
+
+.dashboard-card p {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+/* Centered Analyze Button */
+.dashboard-btn {
+    display: inline-block;
+    padding: 12px 26px;
+    background: #1d2671;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.dashboard-btn:hover {
+    background: #141e50;
+    transform: translateY(-2px);
+}
+
+/* Mobile Optimization */
+@media (max-width: 600px) {
+    .dashboard-card {
+        padding: 30px 22px;
+    }
+
+    .dashboard-card h2 {
+        font-size: 22px;
+    }
 }

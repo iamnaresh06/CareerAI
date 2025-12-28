@@ -22,14 +22,19 @@
     </div>
 </div>
 
-<div class="page-content">
-    <div class="container dashboard">
+
+<div class="dashboard-wrapper">
+    <div class="dashboard-card">
         <h2>Welcome {{ request.user.first_name }}</h2>
         <p>Analyze your resume and get AI-powered career feedback.</p>
 
-        <a href="{% url 'analyze' %}">Analyze Resume</a>
+        <a href="{% url 'analyze' %}" class="dashboard-btn">
+            Analyze Resume
+        </a>
     </div>
 </div>
+
+
 
 
 <footer class="site-footer">

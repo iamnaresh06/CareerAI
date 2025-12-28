@@ -9,25 +9,29 @@
 </head>
 <body>
 
-<div class="container">
-    <h2>Create Account</h2>
 
-    {% for message in messages %}
-        <div class="message">{{ message }}</div>
-    {% endfor %}
+    <div class="main-wrapper">
+        <!-- EXISTING PAGE CONTENT (form/card/etc) -->
+        <div class="container">
+            <h2>Create Account</h2>
 
-    <form method="POST">
-        {% csrf_token %}
-        <input type="text" name="first_name" placeholder="First Name" required>
-        <input type="text" name="last_name" placeholder="Last Name" required>
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-        <button type="submit">Register</button>
-    </form>
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
 
-    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
-</div>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" name="first_name" placeholder="First Name" required>
+                <input type="text" name="last_name" placeholder="Last Name" required>
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                <button type="submit">Register</button>
+            </form>
+
+            <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+    </div>
 
 
 <footer class="site-footer">
