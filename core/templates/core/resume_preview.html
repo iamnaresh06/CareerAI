@@ -1,0 +1,52 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Resume Preview | CareerAI{% endblock %}
+
+{% block content %}
+<div class="main-wrapper">
+    <div class="container wide">
+
+        <h2>{{ full_name }}</h2>
+        <p><strong>{{ email }}</strong> | {{ phone }}</p>
+
+        <div class="result-box">
+            <h3>Profile Summary</h3>
+            <p>{{ summary }}</p>
+
+            <h3>Skills</h3>
+            <p>{{ skills }}</p>
+
+            <h3>Education</h3>
+            <p>{{ education }}</p>
+
+            {% if experience %}
+            <h3>Experience</h3>
+            <p>{{ experience }}</p>
+            {% endif %}
+
+            {% if projects %}
+            <h3>Projects</h3>
+            <p>{{ projects }}</p>
+            {% endif %}
+
+            {% if certifications %}
+            <h3>Certifications</h3>
+            <p>{{ certifications }}</p>
+            {% endif %}
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            {% for key, value in request.POST.items %}
+                <input type="hidden" name="{{ key }}" value="{{ value }}">
+            {% endfor %}
+            <button type="submit" name="download_pdf">
+                Download Resume (PDF)
+            </button>
+        </form>
+
+        <a class="back-link" href="{% url 'dashboard' %}">← Back to Dashboard</a>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,63 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard | CareerAI</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'core/style.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-</head>
-<body>
+{% extends 'core/base.html' %}
 
-<!-- Header -->
-<div class="header">
-    <div class="header-content">
-        <div class="brand">Career<span>AI</span></div>
+{% block title %}Dashboard | CareerAI{% endblock %}
 
-        <div class="nav-links">
-            <a href="{% url 'dashboard' %}">Dashboard</a>
-            <a href="{% url 'analyze' %}">Analyze</a>
-            <a href="{% url 'logout' %}">Logout</a>
-        </div>
-    </div>
-</div>
-
-
-<div class="dashboard-wrapper">
+{% block content %}
+<div class="main-wrapper">
     <div class="dashboard-card">
-        <h2>Welcome {{ request.user.first_name }}</h2>
-        <p>Analyze your resume and get AI-powered career feedback.</p>
+        <h2>Welcome {{ request.user.username }}</h2>
+        <p>Your AI-powered career assistant is ready.</p>
 
-        <a href="{% url 'analyze' %}" class="dashboard-btn">
-            Analyze Resume
-        </a>
-    </div>
-</div>
-
-
-
-
-<footer class="site-footer">
-    <div class="footer-content">
-        <p class="copyright">
-            © 2025 <strong>CareerAI</strong> | Developed by <strong>Naresh Reddy</strong>
-        </p>
-
-        <div class="footer-links">
-            <a href="https://www.linkedin.com/in/iamnaresh06" target="_blank" aria-label="LinkedIn">
-                <i class="fab fa-linkedin-in"></i>
+        <div class="dashboard-actions">
+            <a href="{% url 'analyze' %}" class="dashboard-btn primary">
+                Analyze Resume
             </a>
 
-            <a href="https://github.com/iamnaresh06" target="_blank" aria-label="GitHub">
-                <i class="fab fa-github"></i>
-            </a>
-
-            <a href="mailto:iamnaresh06@gmail.com" aria-label="Email">
-                <i class="fas fa-envelope"></i>
+            <a href="{% url 'resume_builder' %}" class="dashboard-btn resume-builder pulse">
+                Build ATS Resume
             </a>
         </div>
     </div>
-</footer>
-
-</body>
-</html>
+</div>
+{% endblock %}

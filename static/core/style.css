@@ -506,3 +506,70 @@ audio:hover {
         margin-top: 40px;
     }
 }
+
+
+
+
+
+/* =========================
+   Dashboard Resume Builder Button
+========================= */
+
+.dashboard-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.dashboard-btn {
+    padding: 14px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Existing Analyze button style */
+.dashboard-btn.primary {
+    background: #1d2671;
+    color: #fff;
+}
+
+.dashboard-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(29, 38, 113, 0.4);
+}
+
+/* Resume Builder Button (Attractive) */
+.dashboard-btn.resume-builder {
+    background: #c33764;
+    color: #fff;
+}
+
+/* Pulse Animation */
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(195, 55, 100, 0.6);
+    }
+    70% {
+        box-shadow: 0 0 0 14px rgba(195, 55, 100, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(195, 55, 100, 0);
+    }
+}
+
+.pulse {
+    animation: pulseGlow 2.8s infinite;
+}
+
+/* Mobile fine-tune */
+@media (max-width: 600px) {
+    .dashboard-btn {
+        font-size: 14px;
+        padding: 13px;
+    }
+}

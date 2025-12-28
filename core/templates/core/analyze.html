@@ -1,113 +1,59 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Resume Analyzer | CareerAI</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'core/style.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-</head>
-<body>
+{% extends 'core/base.html' %}
 
-    <!-- Header -->
-<div class="header">
-    <div class="header-content">
-        <div class="brand">Career<span>AI</span></div>
+{% block title %}Resume Analyzer | CareerAI{% endblock %}
 
-        <div class="nav-links">
-            <a href="{% url 'dashboard' %}">Dashboard</a>
-            <a href="{% url 'analyze' %}">Analyze</a>
-            <a href="{% url 'logout' %}">Logout</a>
-        </div>
-    </div>
-</div>
-
-
+{% block content %}
 <div class="main-wrapper">
-    <!-- EXISTING PAGE CONTENT (form/card/etc) -->
-     <div class="page-content">
-    <!-- existing container wide code here -->
-        <div class="container wide">
-            <h2>Resume Analyzer</h2>
+    <div class="container wide">
 
-            {% for message in messages %}
-                <div class="message">{{ message }}</div>
-            {% endfor %}
+        <h2>Resume Analyzer</h2>
 
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
+        {% for message in messages %}
+            <div class="message">{{ message }}</div>
+        {% endfor %}
 
-                <label class="label">Upload Resume ( PDF )</label>
-                <input type="file" name="resume" required>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
 
-                <label class="label">Paste Job Description or Enter Your Skills Here</label>
-                <textarea name="job_description" rows="7"
-                    placeholder="Paste job description here..." required></textarea>
+            <label class="label">Upload Resume (PDF / DOCX)</label>
+            <input type="file" name="resume" required>
 
-                <button type="submit">Analyze Resume</button>
-            </form>
+            <label class="label">Paste Job Description</label>
+            <textarea name="job_description" rows="7" required></textarea>
 
-            {% if match_score %}
-            <div class="result-box">
-                <h3>Analysis Result</h3>
+            <button type="submit">Analyze Resume</button>
+        </form>
 
-                <p class="score">
-                    <strong>Resume Match Score:</strong> {{ match_score }} / 100
-                </p>
+        {% if match_score %}
+        <div class="result-box">
+            <h3>Analysis Result</h3>
 
-                <p class="feedback-text">{{ feedback_message }}</p>
+            <p class="score">
+                <strong>Resume Match Score:</strong> {{ match_score }} / 100
+            </p>
 
+            <p class="feedback-text">{{ feedback_message }}</p>
 
-                {% if audio_url %}
-                    <p>Tap play to hear AI feedback</p>
-
-                    <audio controls preload="none" style="width:100%;">
-                        <source src="{{ audio_url }}" type="audio/mpeg">
-                    </audio>
-                {% endif %}
-
-
-
-                {% if missing_skills %}
-                    <p><strong>Missing Skills:</strong></p>
-                    <ul class="skill-list">
-                        {% for skill in missing_skills %}
-                            <li>{{ skill }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
+            {% if missing_skills %}
+            <p><strong>Missing Skills:</strong></p>
+            <ul class="skill-list">
+                {% for skill in missing_skills %}
+                    <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
             {% endif %}
 
-            <a class="back-link" href="{% url 'dashboard' %}">← Back to Dashboard</a>
+            {% if audio_url %}
+            <p>Tap play to hear AI feedback</p>
+            <audio controls preload="none" style="width:100%;">
+                <source src="{{ audio_url }}" type="audio/mpeg">
+            </audio>
+            {% endif %}
         </div>
+        {% endif %}
+
+        <a class="back-link" href="{% url 'dashboard' %}">← Back to Dashboard</a>
+
     </div>
 </div>
-
-
-<footer class="site-footer">
-    <div class="footer-content">
-        <p class="copyright">
-            © 2025 <strong>CareerAI</strong> | Developed by <strong>Naresh Reddy</strong>
-        </p>
-
-        <div class="footer-links">
-            <a href="https://www.linkedin.com/in/iamnaresh06" target="_blank" aria-label="LinkedIn">
-                <i class="fab fa-linkedin-in"></i>
-            </a>
-
-            <a href="https://github.com/iamnaresh06" target="_blank" aria-label="GitHub">
-                <i class="fab fa-github"></i>
-            </a>
-
-            <a href="mailto:iamnaresh06@gmail.com" aria-label="Email">
-                <i class="fas fa-envelope"></i>
-            </a>
-        </div>
-    </div>
-</footer>
-
-
-
-</body>
-</html>
+{% endblock %}

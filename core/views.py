@@ -163,3 +163,43 @@ def stream_audio(request, filename):
         open(audio_path, 'rb'),
         content_type='audio/mpeg'
     )
+
+
+
+
+# Resume Building Logic
+from django.contrib.auth.decorators import login_required
+from .pdf_utils import render_resume_pdf
+
+
+@login_required
+def resume_builder(request):
+    if request.method == "POST":
+
+        resume_data = {
+            "full_name": request.POST.get("full_name"),
+            "email": request.POST.get("email"),
+            "phone": request.POST.get("phone"),
+            "summary": request.POST.get("summary"),
+            "skills": request.POST.get("skills"),
+            "education": request.POST.get("education"),
+            "experience": request.POST.get("experience"),
+            "projects": request.POST.get("projects"),
+            "certifications": request.POST.get("certifications"),
+        }
+
+        # If user clicked Download PDF
+        if "download_pdf" in request.POST:
+            return render_resume_pdf(
+                "core/resume_preview.html",
+                resume_data
+            )
+
+        # Otherwise show preview
+        return render(
+            request,
+            "core/resume_preview.html",
+            resume_data
+        )
+
+    return render(request, "core/resume_builder.html")

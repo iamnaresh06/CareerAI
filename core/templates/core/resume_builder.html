@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+
+{% block title %}ATS Resume Builder | CareerAI{% endblock %}
+
+{% block content %}
+<div class="main-wrapper">
+    <div class="container wide">
+
+        <h2>ATS Resume Builder</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label class="label">Full Name</label>
+            <input type="text" name="full_name" required>
+
+            <label class="label">Email</label>
+            <input type="email" name="email" required>
+
+            <label class="label">Phone</label>
+            <input type="text" name="phone" required>
+
+            <label class="label">Profile Summary</label>
+            <textarea name="summary" rows="3" required></textarea>
+
+            <label class="label">Skills (comma separated)</label>
+            <textarea name="skills" rows="2" required></textarea>
+
+            <label class="label">Education</label>
+            <textarea name="education" rows="3" required></textarea>
+
+            <label class="label">Experience</label>
+            <textarea name="experience" rows="4"></textarea>
+
+            <label class="label">Projects</label>
+            <textarea name="projects" rows="3"></textarea>
+
+            <label class="label">Certifications</label>
+            <textarea name="certifications" rows="2"></textarea>
+
+            <button type="submit">Preview Resume</button>
+        </form>
+
+        <a class="back-link" href="{% url 'dashboard' %}">← Back to Dashboard</a>
+
+    </div>
+</div>
+{% endblock %}
