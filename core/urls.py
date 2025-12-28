@@ -9,5 +9,4 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('analyze/', views.analyze_resume, name='analyze'),
     path('audio/<str:filename>/', views.stream_audio, name='stream_audio'),
-    path('resume-builder/', views.resume_builder, name='resume_builder'),
 ]

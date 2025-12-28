@@ -1,0 +1,73 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/resume.css' %}">
+<script src="{% static 'js/resume.js' %}" defer></script>
+
+<div class="resume-container">
+<form method="POST" action="{% url 'resume_download' %}">
+{% csrf_token %}
+
+<h2>Resume Builder</h2>
+
+<section>
+<h3>Personal Information</h3>
+<input name="full_name" placeholder="Full Name" required>
+<input name="email" placeholder="Email" required>
+<input name="phone" placeholder="Phone" required>
+<input name="linkedin" placeholder="LinkedIn URL">
+<input name="github" placeholder="GitHub URL">
+</section>
+
+<section>
+<h3>Professional Summary</h3>
+<textarea name="summary" rows="4"></textarea>
+</section>
+
+<section>
+<h3>Education</h3>
+<div id="education-container"></div>
+<button type="button" onclick="addEducation()">+ Add Education</button>
+</section>
+
+<section>
+<h3>Skills</h3>
+<input name="skills" placeholder="Python, Java, Django, HTML, CSS">
+<datalist id="skills-list">
+  <option value="Python">
+  <option value="Java">
+  <option value="Django">
+  <option value="HTML">
+  <option value="CSS">
+  <option value="JavaScript">
+</datalist>
+<label style="display:block; margin-bottom:6px;">
+  <input type="checkbox" name="show_skill_categories" checked>
+  Show Skill Categories
+</label>
+</section>
+
+<section>
+<h3>Experience</h3>
+<div id="experience-container"></div>
+<button type="button" onclick="addExperience()">+ Add Experience</button>
+</section>
+
+<section>
+<h3>Projects</h3>
+<div id="project-container"></div>
+<button type="button" onclick="addProject()">+ Add Project</button>
+</section>
+
+<section>
+<h3>Certifications</h3>
+<div id="certification-container"></div>
+<button type="button" onclick="addCertification()">+ Add Certification</button>
+</section>
+
+<button class="submit-btn">Download Resume (PDF)</button>
+
+</form>
+</div>
+{% endblock %}

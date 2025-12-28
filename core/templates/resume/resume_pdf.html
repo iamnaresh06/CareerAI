@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<style>
+@page {
+    size: A4;
+    margin: 30px;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.25;
+    margin: 0;
+}
+
+/* HEADER */
+h1 {
+    text-align: center;
+    font-size: 18pt;
+    margin: 0 0 4px 0;
+}
+
+.header {
+    text-align: center;
+    font-size: 9.5pt;
+    margin-bottom: 10px;
+}
+
+/* SECTION */
+.section {
+    margin-top: 10px;
+    page-break-inside: avoid;
+}
+
+.section-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 11pt;
+    margin-bottom: 2px;
+}
+
+/* HR — MOST IMPORTANT FIX */
+hr {
+    border: none;
+    border-top: 1.4px solid #000;
+    margin: 2px 0 6px 0;
+}
+
+/* TEXT */
+p {
+    margin: 0 0 3px 0;
+}
+.section p {
+  margin-bottom: 3px;
+}
+
+/* LIST */
+ul {
+    margin: 4px 0 6px 14px;
+    padding: 0;
+    list-style-type: disc;
+}
+
+li {
+    margin-bottom: 3px;
+    padding-left: 2px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>{{ full_name }}</h1>
+<div class="header">
+{{ phone }} | {{ email }} | {{ linkedin }} | {{ github }}
+</div>
+
+<!-- SUMMARY -->
+<div class="section">
+<div class="section-title">Professional Summary</div>
+<hr>
+<p>{{ summary }}</p>
+</div>
+
+<!-- EDUCATION -->
+<div class="section">
+<div class="section-title">Education</div>
+<hr>
+{% for e in education|slice:":2" %}
+<p>
+<strong>{{ e.degree }}</strong> | {{ e.start }} – {{ e.end }}<br>
+{{ e.college }}<br>
+<strong>CGPA:</strong> {{ e.score }}
+</p>
+{% endfor %}
+</div>
+
+
+<!-- SKILLS -->
+<div class="section">
+<div class="section-title">Skills</div>
+<hr>
+
+{% if show_skill_categories %}
+
+  {% if skills.programming %}
+  <p><b>Programming:</b> {{ skills.programming|join:", " }}</p>
+  {% endif %}
+
+  {% if skills.web %}
+  <p><b>Web Technologies:</b> {{ skills.web|join:", " }}</p>
+  {% endif %}
+
+  {% if skills.core %}
+  <p><b>Core CS:</b> {{ skills.core|join:", " }}</p>
+  {% endif %}
+
+  {% if skills.tools %}
+  <p><b>Tools & Others:</b> {{ skills.tools|join:", " }}</p>
+  {% endif %}
+
+{% else %}
+
+  <p>
+    {{ skills.programming|add:skills.web|add:skills.core|add:skills.tools|join:", " }}
+  </p>
+
+{% endif %}
+</div>
+
+
+
+<div class="section">
+<div class="section-title">Experience</div>
+<hr>
+
+{% for x in experience %}
+<p>
+<strong>{{ x.role }}</strong>, {{ x.company }} | {{ x.start }} – {{ x.end }}
+</p>
+
+<ul>
+{% for bullet in x.desc|slice:":3" %}
+  <li>{{ bullet }}</li>
+{% endfor %}
+</ul>
+
+{% endfor %}
+</div>
+
+
+
+
+<!-- PROJECTS -->
+<div class="section">
+<div class="section-title">Projects</div>
+<hr>
+
+{% for p in projects %}
+<p>
+<strong>{{ p.name }}</strong> | {{ p.stack }}
+</p>
+
+<ul>
+{% for bullet in p.desc|slice:":3" %}
+  <li>{{ bullet }}</li>
+{% endfor %}
+</ul>
+
+{% endfor %}
+</div>
+
+
+
+
+<!-- CERTIFICATIONS -->
+<div class="section">
+<div class="section-title">Certifications</div>
+<hr>
+<ul>
+{% for c in certifications %}
+<li><b>{{ c.name }}</b> – {{ c.org }}</li>
+{% endfor %}
+</ul>
+</div>
+
+</body>
+</html>

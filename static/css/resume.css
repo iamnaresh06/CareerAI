@@ -1,0 +1,43 @@
+.resume-container {
+  max-width: 900px;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+}
+
+section {
+  margin-bottom: 25px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+}
+
+.block {
+  border: 1px solid #ddd;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+}
+
+button {
+  padding: 8px 14px;
+}
+
+.submit-btn {
+  background: #1f3c88;
+  color: #fff;
+  border: none;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+}
+
+@media (max-width: 600px) {
+  .resume-container {
+    padding: 15px;
+  }
+}
