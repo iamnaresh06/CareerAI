@@ -477,13 +477,32 @@ audio:hover {
 
 
 /* ===== Mobile Login Height Fix ===== */
+
 @media (max-width: 600px) {
+
+    /* Prevent body from forcing center vertically */
     body {
         justify-content: flex-start;
+        padding-top: 90px; /* space for fixed header */
+        padding-bottom: 60px; /* space for footer */
     }
 
+    /* Reduce login card height impact */
     .container {
-        margin-top: 40px;
+        margin-top: 20px;
         margin-bottom: 20px;
+        padding: 22px;
+        border-radius: 14px;
+    }
+
+    /* Slightly compact inputs */
+    .container input {
+        padding: 11px;
+    }
+
+    /* Footer should not push layout upward */
+    .site-footer {
+        position: relative;
+        margin-top: 40px;
     }
 }

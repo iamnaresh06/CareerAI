@@ -37,10 +37,10 @@
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
 
-                <label class="label">Upload Resume (PDF / DOCX)</label>
+                <label class="label">Upload Resume ( PDF )</label>
                 <input type="file" name="resume" required>
 
-                <label class="label">Paste Job Description</label>
+                <label class="label">Paste Job Description or Enter Your Skills Here</label>
                 <textarea name="job_description" rows="7"
                     placeholder="Paste job description here..." required></textarea>
 
