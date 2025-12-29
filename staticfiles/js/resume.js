@@ -1,73 +1,127 @@
+// ===============================
+// EDUCATION
+// ===============================
 function addEducation() {
-  document.getElementById("education-container").insertAdjacentHTML(
-    "beforeend",
-    `<div class="block">
-      <input name="edu_degree[]" placeholder="Degree / Course">
-      <input name="edu_college[]" placeholder="College Name">
-      <input name="edu_start[]" type="month">
-      <input name="edu_end[]" type="month">
-      <input name="edu_score[]" placeholder="CGPA">
-    </div>`
-  );
+    const container = document.getElementById("education-container");
+
+    const div = document.createElement("div");
+    div.className = "block";
+
+    div.innerHTML = `
+        <input name="edu_degree[]" placeholder="Degree (e.g. MCA)">
+        <input name="edu_college[]" placeholder="College / University">
+
+        <div class="row">
+            <input type="month" name="edu_start[]">
+            <input type="month" name="edu_end[]">
+            <label class="present-label">
+                <input type="checkbox" onchange="togglePresent(this, 'edu_end[]')">
+                Present
+            </label>
+        </div>
+
+        <input name="edu_score[]" placeholder="CGPA / Percentage">
+        <hr>
+    `;
+
+    container.appendChild(div);
 }
 
+
+// ===============================
+// EXPERIENCE
+// ===============================
 function addExperience() {
-  document.getElementById("experience-container").insertAdjacentHTML(
-    "beforeend",
-    `<div class="block">
-      <input name="exp_role[]" placeholder="Role">
-      <input name="exp_company[]" placeholder="Company">
-      <input name="exp_start[]" type="month">
-      <input name="exp_end[]" placeholder="End / Present">
-      <textarea name="exp_desc[]" placeholder="Description"></textarea>
-    </div>`
-  );
+    const container = document.getElementById("experience-container");
+
+    const div = document.createElement("div");
+    div.className = "block";
+
+    div.innerHTML = `
+        <input name="exp_role[]" placeholder="Role (e.g. Python Developer Intern)">
+        <input name="exp_company[]" placeholder="Company Name">
+
+        <div class="row">
+            <input type="month" name="exp_start[]">
+            <input type="month" name="exp_end[]">
+            <label class="present-label">
+                <input type="checkbox" onchange="togglePresent(this, 'exp_end[]')">Present
+            </label>
+        </div>
+
+        <textarea name="exp_desc[]" placeholder="EXPERIENCE DESCRIPTION - Please Follow The Below Format
+Enter each point on a new line - (MAX 3 points)"></textarea>
+        <hr>
+    `;
+
+    container.appendChild(div);
 }
 
+
+// ===============================
+// PROJECTS
+// ===============================
 function addProject() {
-  document.getElementById("project-container").insertAdjacentHTML(
-    "beforeend",
-    `<div class="block">
-      <input name="proj_name[]" placeholder="Project Name">
-      <input name="proj_stack[]" placeholder="Tech Stack">
-      <textarea name="proj_desc[]" placeholder="Description"></textarea>
-    </div>`
-  );
+    const container = document.getElementById("projects-container");
+
+    const div = document.createElement("div");
+    div.className = "block";
+
+    div.innerHTML = `
+        <input name="proj_name[]" placeholder="Project Name">
+        <input name="proj_stack[]" placeholder="Tech Stack (Python, Django, MySQL)">
+        <textarea name="proj_desc[]" placeholder="PROJECT DESCRIPTION - Please Follow The Below Format
+Enter each point on a new line - (MAX 3 points)"></textarea>
+        <hr>
+    `;
+
+    container.appendChild(div);
 }
 
+
+// ===============================
+// CERTIFICATIONS
+// ===============================
 function addCertification() {
-  document.getElementById("certification-container").insertAdjacentHTML(
-    "beforeend",
-    `<div class="block">
-      <input name="cert_name[]" placeholder="Certificate Name">
-      <input name="cert_org[]" placeholder="Issued By">
-    </div>`
-  );
+    const container = document.getElementById("certifications-container");
+
+    const div = document.createElement("div");
+    div.className = "block";
+
+    div.innerHTML = `
+        <input name="cert_name[]" placeholder="Certificate Name">
+        <input name="cert_org[]" placeholder="Issued By">
+        <hr>
+    `;
+
+    container.appendChild(div);
 }
 
-window.onload = () => {
-  addEducation();
-  addExperience();
-  addProject();
-  addCertification();
-};
 
-const skillSuggestions = [
-  "Python", "Java", "C", "C++",
-  "HTML", "CSS", "JavaScript", "Django",
-  "SQL", "DBMS", "Computer Networks",
-  "Data Structures", "Algorithms",
-  "Git", "Docker", "Machine Learning"
-];
+// ===============================
+// PRESENT TOGGLE (CORE LOGIC)
+// ===============================
+function togglePresent(checkbox, endFieldName) {
+    const parent = checkbox.closest(".row");
+    const endInput = parent.querySelector(`input[name="${endFieldName}"]`);
 
-document.addEventListener("input", function (e) {
-  if (e.target.name === "skills") {
-    let value = e.target.value.toLowerCase();
-    let match = skillSuggestions.find(s =>
-      s.toLowerCase().startsWith(value.split(",").pop().trim())
-    );
-    if (match) {
-      e.target.setAttribute("list", "skills-list");
+    if (checkbox.checked) {
+        endInput.value = "";
+        endInput.disabled = true;
+        endInput.placeholder = "Present";
+    } else {
+        endInput.disabled = false;
+        endInput.placeholder = "";
     }
-  }
+}
+
+
+// ===============================
+// AUTO ADD FIRST BLOCKS
+// ===============================
+document.addEventListener("DOMContentLoaded", () => {
+    addEducation();
+    addExperience();
+    addProject();
+    addCertification();
 });

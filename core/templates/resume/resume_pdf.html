@@ -19,14 +19,19 @@ body {
 /* HEADER */
 h1 {
     text-align: center;
-    font-size: 18pt;
-    margin: 0 0 4px 0;
+    font-size: 20pt;
+    margin: 0 0 1px 0;
 }
 
 .header {
     text-align: center;
-    font-size: 9.5pt;
-    margin-bottom: 10px;
+    font-size: 11pt;
+}
+
+.header-line {
+    border: none;
+    border-top: 1.5px solid #000;
+    margin: 1px 0 10px 0;
 }
 
 /* SECTION */
@@ -38,15 +43,15 @@ h1 {
 .section-title {
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 11pt;
-    margin-bottom: 2px;
+    font-size: 13.5pt;
+    letter-spacing: 0.3px;
 }
 
 /* HR — MOST IMPORTANT FIX */
 hr {
     border: none;
     border-top: 1.4px solid #000;
-    margin: 2px 0 6px 0;
+    margin: 0px 0 6px 0;
 }
 
 /* TEXT */
@@ -69,15 +74,36 @@ li {
     padding-left: 2px;
 }
 
+a {
+    color: #000;
+    text-decoration: none;
+}
+
 </style>
 </head>
 
 <body>
 
+<!-- Header Section -->
 <h1>{{ full_name }}</h1>
+
 <div class="header">
-{{ phone }} | {{ email }} | {{ linkedin }} | {{ github }}
+{{ phone }} | {{ email }}
+
+{% if linkedin %}
+ | <a href="{{ linkedin }}">LinkedIn</a>
+{% endif %}
+
+{% if portfolio %}
+ | <a href="{{ portfolio }}">Portfolio</a>
+{% endif %}
+
+{% if github %}
+ | <a href="{{ github }}">GitHub</a>
+{% endif %}
 </div>
+
+<hr class="header-line">
 
 <!-- SUMMARY -->
 <div class="section">

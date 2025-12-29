@@ -36,8 +36,62 @@ button {
   font-size: 16px;
 }
 
+
 @media (max-width: 600px) {
   .resume-container {
     padding: 15px;
   }
+}
+
+
+
+/* Preview Page and Button Styles */
+
+.resume-preview-container {
+  max-width: 900px;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+}
+
+.preview-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.edit-btn {
+  color: #1f3c88;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+
+
+.action-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.preview-btn,
+.submit-btn {
+    flex: 1;
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.preview-btn {
+    background: #ffffff;
+    color: #1f3c88;
+    border: 2px solid #1f3c88;
+    transition: all 0.3s ease;
+}
+
+.preview-btn:hover {
+    background: #1f3c88;
+    color: #fff;
+    transform: translateY(-2px);
 }
