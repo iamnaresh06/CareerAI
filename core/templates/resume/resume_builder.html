@@ -34,30 +34,32 @@
   <h3>Skills</h3>
   <input name="skills" value="{{ skills_raw|default:'' }}"
          placeholder="Python, Java, Django, HTML, CSS">
-  <label>
-    <input type="checkbox" name="show_skill_categories"
-           {% if show_skill_categories %}checked{% endif %}>
-    Show Skill Categories
-  </label>
+  <div class="checkbox-row">
+  <input type="checkbox"
+         id="skill_categories"
+         name="show_skill_categories"
+         {% if show_skill_categories %}checked{% endif %}>
+  <label for="skill_categories">Show Skill Categories</label>
+</div>
 </section>
 
 <!-- ================= EDUCATION ================= -->
 <section>
-  <h3>Education: <small>Only Add Latest 2 Education Details</small></h3>
+  <h3>Education: <small>Only Add Recent 2 Education Details</small></h3>
   <div id="education-container"></div>
   <button type="button" onclick="addEducation()">+ Add Education</button>
 </section>
 
 <!-- ================= EXPERIENCE ================= -->
 <section>
-  <h3>Experience: <small>Only Add Latest 1 or 2 Experience Details</small></h3>
+  <h3>Experience: <small>Only Add Recent 1 or 2 Experience Details</small></h3>
   <div id="experience-container"></div>
   <button type="button" onclick="addExperience()">+ Add Experience</button>
 </section>
 
 <!-- ================= PROJECTS ================= -->
 <section>
-  <h3>Projects: <small>Only Add Latest 2 Project Details</small></h3>
+  <h3>Projects: <small>Only Add Recent 2 Project Details</small></h3>
   <div id="projects-container"></div>
   <button type="button" onclick="addProject()">+ Add Project</button>
 </section>

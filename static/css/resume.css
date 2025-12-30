@@ -95,3 +95,25 @@ button {
     color: #fff;
     transform: translateY(-2px);
 }
+
+
+/* Checkbox Alignment CSS */
+.checkbox-row,
+.checkbox-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.checkbox-row input,
+.checkbox-inline input {
+    width: auto;
+    margin: 0;
+}
+
+.checkbox-row label,
+.checkbox-inline span {
+    cursor: pointer;
+    font-size: 15px;
+}

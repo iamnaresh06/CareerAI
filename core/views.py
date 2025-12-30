@@ -16,6 +16,7 @@ from django.conf import settings
 from .voice_engine import generate_voice
 from django.urls import reverse
 import os
+from .skill_recommender import generate_skill_guidance
 
 
 
@@ -119,7 +120,11 @@ def analyze_resume(request):
             resume_text,
             job_description_cleaned
         )
-
+        skill_guidance = generate_skill_guidance(missing_skills)
+        
+        request.session["last_score"] = final_score
+        request.session["last_missing_skills"] = missing_skills
+        
         feedback_message = generate_feedback(
             final_score,
             skill_score,
@@ -143,6 +148,7 @@ def analyze_resume(request):
             'missing_skills': missing_skills,
             'feedback_message': feedback_message,
             'audio_url': audio_url,
+            "skill_guidance" : skill_guidance
         }
 
         return render(request, 'core/analyze.html', context)
@@ -164,3 +170,22 @@ def stream_audio(request, filename):
         content_type='audio/mpeg'
     )
 
+
+from django.http import JsonResponse
+from .career_chatbot import get_chatbot_response
+
+def career_chatbot_api(request):
+    if request.method == "POST":
+        message = request.POST.get("message")
+
+        # optional context
+        resume_score = request.session.get("last_score")
+        missing_skills = request.session.get("last_missing_skills")
+
+        reply = get_chatbot_response(
+            message,
+            resume_score=resume_score,
+            missing_skills=missing_skills
+        )
+
+        return JsonResponse({"reply": reply})

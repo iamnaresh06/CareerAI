@@ -479,15 +479,12 @@ audio:hover {
 /* ===== Mobile Login Height Fix ===== */
 
 @media (max-width: 600px) {
-
-    /* Prevent body from forcing center vertically */
     body {
         justify-content: flex-start;
-        padding-top: 90px; /* space for fixed header */
-        padding-bottom: 60px; /* space for footer */
+        padding-top: 90px;
+        padding-bottom: 60px;
     }
 
-    /* Reduce login card height impact */
     .container {
         margin-top: 20px;
         margin-bottom: 20px;
@@ -495,19 +492,15 @@ audio:hover {
         border-radius: 14px;
     }
 
-    /* Slightly compact inputs */
     .container input {
         padding: 11px;
     }
 
-    /* Footer should not push layout upward */
     .site-footer {
         position: relative;
         margin-top: 40px;
     }
 }
-
-
 
 
 
@@ -572,4 +565,87 @@ audio:hover {
         font-size: 14px;
         padding: 13px;
     }
+}
+
+
+
+/* Chatbot Button Syling */
+#career-bot {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+}
+
+#career-bot button {
+    background: #1d2671;
+    color: #fff;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+#bot-box {
+    display: none;
+    width: 280px;
+    height: 320px;
+    background: #fff;
+    border-radius: 12px;
+    margin-top: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    flex-direction: column;
+}
+
+#bot-box.open {
+    display: flex;
+}
+
+#bot-messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    font-size: 13px;
+}
+
+#bot-input {
+    border: none;
+    border-top: 1px solid #ddd;
+    padding: 10px;
+    outline: none;
+}
+
+
+/* Mobile adjustment for chatbot */
+@media (max-width: 600px) {
+    #career-bot {
+        bottom: 90px; /* lift chatbot above footer */
+        right: 15px;
+    }
+
+    #bot-box {
+        width: 90vw;
+        height: 320px;
+    }
+}
+
+
+/* Chatbot header */
+#bot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    background: #f2f4ff;
+    border-bottom: 1px solid #ddd;
+}
+
+#bot-header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #000;
 }

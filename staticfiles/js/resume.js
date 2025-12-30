@@ -14,9 +14,9 @@ function addEducation() {
         <div class="row">
             <input type="month" name="edu_start[]">
             <input type="month" name="edu_end[]">
-            <label class="present-label">
+            <label class="checkbox-inline">
                 <input type="checkbox" onchange="togglePresent(this, 'edu_end[]')">
-                Present
+                <span>Present</span>
             </label>
         </div>
 
@@ -44,13 +44,14 @@ function addExperience() {
         <div class="row">
             <input type="month" name="exp_start[]">
             <input type="month" name="exp_end[]">
-            <label class="present-label">
-                <input type="checkbox" onchange="togglePresent(this, 'exp_end[]')">Present
+            <label class="checkbox-inline">
+                <input type="checkbox" onchange="togglePresent(this, 'exp_end[]')">
+                <span>Present</span>
             </label>
         </div>
 
         <textarea name="exp_desc[]" placeholder="EXPERIENCE DESCRIPTION - Please Follow The Below Format
-Enter each point on a new line - (MAX 3 points)"></textarea>
+Enter each point on a new line - (MAX 3 points Allowed)"></textarea>
         <hr>
     `;
 
@@ -71,7 +72,7 @@ function addProject() {
         <input name="proj_name[]" placeholder="Project Name">
         <input name="proj_stack[]" placeholder="Tech Stack (Python, Django, MySQL)">
         <textarea name="proj_desc[]" placeholder="PROJECT DESCRIPTION - Please Follow The Below Format
-Enter each point on a new line - (MAX 3 points)"></textarea>
+Enter each point on a new line - (MAX 3 points Allowed)"></textarea>
         <hr>
     `;
 

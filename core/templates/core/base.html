@@ -38,5 +38,76 @@
     </div>
 </footer>
 
+
+<div id="career-bot">
+    <button onclick="toggleBot()">💬 Career AI Bot</button>
+    <div id="bot-box">
+        <div id="bot-header">
+            <span>CareerAI Assistant</span>
+            <button onclick="clearChat()" title="Clear Chat">🗑</button>
+        </div>
+
+        <div id="bot-messages"></div>
+
+        <input type="text" id="bot-input"
+            placeholder="Ask about your career..."
+            onkeydown="if(event.key==='Enter') sendBotMessage()">
+    </div>
+</div>
+
+
+<script>
+function toggleBot() {
+    document.getElementById("bot-box").classList.toggle("open");
+}
+
+function sendBotMessage() {
+    const input = document.getElementById("bot-input");
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    const box = document.getElementById("bot-messages");
+
+    // User message
+    box.innerHTML += `<div><strong>You:</strong> ${msg}</div>`;
+    input.value = "";
+
+    fetch("{% url 'career_chatbot' %}", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: new URLSearchParams({ message: msg })
+    })
+    .then(res => res.json())
+    .then(data => {
+        const reply = data.reply;
+
+        const botMsg = document.createElement("div");
+        botMsg.innerHTML = "<strong>CareerAI:</strong><br>";
+        botMsg.style.whiteSpace = "pre-line";
+        box.appendChild(botMsg);
+
+        let i = 0;
+        const typing = setInterval(() => {
+            if (i < reply.length) {
+                botMsg.innerHTML += reply.charAt(i);
+                i++;
+                box.scrollTop = box.scrollHeight;
+            } else {
+                clearInterval(typing);
+            }
+        }, 15);
+    });
+}
+
+
+function clearChat() {
+    const box = document.getElementById("bot-messages");
+    box.innerHTML = "<div><strong>CareerAI:</strong><br>Chat cleared. How can I help you now?</div>";
+}
+
+</script>
+
 </body>
 </html>

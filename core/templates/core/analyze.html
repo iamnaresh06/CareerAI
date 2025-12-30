@@ -43,6 +43,20 @@
             </ul>
             {% endif %}
 
+            {% if skill_guidance %}
+                <div class="result-box">
+                    <h3>Career Improvement Suggestions</h3>
+
+                    {% for item in skill_guidance %}
+                        <div style="margin-bottom:12px;">
+                            <strong>{{ item.skill }}</strong> ({{ item.type }})<br>
+                            <span><b>Recommendation:</b> {{ item.recommendation }}</span><br>
+                            <em><b>Learning Path:</b> {{ item.learning_path }}</em>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             {% if audio_url %}
             <p>Tap play to hear AI feedback</p>
             <audio controls preload="none" style="width:100%;">
