@@ -121,9 +121,12 @@ def analyze_resume(request):
             job_description_cleaned
         )
         skill_guidance = generate_skill_guidance(missing_skills)
-        
-        request.session["last_score"] = final_score
+
+        # ✅ Save data for Job Readiness feature
+        request.session["last_resume_score"] = final_score
+        request.session["last_skill_score"] = skill_score
         request.session["last_missing_skills"] = missing_skills
+
         
         feedback_message = generate_feedback(
             final_score,
@@ -189,3 +192,35 @@ def career_chatbot_api(request):
         )
 
         return JsonResponse({"reply": reply})
+    
+
+
+
+
+from .readiness_engine import calculate_job_readiness, generate_action_plan
+
+def job_readiness_view(request):
+    if not request.user.is_authenticated:
+        return redirect("login")
+
+    # These values already exist from analysis (safe defaults)
+    resume_score = request.session.get("last_resume_score", 0)
+    skill_score = request.session.get("last_skill_score", 0)
+    missing_skills = request.session.get("last_missing_skills", [])
+
+    readiness_score = calculate_job_readiness(
+        resume_score,
+        skill_score,
+        missing_skills
+    )
+
+    action_plan = generate_action_plan(missing_skills)
+
+    context = {
+        "readiness_score": readiness_score,
+        "resume_score": resume_score,
+        "skill_score": skill_score,
+        "action_plan": action_plan
+    }
+
+    return render(request, "core/job_readiness.html", context)

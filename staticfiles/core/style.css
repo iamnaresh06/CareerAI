@@ -649,3 +649,259 @@ audio:hover {
     font-size: 20px;
     color: #000;
 }
+
+
+
+/* =========================
+   Password Toggle (Eye Icon)
+========================= */
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    padding-right: 40px; /* space for eye icon */
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #777;
+    font-size: 14px;
+}
+
+.toggle-password:hover {
+    color: #1d2671;
+}
+
+
+
+/* =========================
+   Job Readiness UI
+========================= */
+
+.job-page {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 40px 16px 80px;
+}
+
+.readiness-wrapper {
+    width: 100%;
+    max-width: 720px;
+    background: #ffffff;
+    padding: 34px 30px;
+    border-radius: 16px;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.2);
+    animation: fadeUp 0.6s ease;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Title */
+.readiness-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Metrics text */
+.readiness-metrics {
+    text-align: center;
+    margin: 18px 0;
+    font-size: 15px;
+}
+
+/* Plan title */
+.plan-title {
+    margin-top: 28px;
+    margin-bottom: 12px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+    .readiness-wrapper {
+        padding: 26px 20px;
+    }
+}
+
+
+.progress-ring {
+    position: relative;
+    width: 180px;
+    margin: 20px auto;
+}
+
+.progress-ring svg circle {
+    fill: none;
+    stroke-width: 10;
+}
+
+.progress-ring svg circle:first-child {
+    stroke: #eee;
+}
+
+.progress-ring svg circle:last-child {
+    stroke: #1d2671;
+    stroke-dasharray: 502;
+    transition: stroke-dashoffset 1.2s ease;
+}
+
+.progress-ring span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.action-plan li {
+    margin: 10px 0;
+    padding-left: 8px;
+    border-left: 4px solid #c33764;
+}
+
+
+
+/* =====================================================
+   DASHBOARD – FINAL FLEX FIX (NO COLLAPSE)
+===================================================== */
+
+.dashboard-page {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.dashboard-wrapper {
+    width: 100%;
+    max-width: 1100px;
+    padding: 40px 20px;
+}
+
+/* Two-column layout */
+.dashboard-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    align-items: center;
+    gap: 40px;
+}
+
+/* Left intro text */
+.dashboard-intro {
+    color: #fff;
+    text-align: left;
+}
+
+.dashboard-intro h2 {
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+
+.dashboard-intro p {
+    font-size: 16px;
+    opacity: 0.9;
+    max-width: 480px;
+}
+
+/* Right cards */
+.dashboard-cards {
+    width: 100%;
+}
+
+/* Card grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+/* Dashboard cards */
+.dash-card {
+    background: #ffffff;
+    padding: 26px 22px;
+    border-radius: 16px;
+    text-decoration: none;
+    color: #333;
+    box-shadow: 0 14px 30px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Icon */
+.dash-card i {
+    font-size: 34px;
+    color: #1d2671;
+}
+
+/* Hover animation */
+.dash-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+}
+
+/* Shine effect */
+.dash-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(195, 55, 100, 0.15),
+        transparent
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.dash-card:hover::after {
+    transform: translateX(100%);
+}
+
+/* Highlight Job Readiness */
+.dash-card.highlight {
+    border: 2px solid #c33764;
+    transform: scale(1.03);
+    box-shadow: 0 22px 50px rgba(195, 55, 100, 0.35);
+}
+
+/* =========================
+   MOBILE SAFE STACKING
+========================= */
+
+@media (max-width: 900px) {
+    .dashboard-layout {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .dashboard-intro {
+        text-align: center;
+    }
+
+    .dashboard-intro h2 {
+        font-size: 26px;
+    }
+
+    .dashboard-intro p {
+        font-size: 15px;
+        margin: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .dashboard-wrapper {
+        padding: 28px 14px;
+    }
+}

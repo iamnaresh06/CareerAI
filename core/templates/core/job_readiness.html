@@ -1,0 +1,38 @@
+{% extends "core/base.html" %}
+{% block title %}Job Readiness | CareerAI{% endblock %}
+
+{% block content %}
+<div class="job-page">
+
+    <div class="readiness-wrapper">
+
+        <h2 class="readiness-title">🎯 Job Readiness Score</h2>
+
+        <!-- Progress Ring -->
+        <div class="progress-ring">
+            <svg width="180" height="180">
+                <circle cx="90" cy="90" r="80"></circle>
+                <circle cx="90" cy="90" r="80"
+                        style="stroke-dashoffset: {{ dash_offset }};">
+                </circle>
+            </svg>
+            <span>{{ readiness_score }}%</span>
+        </div>
+
+        <div class="readiness-metrics">
+            <p><strong>Resume Quality:</strong> {{ resume_score }}%</p>
+            <p><strong>Skill Match:</strong> {{ skill_score }}%</p>
+        </div>
+
+        <h3 class="plan-title">🧭 30-Day Career Action Plan</h3>
+
+        <ul class="action-plan">
+            {% for step in action_plan %}
+            <li>{{ step }}</li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+</div>
+{% endblock %}

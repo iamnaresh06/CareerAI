@@ -1,22 +1,48 @@
-{% extends 'core/base.html' %}
-
+{% extends "core/base.html" %}
 {% block title %}Dashboard | CareerAI{% endblock %}
 
 {% block content %}
-<div class="main-wrapper">
-    <div class="dashboard-card">
-        <h2>Welcome {{ request.user.username }}</h2>
-        <p>Your AI-powered career assistant is ready.</p>
+<div class="dashboard-page">
+    <div class="dashboard-wrapper">
 
-        <div class="dashboard-actions">
-            <a href="{% url 'analyze' %}" class="dashboard-btn primary">
-                Analyze Resume
-            </a>
+        <div class="dashboard-layout">
 
-            <a href="{% url 'resume_builder' %}" class="dashboard-btn resume-builder pulse">
-                Build ATS Resume
-            </a>
+            <!-- LEFT INTRO -->
+            <div class="dashboard-intro">
+                <h2>Welcome to CareerAI 🚀</h2>
+                <p>
+                    Choose an option to continue your career journey and
+                    become job-ready with AI guidance.
+                </p>
+            </div>
+
+            <!-- RIGHT CARDS -->
+            <div class="dashboard-cards">
+                <div class="dashboard-grid">
+
+                    <a href="{% url 'analyze' %}" class="dash-card">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Resume Analyzer</h3>
+                        <p>Check resume match with job description</p>
+                    </a>
+
+                    <a href="{% url 'resume_builder' %}" class="dash-card">
+                        <i class="fas fa-edit"></i>
+                        <h3>ATS Resume Builder</h3>
+                        <p>Create a professional ATS-friendly resume</p>
+                    </a>
+
+                    <a href="{% url 'job_readiness' %}" class="dash-card highlight">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Job Readiness</h3>
+                        <p>Know how ready you are for jobs</p>
+                    </a>
+
+                </div>
+            </div>
+
         </div>
+
     </div>
 </div>
 {% endblock %}

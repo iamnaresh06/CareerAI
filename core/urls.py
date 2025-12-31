@@ -10,4 +10,5 @@ urlpatterns = [
     path('analyze/', views.analyze_resume, name='analyze'),
     path('audio/<str:filename>/', views.stream_audio, name='stream_audio'),
     path("career-chatbot/", views.career_chatbot_api, name="career_chatbot"),
+    path("job-readiness/", views.job_readiness_view, name="job_readiness"),
 ]
