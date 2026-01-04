@@ -905,3 +905,60 @@ audio:hover {
         padding: 28px 14px;
     }
 }
+
+
+
+
+/* Forget Password CSS Styling */
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.auth-page {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+
+/* Mobile fine-tune */
+@media (max-width: 600px) {
+    .auth-page {
+        align-items: flex-start;
+        padding-top: 40px;
+    }
+}
+
+.helper-text {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+
+
+
+.success-btn {
+    display: inline-block;
+    padding: 12px 26px;
+    background: linear-gradient(135deg, #1d2671, #3a4bd9);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.success-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(29, 38, 113, 0.4);
+}

@@ -24,36 +24,38 @@ def home(request):
     return redirect('login')
 
 def register_view(request):
-    # Handle user registration
     if request.method == "POST":
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        confirm_password = request.POST.get('confirm_password')
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        email = request.POST.get("email")
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        confirm_password = request.POST.get("confirm_password")
 
-        # basic validations
         if password != confirm_password:
             messages.error(request, "Passwords do not match")
-            return redirect('register')
+            return redirect("register")
 
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exists")
-            return redirect('register')
+            return redirect("register")
 
-        # create user
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "Email already registered")
+            return redirect("register")
+
         user = User.objects.create_user(
             username=username,
+            email=email,
             password=password,
             first_name=first_name,
             last_name=last_name
         )
-        user.save()
 
         messages.success(request, "Account created successfully")
-        return redirect('login')
+        return redirect("login")
 
-    return render(request, 'core/register.html')
+    return render(request, "core/register.html")
 
 
 def login_view(request):
