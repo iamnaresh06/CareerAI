@@ -91,6 +91,11 @@ img { max-width: 100%; display: block; }
 .mb-4 { margin-bottom: 1rem; }
 .py-8 { padding-top: 3rem; padding-bottom: 3rem; }
 
+.mobile-break { display: none; }
+@media (max-width: 768px) {
+  .mobile-break { display: block; }
+}
+
 /* Typography - Polished */
 h1, h2, h3 { 
   color: var(--text-main); 
@@ -144,6 +149,11 @@ h3 { font-size: 1.5rem; }
 }
 
 /* Premium Cards */
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+}
+
 .card {
   background-color: var(--bg-card);
   border-radius: var(--radius-lg);
@@ -272,6 +282,12 @@ input:focus {
   
   /* Components */
   .btn { width: 100%; justify-content: center; padding: 0.75rem; }
+  
+  .btn-sm {
+    width: auto !important;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
 
   /* Mobile Grid: Add bottom spacing to cards */
   .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 1.5rem; }
@@ -380,4 +396,14 @@ footer {
   border-top: 1px solid #e2e8f0;
   text-align: center;
   color: var(--text-muted);
+}
+
+.social-link {
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.social-link:hover {
+  color: var(--primary); /* Blue color on hover */
+  transform: translateY(-2px);
 }
