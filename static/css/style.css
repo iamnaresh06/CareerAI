@@ -92,8 +92,23 @@ img { max-width: 100%; display: block; }
 .py-8 { padding-top: 3rem; padding-bottom: 3rem; }
 
 .mobile-break { display: none; }
+
+.heading-top-padding {
+  padding-top: 1rem !important;
+}
+
+.heading-y-padding {
+  padding: 0.75rem 0 !important;
+}
+
 @media (max-width: 768px) {
   .mobile-break { display: block; }
+  .heading-top-padding {
+    padding-top: 2.5rem !important;
+  }
+  .heading-y-padding {
+    padding: 2rem 0 !important;
+  }
 }
 
 /* Typography - Polished */
@@ -392,10 +407,29 @@ input:focus {
 footer {
   margin-top: auto;
   background: white;
-  padding: 3rem 0;
+  padding: 2rem 0;
   border-top: 1px solid #e2e8f0;
   text-align: center;
   color: var(--text-muted);
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-text {
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    .footer-text {
+        font-size: 0.85rem;
+        white-space: normal; /* allow wrap if really small */
+    }
 }
 
 .social-link {
