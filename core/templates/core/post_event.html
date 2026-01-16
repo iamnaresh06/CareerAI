@@ -1,0 +1,64 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Post New Event - CareerAI Admin{% endblock %}
+
+{% block content %}
+<div class="container py-8">
+    <div style="max-width: 800px; margin: 0 auto;">
+        <div class="card glass">
+            <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; text-align: center;">
+                Post New <span style="color: var(--accent);">Event</span>
+            </h1>
+
+            <form method="POST" class="flex flex-col gap-4">
+                {% csrf_token %}
+                
+                <div class="grid grid-2">
+                    <div class="input-group">
+                        <label>Event Name</label>
+                        <input type="text" name="name" placeholder="e.g. AI Innovation Hackathon" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Event Type</label>
+                        <select name="event_type" required>
+                            <option value="HACKATHON">Hackathon</option>
+                            <option value="WEBINAR">Webinar</option>
+                            <option value="WORKSHOP">Workshop</option>
+                            <option value="CONFERENCE">Conference</option>
+                            <option value="OTHER">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="input-group">
+                        <label>Date & Time</label>
+                        <input type="datetime-local" name="date" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Location / Venue</label>
+                        <input type="text" name="location" placeholder="e.g. Online or Main Hall, Block A" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Registration Link</label>
+                    <input type="url" name="registration_link" placeholder="https://..." required>
+                </div>
+
+                <div class="input-group">
+                    <label>Description (Markdown supported)</label>
+                    <textarea name="description" rows="6" placeholder="Describe the event, prizes, requirements..." required></textarea>
+                </div>
+
+                <div class="flex gap-4 mt-4">
+                    <button type="submit" class="btn btn-primary" style="flex: 2;">
+                        <i class="fas fa-paper-plane" style="margin-right: 8px;"></i> Publish Event
+                    </button>
+                    <a href="{% url 'admin_dashboard' %}" class="btn btn-outline" style="flex: 1;">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

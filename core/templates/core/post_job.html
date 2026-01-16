@@ -1,0 +1,67 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Post Job - CareerAI{% endblock %}
+
+{% block content %}
+<div class="container py-8">
+    <div style="max-width: 800px; margin: 0 auto;">
+        <div class="card glass">
+            <h2 class="mb-4">Post a New Job or Internship</h2>
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="grid grid-2">
+                    <div class="input-group">
+                        <label>Job Title</label>
+                        <input type="text" name="title" required placeholder="e.g. Graphic Designer">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Company Name</label>
+                        <input type="text" name="company_name" required placeholder="e.g. Pixar">
+                    </div>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="input-group">
+                        <label>Location</label>
+                        <input type="text" name="location" value="Remote" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Salary Range (Optional)</label>
+                        <input type="text" name="salary_range" placeholder="e.g. $50k-$80k">
+                    </div>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="input-group">
+                        <label>Job Type</label>
+                        <select name="job_type">
+                            <option value="FULL_TIME">Full Time</option>
+                            <option value="PART_TIME">Part Time</option>
+                            <option value="INTERNSHIP">Internship</option>
+                            <option value="CONTRACT">Contract</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Application Link</label>
+                        <input type="url" name="apply_link" required placeholder="https://company.com/apply">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Description</label>
+                    <textarea name="description" rows="6" required placeholder="Job details, requirements..."></textarea>
+                </div>
+
+                <div class="flex justify-between items-center">
+                    <a href="{% url 'admin_dashboard' %}" class="btn btn-outline">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Post Job</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

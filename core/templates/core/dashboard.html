@@ -1,47 +1,42 @@
-{% extends "core/base.html" %}
-{% block title %}Dashboard | CareerAI{% endblock %}
+{% extends 'core/base.html' %}
+
+{% block title %}Dashboard - CareerAI{% endblock %}
 
 {% block content %}
-<div class="dashboard-page">
-    <div class="dashboard-wrapper">
+<div class="container py-8">
+    <div class="mb-4">
+        <h1>Welcome back, <span style="color: var(--primary);">{{ user.username }}</span>! 🚀</h1>
+        <p style="color: var(--text-muted);">Manage your career journey from here.</p>
+    </div>
 
-        <div class="dashboard-layout">
-
-            <!-- LEFT INTRO -->
-            <div class="dashboard-intro">
-                <h2>Welcome to CareerAI 🚀</h2>
-                <p>
-                    Choose an option to continue your career journey and
-                    become job-ready with AI guidance.
-                </p>
+    <div class="grid grid-3">
+        <!-- Resume Analyzer -->
+        <a href="{% url 'analyze' %}" class="card job-card flex flex-col items-center text-center p-8">
+            <div style="width: 60px; height: 60px; background: rgba(99, 102, 241, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                <i class="fas fa-file-alt" style="font-size: 1.5rem; color: var(--primary);"></i>
             </div>
+            <h3>Resume Analyzer</h3>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">Check how well your resume matches a job description using AI.</p>
+        </a>
 
-            <!-- RIGHT CARDS -->
-            <div class="dashboard-cards">
-                <div class="dashboard-grid">
-
-                    <a href="{% url 'analyze' %}" class="dash-card">
-                        <i class="fas fa-file-alt"></i>
-                        <h3>Resume Analyzer</h3>
-                        <p>Check resume match with job description</p>
-                    </a>
-
-                    <a href="{% url 'resume_builder' %}" class="dash-card">
-                        <i class="fas fa-edit"></i>
-                        <h3>ATS Resume Builder</h3>
-                        <p>Create a professional ATS-friendly resume</p>
-                    </a>
-
-                    <a href="{% url 'job_readiness' %}" class="dash-card highlight">
-                        <i class="fas fa-chart-line"></i>
-                        <h3>Job Readiness</h3>
-                        <p>Know how ready you are for jobs</p>
-                    </a>
-
-                </div>
+        <!-- Job Readiness -->
+        <a href="{% url 'job_readiness' %}" class="card job-card flex flex-col items-center text-center p-8">
+            <div style="width: 60px; height: 60px; background: rgba(34, 211, 238, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                <i class="fas fa-chart-line" style="font-size: 1.5rem; color: var(--accent);"></i>
             </div>
+            <h3>Job Readiness</h3>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">Get a score and action plan to improve your employability.</p>
+        </a>
 
-        </div>
+        <!-- Jobs & Internships -->
+        <a href="{% url 'job_list' %}" class="card job-card flex flex-col items-center text-center p-8">
+            <div style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                <i class="fas fa-briefcase" style="font-size: 1.5rem; color: var(--success);"></i>
+            </div>
+            <h3>Find Jobs</h3>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">Explore latest internships and full-time opportunities.</p>
+        </a>
+
 
     </div>
 </div>

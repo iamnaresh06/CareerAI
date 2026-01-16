@@ -1,0 +1,99 @@
+CAREER AI PROJECT - INTERVIEW EXPLANATION GUIDE
+
+================================================================================
+1. PROJECT OVERVIEW
+================================================================================
+This project "CareerAI" is an intelligent Career Guidance Platform tailored for students and job seekers.
+
+**The Problem:**
+Graduates often struggle to align their resumes with job descriptions and lack instant, personalized career advice.
+
+**The Solution:**
+CareerAI bridges this gap by using Machine Learning to analyze resumes against job descriptions, identifying missing skills, and providing an AI-generated match score with voice feedback. It also features a built-in Resume Builder and a Career Chatbot.
+
+**Key Features:**
+1. **User Authentication**: Secure Sign-up and Login system for students.
+2. **AI Resume Analyzer**: Calculates a match score (0-100%) between a Resume and a Job Description.
+3. **AI Voice Feedback**: Converts the analysis result into audio for an interactive experience.
+4. **Resume Builder**: A tool to create professional, ATS-friendly PDF resumes.
+5. **Career Chatbot**: A rule-based assistant for instant career roadmaps and advice.
+6. **Job & Event Portal**: A section to view Jobs, Internships, and Hackathons posted by admins.
+
+================================================================================
+2. TECHNICAL STACK
+================================================================================
+We chose **Django (Python)** for its security, scalability, and "batteries-included" philosophy.
+
+- **Backend**: Django Framework (Python)
+- **Frontend**: HTML5, CSS3 (Custom Responsive Design), JavaScript
+- **Database**: SQLite (Development) / PostgreSQL (Production ready)
+- **Key Python Libraries**:
+  - `scikit-learn`: For TF-IDF Vectorization and Cosine Similarity (The "Brain" of the analyzer).
+  - `pdfplumber` & `python-docx`: For reliable text extraction from uploaded files.
+  - `gTTS` (Google Text-to-Speech): For generating MP3 voice feedback.
+  - `xhtml2pdf`: For converting HTML templates into downloadable PDF resumes.
+
+================================================================================
+3. SYSTEM ARCHITECTURE & IMPLEMENTATION
+================================================================================
+
+**1. Authentication System (core/views/auth_views.py)**
+-------------------------------------------------------
+We implemented standard Django authentication.
+- **Signup/Login**: Users create an account to access the dashboard.
+- **Security**: Passwords are hashed automatically by Django. We use the `@login_required` decorator to protect sensitive routes (like the dashboard and analyzer), ensuring only authenticated users can access them.
+
+**2. Database Design (core/models.py)**
+---------------------------------------
+We kept the database lightweight and efficient.
+- **JobPosting**: Stores job details (Title, Company, Salary, Apply Link) managed by the Admin.
+- **Event**: Stores Hackathons and Webinars data.
+- **User**: We use Django's default secure `User` model for authentication.
+
+**3. The AI Engine: Resume Analyzer (core/ml_engine.py)**
+--------------------------------------------------------
+*This is the core differentiator of the project.*
+
+**How it works (The Algorithm):**
+1. **Text Extraction**: When a user uploads a resume, `pdfplumber` reads the file and extracts raw text string.
+2. **Vectorization (TF-IDF)**: We use `TfidfVectorizer` to convert the "Resume Text" and "Job Description" into numerical vectors. This represents the importance of words in the documents.
+3. **Similarity Calculation**: We calculate the **Cosine Similarity** between the two vectors.
+   - Result is a score from 0.0 to 1.0 (converted to 0-100%).
+   - High similarity means better match.
+4. **Skill Matching**: We cross-reference the resume text against a predefined set of technical skills (e.g., Python, SQL, React) to identify what the candidate is missing.
+
+**4. Voice Feedback System (core/voice_engine.py)**
+---------------------------------------------------
+To enhance User Experience (UX):
+- The analysis result (Score + Advice) is converted to a text string.
+- passed to `gTTS`, which generates an audio file.
+- The audio is played automatically on the analysis results page.
+
+**5. Resume Builder (core/views/builder_views.py)**
+---------------------------------------------------
+Allows users to build a resume without formatting headaches.
+- **Input**: User fills out structured forms (Education, Experience, Skills).
+- **Processing**: Data is rendered into a clean HTML template.
+- **Output**: `xhtml2pdf` converts that HTML into a polished, downloadable PDF.
+
+**6. Career Chatbot (core/career_chatbot.py)**
+----------------------------------------------
+A fast, reliable guide for students.
+- **Logic**: Keyword-based intent recognition (not LLM-based, to ensure speed and accuracy for specific queries).
+- **Function**: User asks "Python Roadmap" -> System detects "Python" & "Roadmap" -> Returns a structured learning path.
+
+================================================================================
+4. INTERVIEW Q&A (CHEAT SHEET)
+================================================================================
+
+**Q: Why didn't you use OpenAI/ChatGPT?**
+A: "For this MVP, I wanted full control over the logic and zero API costs. Using `scikit-learn` allows us to run the matching algorithm locally and privately without sending user data to an external API."
+
+**Q: How accurate is the Matching Algorithm?**
+A: "It is mathematically precise based on keyword overlap and term importance. While it doesn't 'understand' context like a Human, TF-IDF is a standard, robust industry baseline for text similarity."
+
+**Q: How do you handle file uploads?**
+A: "We use Django's `FileSystemStorage` to temporarily save files, extract text immediately, and then we strictly limit allowed file types to PDF and DOCX for security."
+
+**Q: What was the biggest challenge?**
+A: "Accurately extracting text from complex PDF layouts was tricky. I solved it by using `pdfplumber` which handles improved layout parsing compared to older libraries like PyPDF2."

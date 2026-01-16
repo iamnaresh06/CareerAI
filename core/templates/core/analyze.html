@@ -1,73 +1,131 @@
 {% extends 'core/base.html' %}
 
-{% block title %}Resume Analyzer | CareerAI{% endblock %}
+{% block title %}Resume Analyzer - CareerAI{% endblock %}
 
 {% block content %}
-<div class="main-wrapper">
-    <div class="container wide">
+<div class="container py-8">
+    <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
+        <h1>Resume Analyzer</h1>
+        <a href="{% url 'dashboard' %}" class="btn btn-outline back-btn-mobile"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
 
-        <h2>Resume Analyzer</h2>
+    <div class="grid grid-2">
+        <!-- Input Section -->
+        <div class="card glass">
+            <h3 class="mb-4">Input Data</h3>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="input-group">
+                    <label>Upload Resume (PDF / DOCX)</label>
+                    <input type="file" name="resume" required class="file-input">
+                </div>
 
-        {% for message in messages %}
-            <div class="message">{{ message }}</div>
-        {% endfor %}
+                <div class="input-group">
+                    <label>Job Description</label>
+                    <textarea name="job_description" rows="10" required placeholder="Paste the job description here..."></textarea>
+                </div>
 
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Analyze Now</button>
+            </form>
+        </div>
 
-            <label class="label">Upload Resume (PDF / DOCX)</label>
-            <input type="file" name="resume" required>
-
-            <label class="label">Paste Job Description</label>
-            <textarea name="job_description" rows="7" required></textarea>
-
-            <button type="submit">Analyze Resume</button>
-        </form>
-
+        <!-- Result Section -->
         {% if match_score %}
-        <div class="result-box">
-            <h3>Analysis Result</h3>
+        <div class="card glass">
+            <h3 class="mb-4">Analysis Result</h3>
+            
+            <div class="text-center mb-4">
+                <div class="match-score-text" style="font-weight: 800; color: {% if match_score > 70 %}var(--success){% elif match_score > 40 %}var(--accent){% else %}var(--error){% endif %};">
+                    {{ match_score }}%
+                </div>
+                <p style="color: var(--text-muted);">Match Score</p>
+            </div>
 
-            <p class="score">
-                <strong>Resume Match Score:</strong> {{ match_score }} / 100
-            </p>
-
-            <p class="feedback-text">{{ feedback_message }}</p>
+            <div class="mb-4" style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: var(--radius-md);">
+                <p>{{ feedback_message }}</p>
+            </div>
 
             {% if missing_skills %}
-            <p><strong>Missing Skills:</strong></p>
-            <ul class="skill-list">
-                {% for skill in missing_skills %}
-                    <li>{{ skill }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-
-            {% if skill_guidance %}
-                <div class="result-box">
-                    <h3>Career Improvement Suggestions</h3>
-
-                    {% for item in skill_guidance %}
-                        <div style="margin-bottom:12px;">
-                            <strong>{{ item.skill }}</strong> ({{ item.type }})<br>
-                            <span><b>Recommendation:</b> {{ item.recommendation }}</span><br>
-                            <em><b>Learning Path:</b> {{ item.learning_path }}</em>
-                        </div>
+            <div class="mb-4">
+                <strong>Missing Skills:</strong>
+                <div class="flex flex-wrap gap-2 mt-2">
+                    {% for skill in missing_skills %}
+                        <span class="tag" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5;">{{ skill }}</span>
                     {% endfor %}
                 </div>
+            </div>
             {% endif %}
 
             {% if audio_url %}
-            <p>Tap play to hear AI feedback</p>
-            <audio controls preload="none" style="width:100%;">
-                <source src="{{ audio_url }}" type="audio/mpeg">
-            </audio>
+            <div class="mt-4">
+                <p class="mb-2"><strong>AI Audio Feedback:</strong></p>
+                <audio controls style="width: 100%;">
+                    <source src="{{ audio_url }}" type="audio/mpeg">
+                </audio>
+            </div>
             {% endif %}
         </div>
+        {% else %}
+        <div class="card glass flex items-center justify-center text-center p-8">
+            <div>
+                <i class="fas fa-magic" style="font-size: 3rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
+                <h3>Ready to Analyze</h3>
+                <p style="color: var(--text-muted);">Upload your resume and a job description to get AI-powered insights.</p>
+            </div>
+        </div>
         {% endif %}
-
-        <a class="back-link" href="{% url 'dashboard' %}">← Back to Dashboard</a>
-
     </div>
+
+    <!-- Persistent Build Button Section -->
+    <div class="card glass flex items-center justify-center text-center p-8 mt-8">
+        <div style="width: 100%;">
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                {% if match_score %}
+                    Want to improve your score? Build a professional ATS-compliant resume now.
+                {% else %}
+                    Don't have a resume yet? Create one with our smart AI builder.
+                {% endif %}
+            </p>
+            <a href="{% url 'resume_builder' %}" class="btn btn-primary pulse-btn build-resume-btn">
+                <i class="fas fa-file-invoice" style="margin-right: 0.5rem;"></i> Build ATS Resume
+            </a>
+        </div>
+    </div>
+
+    {% if skill_guidance %}
+    <div class="card glass mt-8">
+        <h3 class="mb-4">Career Improvement Suggestions</h3>
+        <div class="grid grid-2">
+            {% for item in skill_guidance %}
+            <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: var(--radius-md);">
+                <strong style="color: var(--accent);">{{ item.skill }}</strong> <span style="font-size: 0.8rem; color: var(--text-muted);">({{ item.type }})</span>
+                <p class="mt-2" style="font-size: 0.95rem;">{{ item.recommendation }}</p>
+                <div class="mt-2" style="font-size: 0.85rem; color: var(--text-muted);">
+                    <i class="fas fa-book-reader"></i> {{ item.learning_path }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 </div>
+
+<style>
+    .match-score-text {
+        font-size: 3.5rem;
+    }
+    .build-resume-btn {
+        padding: 1rem 3rem;
+    }
+    @media (max-width: 768px) {
+        .match-score-text {
+            font-size: 2.5rem;
+        }
+        .build-resume-btn {
+            padding: 0.75rem 1.5rem;
+            width: 100%;
+        }
+    }
+</style>
 {% endblock %}

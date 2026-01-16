@@ -5,7 +5,6 @@ from xhtml2pdf import pisa
 import io
 from datetime import datetime
 
-
 # ==============================
 # HELPERS
 # ==============================
@@ -85,17 +84,19 @@ def resume_save(request):
     edu_colleges = request.POST.getlist("edu_college[]")
     edu_starts = request.POST.getlist("edu_start[]")
     edu_ends = request.POST.getlist("edu_end[]")
+    edu_scores = request.POST.getlist("edu_score[]")
 
     for i in range(len(edu_degrees)):
         end_raw = edu_ends[i] if i < len(edu_ends) else ""
         end = format_month_year(end_raw) if end_raw else "Present"
+        score = edu_scores[i] if i < len(edu_scores) else ""
 
         education.append({
             "degree": edu_degrees[i],
             "college": edu_colleges[i],
             "start": format_month_year(edu_starts[i]),
             "end": end,
-            "score": request.POST.getlist("edu_score[]")[i],
+            "score": score,
         })
 
     # ---------- EXPERIENCE ----------
@@ -153,7 +154,7 @@ def resume_save(request):
         "certifications": certifications,
     }
 
-    # ✅ SAVE ONCE — USED EVERYWHERE
+    # SAVE ONCE — USED EVERYWHERE
     request.session["resume_data"] = context
 
     # ---------- ACTION ----------

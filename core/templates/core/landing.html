@@ -1,0 +1,206 @@
+{% extends 'core/base.html' %} {% load static %} {% block title %}Welcome to
+CareerAI{% endblock %} {% block content %}
+<div class="landing-container">
+  <!-- Hero Section -->
+  <section
+    class="hero flex flex-col items-center justify-center text-center py-8 hero-section"
+    style="min-height: 85vh; position: relative; overflow: hidden;"
+  >
+    <!-- Background Blobs -->
+    <div style="position: absolute; top: -10%; left: -10%; width: 50vw; height: 50vw; background: rgba(37, 99, 235, 0.1); filter: blur(100px); border-radius: 50%; z-index: -1;"></div>
+    <div style="position: absolute; bottom: -10%; right: -10%; width: 40vw; height: 40vw; background: rgba(14, 165, 233, 0.1); filter: blur(80px); border-radius: 50%; z-index: -1;"></div>
+
+    <h1 class="animate-text gradient-text mb-4 hero-title">
+      Launch Your Career <br />
+      With AI Precision
+    </h1>
+    <p class="animate-text delay-1 mb-8 hero-subtitle" style="margin-bottom: 3rem;">
+      CareerAI helps you build ATS-friendly resumes, analyze job readiness, and
+      find the perfect opportunity with smart AI tools.
+    </p>
+
+    <div class="flex gap-6 animate-text delay-2 w-full-mobile justify-center">
+      <a href="{% url 'login' %}" class="btn btn-outline hero-btn">
+        <i class="fas fa-sign-in-alt mt-0" style="margin-right:0.5rem"></i> Login
+      </a>
+      <a href="{% url 'register' %}" class="btn btn-primary pulse-btn hero-btn">
+        Get Started <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="container py-8">
+    <h2
+      class="text-center mb-8 animate-scroll"
+      style="font-size: 2.5rem; color: var(--text-main)"
+    >
+      Our Intelligent Services
+    </h2>
+
+    <div class="grid grid-3">
+      <!-- Feature 1 -->
+      <div class="card glass text-center p-8 animate-scroll delay-1 hover-3d">
+        <div
+          class="float-animation"
+          style="
+            width: 80px;
+            height: 80px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+          "
+        >
+          <i
+            class="fas fa-magic"
+            style="font-size: 2rem; color: var(--primary)"
+          ></i>
+        </div>
+        <h3>AI Resume Analyzer</h3>
+        <p style="color: var(--text-muted); margin-top: 1rem">
+          Upload your resume and get instant scoring, feedback, and missing
+          skills analysis against any job description.
+        </p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="card glass text-center p-8 animate-scroll delay-2 hover-3d">
+        <div
+          class="float-animation"
+          style="
+            width: 80px;
+            height: 80px;
+            background: rgba(14, 165, 233, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            animation-delay: 1s;
+          "
+        >
+          <i
+            class="fas fa-chart-pie"
+            style="font-size: 2rem; color: var(--accent)"
+          ></i>
+        </div>
+        <h3>Job Readiness Score</h3>
+        <p style="color: var(--text-muted); margin-top: 1rem">
+          Find out how ready you are for the market with a detailed graphical
+          score and personalized action plan.
+        </p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="card glass text-center p-8 animate-scroll delay-3 hover-3d">
+        <div
+          class="float-animation"
+          style="
+            width: 80px;
+            height: 80px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            animation-delay: 2s;
+          "
+        >
+          <i
+            class="fas fa-file-invoice"
+            style="font-size: 2rem; color: var(--success)"
+          ></i>
+        </div>
+        <h3>ATS Resume Builder</h3>
+        <p style="color: var(--text-muted); margin-top: 1rem">
+          Create professional, standard ATS-compliant resumes that pass
+          automated screening software effortlessly.
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+    /* Hero Section Specifics */
+    .hero-title {
+        font-size: clamp(1.8rem, 8vw, 5rem) !important; /* Adjusted to prevent wrapping on mobile */
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.03em;
+        color: var(--text-main);
+    }
+    .hero-subtitle {
+        color: var(--text-muted);
+        font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+        max-width: 650px; /* Slightly tighter width for better read shape */
+        width: 90%; /* Ensure mobile edge spacing */
+        margin: 0 auto 3rem auto; /* Centered with bottom margin */
+        line-height: 1.8; /* improved readability */
+        padding: 0 1rem; /* Extra internal breathing room */
+    }
+    .hero-btn {
+        padding: 0.8rem 2rem;
+        font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            min-height: auto !important;
+            padding-top: 6rem;
+            padding-bottom: 4rem;
+        }
+        .hero-title {
+            margin-bottom: 0.5rem !important; /* Reduced vertical gap */
+            line-height: 1.1; /* Tighter lines */
+        }
+        /* Mobile: Let global CSS handle width, just ensure margin/gap is correct */
+        .flex-mobile-col {
+            gap: 1rem;
+        }
+    }
+
+    /* Gradient Text for Light Theme */
+    .gradient-text {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 50%, var(--accent) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: var(--primary);
+    }
+
+    /* Staggered Animations */
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+
+    /* Scroll Animation Base */
+    .animate-scroll {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.8s forwards;
+    }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* 3D Hover Effect - Desktop Only handled by media query in global CSS or here */
+    @media (min-width: 769px) {
+        .hover-3d {
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+        }
+        .hover-3d:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1);
+        }
+    }
+</style>
+{% endblock %}

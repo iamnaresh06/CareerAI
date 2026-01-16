@@ -1,38 +1,115 @@
 {% extends "core/base.html" %}
-{% block title %}Job Readiness | CareerAI{% endblock %}
+{% block title %}Job Readiness - CareerAI{% endblock %}
 
 {% block content %}
-<div class="job-page">
-
-    <div class="readiness-wrapper">
-
-        <h2 class="readiness-title">🎯 Job Readiness Score</h2>
-
-        <!-- Progress Ring -->
-        <div class="progress-ring">
-            <svg width="180" height="180">
-                <circle cx="90" cy="90" r="80"></circle>
-                <circle cx="90" cy="90" r="80"
-                        style="stroke-dashoffset: {{ dash_offset }};">
-                </circle>
-            </svg>
-            <span>{{ readiness_score }}%</span>
-        </div>
-
-        <div class="readiness-metrics">
-            <p><strong>Resume Quality:</strong> {{ resume_score }}%</p>
-            <p><strong>Skill Match:</strong> {{ skill_score }}%</p>
-        </div>
-
-        <h3 class="plan-title">🧭 30-Day Career Action Plan</h3>
-
-        <ul class="action-plan">
-            {% for step in action_plan %}
-            <li>{{ step }}</li>
-            {% endfor %}
-        </ul>
-
+<div class="container py-8">
+    <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
+        <h1>Job Readiness Assessment</h1>
+        <a href="{% url 'dashboard' %}" class="btn btn-outline back-btn-mobile"><i class="fas fa-arrow-left"></i> Back</a>
     </div>
 
+    <div class="grid grid-2">
+        <!-- Score Card -->
+        <div class="card glass text-center p-8">
+            <h2 class="mb-4">Readiness Score</h2>
+            <div class="score-circle-container">
+                <svg width="180" height="180" style="transform: rotate(-90deg);" class="score-svg">
+                    <circle cx="90" cy="90" r="80" stroke="rgba(255,255,255,0.1)" stroke-width="12" fill="transparent"></circle>
+                    <circle cx="90" cy="90" r="80" stroke="var(--success)" stroke-width="12" fill="transparent"
+                            style="stroke-dasharray: 502; stroke-dashoffset: calc(502 - (502 * {{ readiness_score }}) / 100); transition: stroke-dashoffset 1s ease-out;">
+                    </circle>
+                </svg>
+                <div class="score-value-text">
+                    {{ readiness_score }}%
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-6 mt-6">
+                <div class="text-center">
+                    <div class="sub-score-text">{{ resume_score }}%</div>
+                    <small style="color: var(--text-muted);">Resume Quality</small>
+                </div>
+                <div class="text-center">
+                    <div class="sub-score-text">{{ skill_score }}%</div>
+                    <small style="color: var(--text-muted);">Skill Match</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Plan -->
+        <div class="card glass">
+            <h3 class="mb-4">🧭 30-Day Career Action Plan</h3>
+            <ul style="padding-left: 1.5rem;">
+                {% for step in action_plan %}
+                <li style="margin-bottom: 1rem; position: relative; list-style: none;">
+                    <i class="fas fa-check-circle" style="color: var(--primary); margin-right: 0.5rem;"></i>
+                    {{ step }}
+                </li>
+                {% empty %}
+                <li style="color: var(--text-muted);">Analyze a resume to generate your action plan!</li>
+                {% endfor %}
+            </ul>
+            
+            {% if not action_plan %}
+            <div class="mt-4 text-center">
+                <a href="{% url 'analyze' %}" class="btn btn-primary">Go to Analyzer</a>
+            </div>
+            {% else %}
+            <div class="mt-8 pt-4 text-center" style="border-top: 1px solid rgba(255,255,255,0.05);">
+                <a href="{% url 'resume_builder' %}" class="btn btn-primary pulse-btn" style="padding: 1rem 2rem;">
+                     <i class="fas fa-file-invoice"></i>   Build ATS Resume
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
 </div>
+
+<style>
+    .score-circle-container {
+        position: relative; 
+        width: 180px; 
+        height: 180px; 
+        margin: 0 auto;
+    }
+    .score-value-text {
+        position: absolute; 
+        top: 50%; 
+        left: 50%; 
+        transform: translate(-50%, -50%); 
+        font-size: 2.5rem; 
+        font-weight: 800;
+    }
+    .sub-score-text {
+        font-size: 1.5rem; 
+        font-weight: 700;
+    }
+
+    @media (max-width: 480px) {
+        .score-circle-container {
+            width: 140px;
+            height: 140px;
+        }
+        .score-svg {
+            width: 140px;
+            height: 140px;
+        }
+        .score-svg circle {
+            cx: 70;
+            cy: 70;
+            r: 60;
+            stroke-dasharray: 377; /* 2 * PI * 60 */
+        }
+        /* Update the dynamic offset for smaller circle */
+        .score-svg circle[style*="stroke-dashoffset"] {
+            stroke-dashoffset: calc(377 - (377 * {{ readiness_score }}) / 100) !important;
+        }
+        .score-value-text {
+            font-size: 1.75rem;
+        }
+        .sub-score-text {
+            font-size: 1.25rem;
+        }
+    }
+</style>
 {% endblock %}

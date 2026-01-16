@@ -1,6 +1,20 @@
-# Ignore user uploaded files
+# Python & Django
+*.pyc
+__pycache__/
+db.sqlite3
+*.sqlite3
+.env
+venv/
+env/
+.venv/
+staticfiles/
 media/
+*.log
 
-# Ignore audio feedback files
-*.mp3
-*.wav
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
