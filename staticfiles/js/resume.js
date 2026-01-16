@@ -153,19 +153,25 @@ function addCertification() {
 // ===============================
 // PRESENT TOGGLE (CORE LOGIC)
 // ===============================
+// ===============================
+// PRESENT TOGGLE (CORE LOGIC)
+// ===============================
 function togglePresent(checkbox, endFieldName) {
-    const parentContainer = checkbox.closest(".flex");
+    // Navigate up to the main input-group container to ensure we don't get stuck in the inner flex label
+    const parentContainer = checkbox.closest(".input-group");
     const endInput = parentContainer.querySelector(`input[name="${endFieldName}"]`);
 
     if (checkbox.checked) {
         endInput.value = "";
         endInput.disabled = true;
-        endInput.style.opacity = "0.5";
-        endInput.style.pointerEvents = "none";
+        endInput.style.backgroundColor = "#e2e8f0"; // Explicit gray background
+        endInput.style.opacity = "0.7";
+        endInput.style.cursor = "not-allowed";
     } else {
         endInput.disabled = false;
+        endInput.style.backgroundColor = ""; // Reset
         endInput.style.opacity = "1";
-        endInput.style.pointerEvents = "auto";
+        endInput.style.cursor = "text";
     }
 }
 
