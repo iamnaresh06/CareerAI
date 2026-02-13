@@ -1,0 +1,112 @@
+
+# CareerAI - Intelligent Career Guidance Platform
+# Project Documentation & Interview Explanation
+
+## 1. Project Overview
+CareerAI is a comprehensive web application designed to help students and job seekers better prepare for their careers. It combines traditional job portal features with AI-powered tools such as a Resume Analyzer, Smart Career Chatbot, ATS-Friendly Resume Builder, and Automated Voice Feedback.
+
+The project is built using **Python** and the **Django Framework**, leveraging **Machine Learning (NLP)** for resume scoring and analysis.
+
+---
+
+## 2. Tech Stack & Libraries Used
+Here are the key Python libraries used in this project and the specific reason for each:
+
+### Core Framework
+*   **Django**: The primary web framework used for backend logic, routing, database management, and template rendering. It follows the MVT (Model-View-Template) architecture.
+
+### AI & Machine Learning
+*   **scikit-learn (sklearn)**: 
+    *   *Purpose*: Used for the Resume Screening/Matching engine.
+    *   *Why*: We use `TfidfVectorizer` to convert text (resumes & job descriptions) into numerical vectors (TF-IDF features) and `cosine_similarity` to mathematically calculate how closely a resume matches a job description (0-100% score).
+*   **NumPy**: 
+    *   *Purpose*: Handles numerical operations required by scikit-learn.
+    *   *Why*: It provides efficient array processing which is faster than standard Python lists for ML calculations.
+
+### PDF & File Handling
+*   **xhtml2pdf**:
+    *   *Purpose*: Generating ATS-friendly PDF resumes.
+    *   *Why*: It converts standard HTML/CSS templates directly into PDF documents, allowing us to design the resume dynamically in Django templates and export it as a file.
+
+### Audio & Voice
+*   **gTTS (Google Text-to-Speech)**:
+    *   *Purpose*: Generating audio feedback for career guidance.
+    *   *Why*: Converts text-based feedback/analysis into an MP3 file so users can "listen" to their resume review.
+
+### Deployment & Utilities
+*   **Gunicorn**: Production WSGI HTTP server (used for deploying on platforms like Render).
+*   **Whitenoise**: Serves static files (CSS/JS) efficiently in production.
+*   **os & io**: Standard libraries for file path handling and in-memory byte stream manipulation (for PDF generation).
+
+---
+
+## 3. Project Implementation from Scratch
+This explains how the project was built, step-by-step.
+
+### Step 1: Project Setup
+1.  **Environment Setup**: 
+    *   Created a virtual environment (`python -m venv venv`) to isolate dependencies.
+    *   Installed Django: `pip install django`.
+2.  **Project Initialization**:
+    *   Ran `django-admin startproject careerai_project`.
+    *   Created the main app: `python manage.py startapp core`.
+
+### Step 2: Database Modeling (`models.py`)
+We modeled the data required for the application:
+*   **JobPosting**: Stores job details like title, company, salary, description, and apply links.
+*   **Event**: Manages Hackathons, Webinars, and Workshops.
+*   **User (Built-in)**: Used Django's default User model for authentication.
+
+### Step 3: Core Logic Engines (The "AI" Part)
+Instead of putting everything in views, we separated logic into specific utility files in the `core/` folder:
+
+1.  **`ml_engine.py` (Resume Analyzer)**:
+    *   Contains `extract_skills()`: A custom dictionary-based algo to find skills like Python, Django, SQL in text.
+    *   Contains `calculate_final_score()`: Uses TF-IDF and Cosine Similarity to compare Resume Text vs. Job Description.
+    
+2.  **`career_chatbot.py` (Chatbot Logic)**:
+    *   A rule-based intelligent bot defined in `get_chatbot_response()`.
+    *   Identify keywords like "roadmap", "interview", "python" and returns structured guidance, learning paths, or interview questions.
+
+3.  **`voice_engine.py`**:
+    *   Takes text input -> Calls gTTS -> Saves/Returns an MP3 file path.
+
+4.  **`pdf_utils.py` / `builder_views.py`**:
+    *   Handles the data collection from the Resume Builder form and renders it to a PDF using `xhtml2pdf`.
+
+### Step 4: Views & Templates
+We organized views into a module structure (`core/views/`) for better manageability:
+*   **`auth_views.py`**: Handles User Login, Register, and Logout.
+*   **`job_views.py`**: Lists jobs and details.
+*   **`builder_views.py`**: Handles the form input for the Resume Builder, session storage, and PDF generation.
+*   **`resume_views.py`**: Handles the Resume Analyzer logic (uploading resume -> running ML engine -> showing results).
+
+Templates were created using HTML5 and CSS (Vanilla) for a clean, responsive UI.
+
+### Step 5: URLs & Routing
+*   Configured `urls.py` to map routes like `/resume-builder`, `/jobs`, `/chat`, and `/analyze` to their respective views.
+
+---
+
+## 4. Key Features Explained
+
+### 1. Resume Analyzer
+*   **Input**: User uploads a resume (PDF/Text) and pastes a Job Description.
+*   **Process**: The system extracts text, finds common skills, and calculates a similarity score using Cosine Similarity.
+*   **Output**: A percentage match score (e.g., 85%), a list of missing skills, and detailed feedback.
+
+### 2. Career Chatbot
+*   **Function**: Acts as a mentor for freshers.
+*   **Logic**: It doesn't just "chat"; it provides structured Roadmap data (e.g., "Path for Python Developer"), Interview Questions, and Project Ideas based on user queries.
+
+### 3. ATS Resume Builder
+*   **Problem**: Students often make resumes with bad formatting that ATS (Applicant Tracking Systems) can't read.
+*   **Solution**: We provide a standardized form. The user fills data -> We generate a clean, simple, ATS-friendly PDF.
+
+### 4. Job & Event Portal
+*   **Function**: Admins can post internships and hackathons. Students can view and apply/register directly.
+
+---
+
+## 5. Conclusion
+CareerAI simplifies the job preparation process by merging technical tools (Resume Building) with intelligent guidance (AI Analyzer & Chatbot). It is designed to be a "one-stop" solution for freshers entering the tech industry.

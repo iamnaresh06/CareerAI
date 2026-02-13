@@ -5,7 +5,7 @@ function addEducation() {
     const container = document.getElementById("education-container");
 
     const div = document.createElement("div");
-    div.className = "card glass mb-4 p-6"; // Increased padding
+    div.className = "card mb-4 p-6"; // Removed glass for performance
 
     div.innerHTML = `
         <div class="grid grid-2 gap-4 mb-4">
@@ -53,24 +53,24 @@ function addExperience() {
     const container = document.getElementById("experience-container");
 
     const div = document.createElement("div");
-    div.className = "card glass mb-4 p-6";
+    div.className = "card mb-4 p-6"; // Removed glass for performance
 
     div.innerHTML = `
         <div class="grid grid-2 gap-4 mb-4">
             <div class="input-group mb-0">
                 <label>Role / Position</label>
-                <input name="exp_role[]" placeholder="e.g. Software Engineer" required>
+                <input name="exp_role[]" placeholder="e.g. Software Engineer">
             </div>
             <div class="input-group mb-0">
                 <label>Company Name</label>
-                <input name="exp_company[]" placeholder="e.g. Google" required>
+                <input name="exp_company[]" placeholder="e.g. Google">
             </div>
         </div>
 
         <div class="grid grid-2 gap-4 mb-4 items-end">
             <div class="input-group mb-0">
                 <label>Start Date</label>
-                <input type="month" name="exp_start[]" required>
+                <input type="month" name="exp_start[]">
             </div>
             <div class="input-group mb-0">
                 <label>End Date</label>
@@ -101,17 +101,17 @@ function addProject() {
     const container = document.getElementById("projects-container");
 
     const div = document.createElement("div");
-    div.className = "card glass mb-4 p-6";
+    div.className = "card mb-4 p-6"; // Removed glass for performance
 
     div.innerHTML = `
         <div class="grid grid-2 gap-4 mb-4">
             <div class="input-group mb-0">
                 <label>Project Name</label>
-                <input name="proj_name[]" placeholder="e.g. E-Commerce App" required>
+                <input name="proj_name[]" placeholder="e.g. E-Commerce App">
             </div>
             <div class="input-group mb-0">
                 <label>Tech Stack</label>
-                <input name="proj_stack[]" placeholder="e.g. React, Node.js, MongoDB" required>
+                <input name="proj_stack[]" placeholder="e.g. React, Node.js, MongoDB">
             </div>
         </div>
         <div class="input-group mb-0">
@@ -131,17 +131,17 @@ function addCertification() {
     const container = document.getElementById("certifications-container");
 
     const div = document.createElement("div");
-    div.className = "card glass mb-4 p-6";
+    div.className = "card mb-4 p-6"; // Removed glass for performance
 
     div.innerHTML = `
         <div class="grid grid-2 gap-4">
             <div class="input-group mb-0">
                 <label>Certificate Name</label>
-                <input name="cert_name[]" placeholder="e.g. AWS Solutions Architect" required>
+                <input name="cert_name[]" placeholder="e.g. AWS Solutions Architect">
             </div>
             <div class="input-group mb-0">
                 <label>Issued By / Organization</label>
-                <input name="cert_org[]" placeholder="e.g. Amazon Web Services" required>
+                <input name="cert_org[]" placeholder="e.g. Amazon Web Services">
             </div>
         </div>
     `;

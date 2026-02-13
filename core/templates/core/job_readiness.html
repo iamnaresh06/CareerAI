@@ -5,12 +5,16 @@
 <div class="container py-8">
     <div class="flex flex-wrap justify-between items-center gap-3 mb-6 heading-y-padding">
         <h1>Job Readiness <br class="mobile-break"> Assessment</h1>
-        <a href="{% url 'dashboard' %}" class="btn btn-outline back-btn-mobile"><i class="fas fa-arrow-left"></i> Back</a>
+        {% if user.is_superuser %}
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline back-btn-mobile"><i class="fas fa-arrow-left"></i> Back to Admin Dashboard</a>
+        {% else %}
+            <a href="{% url 'dashboard' %}" class="btn btn-outline back-btn-mobile"><i class="fas fa-arrow-left"></i> Back</a>
+        {% endif %}
     </div>
 
     <div class="grid grid-2">
         <!-- Score Card -->
-        <div class="card glass text-center p-8">
+        <div class="card text-center p-8">
             <h2 class="mb-4">Readiness Score</h2>
             <div class="score-circle-container">
                 <svg width="180" height="180" style="transform: rotate(-90deg);" class="score-svg">
@@ -37,7 +41,7 @@
         </div>
 
         <!-- Action Plan -->
-        <div class="card glass">
+        <div class="card">
             <h3 class="mb-4">🧭 30-Day Career Action Plan</h3>
             <ul style="padding-left: 1.5rem;">
                 {% for step in action_plan %}

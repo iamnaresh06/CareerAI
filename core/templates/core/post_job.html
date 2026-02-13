@@ -7,7 +7,7 @@
     <div style="max-width: 800px; margin: 0 auto;">
         <div class="card glass">
             <h2 class="mb-4">Post a New Job or Internship</h2>
-            <form method="POST">
+            <form method="POST" class="flex flex-col gap-4">
                 {% csrf_token %}
                 
                 <div class="grid grid-2">
@@ -56,9 +56,11 @@
                     <textarea name="description" rows="6" required placeholder="Job details, requirements..."></textarea>
                 </div>
 
-                <div class="flex justify-between items-center">
-                    <a href="{% url 'admin_dashboard' %}" class="btn btn-outline">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Post Job</button>
+                <div class="flex gap-4 mt-4">
+                    <button type="submit" class="btn btn-primary" style="flex: 2;">
+                        <i class="fas fa-briefcase" style="margin-right: 8px;"></i> Post Job
+                    </button>
+                    <a href="{% url 'admin_dashboard' %}" class="btn btn-outline" style="flex: 1;">Cancel</a>
                 </div>
             </form>
         </div>

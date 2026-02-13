@@ -8,14 +8,19 @@
 <div class="container py-8">
     <div class="flex justify-between items-center mb-4 heading-y-padding">
         <h1>ATS Resume Builder</h1>
-        <a href="{% url 'dashboard' %}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Dashboard</a>
+
+        {% if user.is_superuser %}
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Admin Dashboard</a>
+        {% else %}
+            <a href="{% url 'dashboard' %}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Dashboard</a>
+        {% endif %}
     </div>
 
     <form method="POST" action="{% url 'resume_save' %}">
         {% csrf_token %}
 
         <!-- Personal Info -->
-        <div class="card glass mb-8">
+        <div class="card mb-8">
             <h3 class="mb-4 text-accent"><i class="fas fa-user-circle"></i> Personal Information</h3>
             <div class="grid grid-2">
                 <div class="input-group">
@@ -46,13 +51,13 @@
         </div>
 
         <!-- Summary -->
-        <div class="card glass mb-8">
+        <div class="card mb-8">
             <h3 class="mb-4 text-accent"><i class="fas fa-align-left"></i> Professional Summary</h3>
             <textarea name="summary" rows="4" placeholder="Brief professional summary (2-4 lines)...">{{ summary|default:'' }}</textarea>
         </div>
 
         <!-- Skills -->
-        <div class="card glass mb-8">
+        <div class="card mb-8">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-accent"><i class="fas fa-tools"></i> Skills</h3>
                 <label class="flex items-center gap-2 cursor-pointer">
@@ -66,7 +71,7 @@
         <!-- Education -->
         <div class="mb-8">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-accent"><i class="fas fa-graduation-cap"></i> Education</h3>
+                <h3 class="text-accent"><i class="fas fa-graduation-cap"></i> Education <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted); margin-left: 0.5rem; text-transform: none;">(Add only recent 2 educations)</span></h3>
                 <button type="button" onclick="addEducation()" class="btn btn-sm btn-outline"><i class="fas fa-plus"></i> Add</button>
             </div>
             <div id="education-container"></div>
@@ -75,7 +80,7 @@
         <!-- Experience -->
         <div class="mb-8">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-accent"><i class="fas fa-briefcase"></i> Experience</h3>
+                <h3 class="text-accent"><i class="fas fa-briefcase"></i> Experience <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted); margin-left: 0.5rem; text-transform: none;">(Add only recent 2 experience details)</span></h3>
                 <button type="button" onclick="addExperience()" class="btn btn-sm btn-outline"><i class="fas fa-plus"></i> Add</button>
             </div>
             <div id="experience-container"></div>
@@ -84,7 +89,7 @@
         <!-- Projects -->
         <div class="mb-8">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-accent"><i class="fas fa-laptop-code"></i> Projects</h3>
+                <h3 class="text-accent"><i class="fas fa-laptop-code"></i> Projects <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted); margin-left: 0.5rem; text-transform: none;">(Add only recent 2 projects)</span></h3>
                 <button type="button" onclick="addProject()" class="btn btn-sm btn-outline"><i class="fas fa-plus"></i> Add</button>
             </div>
             <div id="projects-container"></div>
@@ -93,14 +98,14 @@
         <!-- Certifications -->
         <div class="mb-8">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-accent"><i class="fas fa-certificate"></i> Certifications</h3>
+                <h3 class="text-accent"><i class="fas fa-certificate"></i> Certifications <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted); margin-left: 0.5rem; text-transform: none;">(Add only recent 2 certifications)</span></h3>
                 <button type="button" onclick="addCertification()" class="btn btn-sm btn-outline"><i class="fas fa-plus"></i> Add</button>
             </div>
             <div id="certifications-container"></div>
         </div>
 
         <!-- Actions -->
-        <div class="card glass sticky-bottom p-4 flex gap-2 justify-center" style="position: sticky; bottom: 1rem; z-index: 40; border-top: 2px solid var(--primary);">
+        <div class="card sticky-bottom p-4 flex gap-2 justify-center" style="position: sticky; bottom: 1rem; z-index: 40; border-top: 2px solid var(--primary); background: var(--bg-card);">
             <button name="action" value="preview" class="btn btn-outline sticky-action-btn">
                 <i class="fas fa-eye"></i> Preview
             </button>

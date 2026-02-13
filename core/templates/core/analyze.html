@@ -6,12 +6,16 @@
 <div class="container py-8">
     <div class="flex flex-wrap justify-between items-center gap-3 mb-6 heading-y-padding">
         <h1>Resume Analyzer</h1>
-        <a href="{% url 'dashboard' %}" class="btn btn-outline back-btn-mobile"><i class="fas fa-arrow-left"></i> Back</a>
+        {% if user.is_superuser %}
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline back-btn-mobile"><i class="fas fa-arrow-left"></i> Back to Admin Dashboard</a>
+        {% else %}
+            <a href="{% url 'dashboard' %}" class="btn btn-outline back-btn-mobile"><i class="fas fa-arrow-left"></i> Back</a>
+        {% endif %}
     </div>
 
     <div class="grid grid-2">
         <!-- Input Section -->
-        <div class="card glass">
+        <div class="card">
             <h3 class="mb-4">Input Data</h3>
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -32,7 +36,7 @@
 
         <!-- Result Section -->
         {% if match_score %}
-        <div class="card glass">
+        <div class="card">
             <h3 class="mb-4">Analysis Result</h3>
             
             <div class="text-center mb-4">
@@ -67,7 +71,7 @@
             {% endif %}
         </div>
         {% else %}
-        <div class="card glass flex items-center justify-center text-center p-8">
+        <div class="card flex items-center justify-center text-center p-8">
             <div>
                 <i class="fas fa-magic" style="font-size: 3rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
                 <h3>Ready to Analyze</h3>
@@ -78,7 +82,7 @@
     </div>
 
     <!-- Persistent Build Button Section -->
-    <div class="card glass flex items-center justify-center text-center p-8 mt-8">
+    <div class="card flex items-center justify-center text-center p-8 mt-8">
         <div style="width: 100%;">
             <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
                 {% if match_score %}
@@ -94,7 +98,7 @@
     </div>
 
     {% if skill_guidance %}
-    <div class="card glass mt-8">
+    <div class="card mt-8">
         <h3 class="mb-4">Career Improvement Suggestions</h3>
         <div class="grid grid-2">
             {% for item in skill_guidance %}

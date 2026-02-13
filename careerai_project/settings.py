@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'careerai_project.wsgi.application'
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
 if DATABASE_URL:
-    # Production (Render / Cloud)
+    # Production (Render / Cloud) - Remote PostgreSQL
     DATABASES = {
         'default': dj_database_url.parse(
             DATABASE_URL,
@@ -96,7 +96,8 @@ if DATABASE_URL:
         )
     }
 else:
-    # Local development (SQLite)
+    # Fallback to SQLite (Local or Render without external DB)
+    # WARNING: On Render, this data will be lost every time the server restarts
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',

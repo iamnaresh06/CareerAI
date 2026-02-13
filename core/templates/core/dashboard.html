@@ -28,14 +28,24 @@
             <p style="color: var(--text-muted); margin-top: 0.5rem;">Get a score and action plan to improve your employability.</p>
         </a>
 
-        <!-- Jobs & Internships -->
-        <a href="{% url 'job_list' %}" class="card job-card flex flex-col items-center text-center p-8 animate-fade-up delay-3 hover-3d">
-            <div style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-                <i class="fas fa-briefcase" style="font-size: 1.5rem; color: var(--success);"></i>
-            </div>
-            <h3>Find Jobs</h3>
-            <p style="color: var(--text-muted); margin-top: 0.5rem;">Explore latest internships and full-time opportunities.</p>
-        </a>
+        <!-- Jobs & Internships / Admin Dashboard -->
+        {% if user.is_superuser %}
+            <a href="{% url 'admin_dashboard' %}" class="card job-card flex flex-col items-center text-center p-8 animate-fade-up delay-3 hover-3d">
+                <div style="width: 60px; height: 60px; background: rgba(255, 165, 0, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                    <i class="fas fa-shield-alt" style="font-size: 1.5rem; color: var(--warning);"></i>
+                </div>
+                <h3>Admin Dashboard</h3>
+                <p style="color: var(--text-muted); margin-top: 0.5rem;">Access administrative tools and user management.</p>
+            </a>
+        {% else %}
+            <a href="{% url 'job_list' %}" class="card job-card flex flex-col items-center text-center p-8 animate-fade-up delay-3 hover-3d">
+                <div style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                    <i class="fas fa-briefcase" style="font-size: 1.5rem; color: var(--success);"></i>
+                </div>
+                <h3>Find Jobs</h3>
+                <p style="color: var(--text-muted); margin-top: 0.5rem;">Explore latest internships and full-time opportunities.</p>
+            </a>
+        {% endif %}
 
 
     </div>

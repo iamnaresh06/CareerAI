@@ -19,14 +19,14 @@
             <div class="stat-value" style="color: var(--primary);">{{ total_users }}</div>
             <div class="stat-label">Registered Users</div>
         </div>
-        <div class="card stat-card" style="border-bottom: 4px solid var(--success);">
+        <a href="{% url 'job_list' %}" class="card stat-card" style="border-bottom: 4px solid var(--success); text-decoration: none; display: block; transition: transform 0.2s;">
             <div class="stat-value" style="color: var(--success);">{{ total_jobs }}</div>
-            <div class="stat-label">Active Jobs</div>
-        </div>
-        <div class="card stat-card" style="border-bottom: 4px solid var(--accent);">
+            <div class="stat-label" style="color: var(--text-main);">Active Jobs <i class="fas fa-arrow-right" style="font-size: 0.8em; opacity: 0.7;"></i></div>
+        </a>
+        <a href="{% url 'event_list' %}" class="card stat-card" style="border-bottom: 4px solid var(--accent); text-decoration: none; display: block; transition: transform 0.2s;">
             <div class="stat-value" style="color: var(--accent);">{{ total_events }}</div>
-            <div class="stat-label">Total Events</div>
-        </div>
+            <div class="stat-label" style="color: var(--text-main);">Total Events <i class="fas fa-arrow-right" style="font-size: 0.8em; opacity: 0.7;"></i></div>
+        </a>
     </div>
 
     <!-- Content Sections -->

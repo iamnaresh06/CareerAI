@@ -6,9 +6,16 @@
 {% block content %}
 <div class="container py-8">
     <!-- Breadcrumb-like back button -->
-    <a href="{% url 'job_list' %}" class="btn btn-outline mb-8" style="padding: 0.5rem 1rem; border-width: 1px;">
-        <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Back to Jobs
-    </a>
+
+    {% if user.is_superuser %}
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-outline mb-8" style="padding: 0.5rem 1rem; border-width: 1px;">
+            <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Back to Admin Dashboard
+        </a>
+    {% else %}
+        <a href="{% url 'job_list' %}" class="btn btn-outline mb-8" style="padding: 0.5rem 1rem; border-width: 1px;">
+            <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Back to Jobs
+        </a>
+    {% endif %}
 
     <div class="grid grid-2" style="grid-template-columns: 2fr 1fr; align-items: start;">
         <!-- Left Column: Job Content -->
