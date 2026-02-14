@@ -257,15 +257,16 @@ h3 {
   border-radius: var(--radius-lg);
   padding: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.02); /* Optimized shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02); /* Optimized shadow */
   transition: var(--transition);
-  content-visibility: auto; 
+  content-visibility: auto;
   contain-intrinsic-size: 0 500px;
 }
 
-.hover-3d:hover, .card:hover {
+.hover-3d:hover,
+.card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 /* Glassmorphism */
@@ -331,13 +332,22 @@ input:focus {
   align-items: center;
 }
 .nav-logo {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--primary);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  letter-spacing: -0.03em;
+  transition: var(--transition);
+}
+
+.nav-logo img {
+  height: 50px; /* Professional logo size */
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .nav-logo img {
+    height: 40px; /* Slightly smaller for mobile */
+  }
 }
 
 .nav-links {
