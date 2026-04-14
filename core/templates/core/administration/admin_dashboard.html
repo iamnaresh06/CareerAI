@@ -138,6 +138,87 @@
             </div>
         </div>
     </div>
+
+    <!-- Booking Requests Section -->
+    <div class="card mt-8" style="margin-top: 2rem;">
+        <div class="flex justify-between items-center mb-4">
+            <h3 style="margin: 0; font-size: 1.25rem;"><i class="fas fa-headset" style="margin-right: 0.5rem; color: #f59e0b;"></i> Service Booking Leads</h3>
+            <span class="tag" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">{{ total_bookings }} Requests</span>
+        </div>
+
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: separate; border-spacing: 0 0.5rem;">
+                <thead>
+                    <tr style="text-align: left; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">
+                        <th style="padding: 0 0.75rem 0.5rem 0.75rem;">User</th>
+                        <th style="padding: 0 0.75rem 0.5rem 0.75rem;">Service Type</th>
+                        <th style="padding: 0 0.75rem 0.5rem 0.75rem;">Contact Number</th>
+                        <th style="padding: 0 0.75rem 0.5rem 0.75rem;">Details (Tech / Timing)</th>
+                        <th style="padding: 0 0.75rem 0.5rem 0.75rem; text-align: right;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                    <tr style="background: var(--bg-surface); font-size: 0.95rem; border: 1px solid rgba(0,0,0,0.02);">
+                        <td style="padding: 1rem 0.75rem; border-radius: 8px 0 0 8px;">
+                            <a href="{% url 'admin_user_profile' booking.user.id %}" style="font-weight: 600; color: var(--primary); text-decoration: none;">
+                                {{ booking.user.username }}
+                            </a>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); font-family: monospace; margin-top: 0.2rem;">ID: {{ booking.user.userprofile.student_id|default:"No ID" }}</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">
+                                <i class="far fa-clock" style="margin-right: 0.2rem;"></i> {{ booking.created_at|date:"M d, Y h:i A" }}
+                            </div>
+                        </td>
+                        <td style="padding: 1rem 0.75rem; font-weight: 500; color: var(--text-main);">
+                            {% if booking.service_type == 'BUNDLE' %}
+                            <span style="color: #f59e0b;"><i class="fas fa-gem" style="margin-right:0.3rem;"></i> Placement Bundle</span>
+                            {% else %}
+                            <span style="color: var(--success);"><i class="fas fa-laptop-house" style="margin-right:0.3rem;"></i> Home Tech Tuition</span>
+                            {% endif %}
+                        </td>
+                        <td style="padding: 1rem 0.75rem;">
+                            <a href="tel:{{ booking.phone_number }}" style="color: var(--text-main); font-weight: 600; text-decoration: none;">
+                                <i class="fas fa-phone-alt" style="color: var(--text-muted); margin-right: 0.3rem; font-size: 0.8rem;"></i> {{ booking.phone_number }}
+                            </a>
+                        </td>
+                        <td style="padding: 1rem 0.75rem; color: var(--text-muted); font-size: 0.85rem;">
+                            {% if booking.service_type == 'TUITION' %}
+                                <div><strong>Tech:</strong> {{ booking.preferred_tech|default:"-" }}</div>
+                                <div><strong>Time:</strong> {{ booking.preferred_timing|default:"-" }}</div>
+                            {% else %}
+                                <span style="opacity: 0.5;">Not Applicable</span>
+                            {% endif %}
+                        </td>
+                        <td style="padding: 1rem 0.75rem; border-radius: 0 8px 8px 0; text-align: right;">
+                            <form action="{% url 'update_booking_status' booking.id %}" method="POST" style="display: inline-block;">
+                                {% csrf_token %}
+                                <select name="status" onchange="this.form.submit()" style="
+                                    appearance: none; -moz-appearance: none; -webkit-appearance: none;
+                                    background: {% if booking.status == 'PENDING' %} rgba(245, 158, 11, 0.1) {% elif booking.status == 'CONTACTED' %} rgba(59, 130, 246, 0.1) {% elif booking.status == 'CONFIRMED' %} rgba(16, 185, 129, 0.1) {% else %} rgba(100, 116, 139, 0.1) {% endif %};
+                                    color: {% if booking.status == 'PENDING' %} #f59e0b {% elif booking.status == 'CONTACTED' %} #3b82f6 {% elif booking.status == 'CONFIRMED' %} var(--success) {% else %} var(--text-muted) {% endif %};
+                                    padding: 0.35rem 1.5rem 0.35rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid transparent; cursor: pointer; outline: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22currentColor%22 height=%2216%22 viewBox=%220 0 24 24%22 width=%2216%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/></svg>'); background-repeat: no-repeat; background-position: right 0.4rem center; background-size: 1rem;
+                                ">
+                                    <option value="PENDING" {% if booking.status == 'PENDING' %}selected{% endif %}>Pending</option>
+                                    <option value="CONTACTED" {% if booking.status == 'CONTACTED' %}selected{% endif %}>Contacted</option>
+                                    <option value="CONFIRMED" {% if booking.status == 'CONFIRMED' %}selected{% endif %}>Confirmed</option>
+                                    <option value="COMPLETED" {% if booking.status == 'COMPLETED' %}selected{% endif %}>Completed</option>
+                                    <option value="CANCELLED" {% if booking.status == 'CANCELLED' %}selected{% endif %}>Cancelled</option>
+                                </select>
+                            </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                            <i class="fas fa-inbox" style="font-size: 2rem; color: rgba(0,0,0,0.1); margin-bottom: 1rem; display: block;"></i>
+                            No booking requests currently pending.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <style>

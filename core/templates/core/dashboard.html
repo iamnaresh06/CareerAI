@@ -67,79 +67,335 @@
 </style>
 
 <div class="container py-12">
-    <div class="mb-4 heading-top-padding">
-        <h1>Welcome back, <span style="color: var(--primary);">{{ user.first_name|default:user.username }}</span>! 🚀</h1>
-        <p style="color: var(--text-muted);">Manage your career journey from here.</p>
+    <div class="mb-4 heading-top-padding flex justify-between items-end" style="flex-wrap: wrap; gap: 1rem;">
+        <div>
+            <h1>Welcome back, <span style="color: var(--primary);">{{ user.first_name|default:user.username }}</span>! 🚀</h1>
+            <p style="color: var(--text-muted);">Manage your career journey from here.</p>
+        </div>
     </div>
 
-    <!-- Main Grid -->
-    <div class="grid grid-3 gap-6 mt-10">
+    <!-- FREE Tools & Services -->
+    <div style="margin-top: 4rem; margin-bottom: 6rem;">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+            <div style="width: 4px; height: 1.25rem; background: var(--primary); border-radius: 2px;"></div>
+            <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main); white-space: nowrap; margin: 0; letter-spacing: -0.02em;">FREE Tools & Services</h2>
+            <div style="flex-grow: 1; height: 1px; background: linear-gradient(to right, rgba(0,0,0,0.1), transparent); margin-left: 0.5rem;"></div>
+        </div>
+        <div class="grid grid-3 gap-8">
+            <!-- Resume Builder -->
+            <a href="{% url 'resume_builder' %}" class="service-card glass">
+                <div class="service-icon-wrapper" style="background: rgba(16, 185, 129, 0.2);">
+                    <i class="fas fa-file-signature" style="color: var(--success);"></i>
+                </div>
+                <h3>ATS Resume Builder</h3>
+                <p>Create a professional, ATS-friendly resume from scratch.</p>
+            </a>
+
+            <!-- Find Jobs -->
+            <a href="{% url 'job_list' %}" class="service-card glass">
+                <div class="service-icon-wrapper" style="background: rgba(59, 130, 246, 0.2);">
+                    <i class="fas fa-briefcase" style="color: #3b82f6;"></i>
+                </div>
+                <h3>Jobs & Internships</h3>
+                <p>Explore latest internships and full-time opportunities.</p>
+            </a>
+
+            <!-- Events & Hackathons -->
+            <a href="{% url 'event_list' %}" class="service-card glass">
+                <div class="service-icon-wrapper" style="background: rgba(168, 85, 247, 0.2);">
+                    <i class="fas fa-calendar-alt" style="color: #a855f7;"></i>
+                </div>
+                <h3>Events & Hackathons</h3>
+                <p>Keep an eye on upcoming career events and hackathons.</p>
+            </a>
+
+            <!-- Resume Analyzer -->
+            <a href="{% url 'analyze' %}" class="service-card glass">
+                <div class="service-icon-wrapper" style="background: rgba(99, 102, 241, 0.2);">
+                    <i class="fas fa-file-alt" style="color: var(--primary);"></i>
+                </div>
+                <h3>Resume Analyzer</h3>
+                <p>Check how well your resume matches a job description using AI.</p>
+            </a>
+
+            <!-- Job Readiness -->
+            <a href="{% url 'job_readiness' %}" class="service-card glass">
+                <div class="service-icon-wrapper" style="background: rgba(34, 211, 238, 0.2);">
+                    <i class="fas fa-chart-line" style="color: var(--accent);"></i>
+                </div>
+                <h3>Job Readiness</h3>
+                <p>Get a score and action plan to improve your employability.</p>
+            </a>
+
+            <!-- AI Mock Interview -->
+            <a href="{% url 'interview_hub' %}" class="service-card glass">
+                <div class="service-icon-wrapper" style="background: rgba(236, 72, 153, 0.2);">
+                    <i class="fas fa-microphone-lines" style="color: #ec4899;"></i>
+                </div>
+                <h3>AI Mock Interview</h3>
+                <p>Practice voice-based interviews with real-time AI feedback.</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- Section: Priority Expert Services -->
+    <div style="margin-top: 6rem; margin-bottom: 6rem;">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+            <div style="width: 4px; height: 1.25rem; background: var(--accent); border-radius: 2px;"></div>
+            <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main); white-space: nowrap; margin: 0; letter-spacing: -0.02em;">Expert Offline Support</h2>
+            <div style="flex-grow: 1; height: 1px; background: linear-gradient(to right, rgba(0,0,0,0.1), transparent); margin-left: 0.5rem;"></div>
+        </div>
         
-        <!-- Resume Analyzer -->
-        <a href="{% url 'analyze' %}" class="service-card glass">
-            <div class="service-icon-wrapper" style="background: rgba(99, 102, 241, 0.2);">
-                <i class="fas fa-file-alt" style="color: var(--primary);"></i>
+        <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
+            <!-- Bundle Service Card -->
+            <div class="card glass cursor-pointer" onclick="document.getElementById('expertBundleModal').classList.add('open')" style="flex: 1; min-width: 300px; max-width: 500px; padding: 2rem; border: 2px dashed rgba(245, 158, 11, 0.4); text-align: center; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin: 0; box-shadow: var(--shadow-md);">
+               <div style="width: 60px; height: 60px; background: rgba(245, 158, 11, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
+                   <i class="fas fa-gem" style="color: #f59e0b; font-size: 1.5rem;"></i>
+               </div>
+               <h3 style="font-size: 1.5rem; color: var(--text-main); margin-bottom: 0.5rem;">Placement Success Bundle</h3>
+               <p style="color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem;">Get professional 1-on-1 resume auditing, LinkedIn optimization, and a custom portfolio website all bundled into one premium service.</p>
+               <span class="btn btn-outline" style="border-color: #f59e0b; color: #f59e0b; width: 100%;">View Details</span>
             </div>
-            <h3>Resume Analyzer</h3>
-            <p>Check how well your resume matches a job description using AI.</p>
-        </a>
 
-        <!-- Resume Builder -->
-        <a href="{% url 'resume_builder' %}" class="service-card glass">
-            <div class="service-icon-wrapper" style="background: rgba(16, 185, 129, 0.2);">
-                <i class="fas fa-file-signature" style="color: var(--success);"></i>
+            <!-- Home Tech Tuition Card -->
+            <div class="card glass cursor-pointer" onclick="document.getElementById('techTuitionModal').classList.add('open')" style="flex: 1; min-width: 300px; max-width: 500px; padding: 2rem; border: 2px dashed rgba(16, 185, 129, 0.4); text-align: center; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin: 0; box-shadow: var(--shadow-md);">
+               <div style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
+                   <i class="fas fa-laptop-house" style="color: var(--success); font-size: 1.5rem;"></i>
+               </div>
+               <h3 style="font-size: 1.5rem; color: var(--text-main); margin-bottom: 0.5rem;">Home Tech Tuition</h3>
+               <p style="color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem;">Personalized at-home coding sessions. We bring the laptop, materials, and a dedicated mentor straight to your living room.</p>
+               <span class="btn btn-outline" style="border-color: var(--success); color: var(--success); width: 100%;">View Full Process</span>
             </div>
-            <h3>ATS Resume Builder</h3>
-            <p>Create a professional, ATS-friendly resume from scratch.</p>
-        </a>
+        </div>
+    </div>
 
-        <!-- Job Readiness -->
-        <a href="{% url 'job_readiness' %}" class="service-card glass">
-            <div class="service-icon-wrapper" style="background: rgba(34, 211, 238, 0.2);">
-                <i class="fas fa-chart-line" style="color: var(--accent);"></i>
+    <!-- Modal for Expert Bundle Details -->
+    <div id="expertBundleModal" class="modal-overlay" onclick="if(event.target===this) this.classList.remove('open')">
+        <div class="modal-content card glass">
+            <button class="modal-close" onclick="document.getElementById('expertBundleModal').classList.remove('open')"><i class="fas fa-times"></i></button>
+            <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--text-main);">Placement Success Bundle</h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Everything you need to stand out to top recruiters.</p>
+            
+            <ul style="list-style: none; padding: 0; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1.5rem; text-align: left;">
+                <li style="display: flex; gap: 1rem; align-items: flex-start;">
+                    <div style="background: rgba(30, 41, 59, 0.1); padding: 0.8rem; border-radius: 12px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <i class="fas fa-user-tie" style="color: var(--text-main); font-size: 1.2rem;"></i>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 1.1rem; margin-bottom: 0.2rem;">Expert Resume Review</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Connect with a dedicated mentor for a professional 1-on-1 resume audit.</p>
+                    </div>
+                </li>
+                <li style="display: flex; gap: 1rem; align-items: flex-start;">
+                    <div style="background: rgba(0, 119, 181, 0.1); padding: 0.8rem; border-radius: 12px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <i class="fab fa-linkedin" style="color: #0077b5; font-size: 1.2rem;"></i>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 1.1rem; margin-bottom: 0.2rem;">LinkedIn Optimization</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Get your profile optimized for maximum recruiter visibility.</p>
+                    </div>
+                </li>
+                <li style="display: flex; gap: 1rem; align-items: flex-start;">
+                    <div style="background: rgba(245, 158, 11, 0.1); padding: 0.8rem; border-radius: 12px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <i class="fas fa-laptop-code" style="color: #f59e0b; font-size: 1.2rem;"></i>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 1.1rem; margin-bottom: 0.2rem;">Portfolio Website</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Have our expert team custom design and host your professional bio website.</p>
+                    </div>
+                </li>
+            </ul>
+
+            <div style="background: rgba(0,0,0,0.02); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px dashed rgba(0,0,0,0.1);">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <div style="font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 0.5rem;">Bundled Price</div>
+                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-main); line-height: 1;">₹999 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">(One-time fee)</span></div>
+                </div>
+
+                <form action="{% url 'book_service' %}" method="POST" style="display: flex; flex-direction: column; gap: 1rem;">
+                    {% csrf_token %}
+                    <input type="hidden" name="service_type" value="BUNDLE">
+                    
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <input type="text" name="phone_number" placeholder="Your Phone Number (e.g. +91...)" required style="width: 100%; border: 1px solid rgba(0,0,0,0.1); background: white;">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary shadow-glow" style="width: 100%; text-align: center; padding: 0.8rem;">
+                        <i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i> Request This Bundle
+                    </button>
+                </form>
             </div>
-            <h3>Job Readiness</h3>
-            <p>Get a score and action plan to improve your employability.</p>
-        </a>
+            <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">Our team will contact you shortly after submission.</p>
+        </div>
+    </div>
 
-        <!-- AI Mock Interview -->
-        <a href="{% url 'interview_hub' %}" class="service-card glass">
-            <div class="service-icon-wrapper" style="background: rgba(236, 72, 153, 0.2);">
-                <i class="fas fa-microphone-lines" style="color: #ec4899;"></i>
+    <!-- Modal for Tech Tuition Details -->
+    <div id="techTuitionModal" class="modal-overlay" onclick="if(event.target===this) this.classList.remove('open')">
+        <div class="modal-content card glass">
+            <button class="modal-close" onclick="document.getElementById('techTuitionModal').classList.remove('open')"><i class="fas fa-times"></i></button>
+            
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+               <div style="width: 45px; height: 45px; background: rgba(16, 185, 129, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                   <i class="fas fa-laptop-house" style="color: var(--success); font-size: 1.2rem;"></i>
+               </div>
+               <h2 style="font-size: 1.8rem; color: var(--text-main); margin: 0;">Home Tech Tuition</h2>
             </div>
-            <h3>AI Mock Interview</h3>
-            <p>Practice voice-based interviews with real-time AI feedback.</p>
-        </a>
+            
+            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem;">A radically personalized, hands-on learning experience delivered directly to your front door. You choose the tech stack, we bring the education.</p>
+            
+            <ul style="list-style: none; padding: 0; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1.25rem; text-align: left;">
+                
+                <li style="display: flex; gap: 1rem; align-items: flex-start;">
+                    <div style="color: var(--success); font-size: 1.2rem; margin-top: 2px;"><i class="fas fa-check-circle"></i></div>
+                    <div>
+                        <h4 style="font-size: 1.05rem; margin-bottom: 0.2rem; color: var(--text-main);">Customized Skill Selection & Flexible Timing</h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">Learn Python, React, Data Science, or whatever you need. Choose any 2-hour window between Monday to Friday that fits your schedule.</p>
+                    </div>
+                </li>
+                
+                <li style="display: flex; gap: 1rem; align-items: flex-start;">
+                    <div style="color: var(--success); font-size: 1.2rem; margin-top: 2px;"><i class="fas fa-check-circle"></i></div>
+                    <div>
+                        <h4 style="font-size: 1.05rem; margin-bottom: 0.2rem; color: var(--text-main);">Hardware & Materials Provided</h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">Don't have a reliable setup? No problem. Our instructors arrive fully equipped with a training laptop and comprehensive course materials.</p>
+                    </div>
+                </li>
 
-        <!-- Find Jobs -->
-        <a href="{% url 'job_list' %}" class="service-card glass">
-            <div class="service-icon-wrapper" style="background: rgba(59, 130, 246, 0.2);">
-                <i class="fas fa-briefcase" style="color: #3b82f6;"></i>
+                <li style="display: flex; gap: 1rem; align-items: flex-start;">
+                    <div style="color: var(--success); font-size: 1.2rem; margin-top: 2px;"><i class="fas fa-check-circle"></i></div>
+                    <div>
+                        <h4 style="font-size: 1.05rem; margin-bottom: 0.2rem; color: var(--text-main);">The '1+1' Mastery Method</h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">Every session guarantees <strong>1 hour of core concept theory</strong> followed strictly by <strong>1 hour of hands-on practical coding</strong> under direct supervision.</p>
+                    </div>
+                </li>
+
+                <li style="display: flex; gap: 1rem; align-items: flex-start;">
+                    <div style="color: var(--success); font-size: 1.2rem; margin-top: 2px;"><i class="fas fa-check-circle"></i></div>
+                    <div>
+                        <h4 style="font-size: 1.05rem; margin-bottom: 0.2rem; color: var(--text-main);">Mini Project Development</h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">Build a real-world, industry-standard mini project during the sessions specifically designed to boost your resume and portfolio instantly.</p>
+                    </div>
+                </li>
+
+                <li style="display: flex; gap: 1rem; align-items: flex-start;">
+                    <div style="color: var(--success); font-size: 1.2rem; margin-top: 2px;"><i class="fas fa-check-circle"></i></div>
+                    <div>
+                        <h4 style="font-size: 1.05rem; margin-bottom: 0.2rem; color: var(--text-main);">Verified Completion Certificate</h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">Upon successful completion and evaluation, receive an industry-recognized certificate demonstrating your applied mastery of the chosen skill.</p>
+                    </div>
+                </li>
+            </ul>
+
+            <div style="background: rgba(16, 185, 129, 0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px dashed rgba(16, 185, 129, 0.2);">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <div style="font-size: 0.9rem; color: var(--success); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 0.5rem;">Monthly Commitment</div>
+                    <div style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); line-height: 1;">₹5,999 <span style="font-size: 0.9rem; color: var(--text-muted); font-weight: 500;">/ month</span></div>
+                </div>
+
+                <form action="{% url 'book_service' %}" method="POST" style="display: flex; flex-direction: column; gap: 1rem;">
+                    {% csrf_token %}
+                    <input type="hidden" name="service_type" value="TUITION">
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <input type="text" name="preferred_tech" placeholder="Tech Skill (e.g. React+Node)" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); background: white;">
+                        <input type="text" name="preferred_timing" placeholder="Preferred Slot (e.g. 5PM - 7PM)" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); background: white;">
+                    </div>
+                    
+                    <div style="margin-bottom: 0;">
+                        <input type="text" name="phone_number" placeholder="Your WhatsApp / Phone Number" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); background: white;">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary shadow-glow" style="width: 100%; text-align: center; padding: 0.8rem; background: var(--success); border-color: var(--success);">
+                        <i class="fas fa-chalkboard-teacher" style="margin-right: 0.5rem;"></i> Book Your Slot
+                    </button>
+                </form>
             </div>
-            <h3>Jobs & Internships</h3>
-            <p>Explore latest internships and full-time opportunities.</p>
-        </a>
 
-        <!-- Events & Hackathons -->
-        <a href="{% url 'event_list' %}" class="service-card glass">
-            <div class="service-icon-wrapper" style="background: rgba(168, 85, 247, 0.2);">
-                <i class="fas fa-calendar-alt" style="color: #a855f7;"></i>
-            </div>
-            <h3>Events & Hackathons</h3>
-            <p>Keep an eye on upcoming career events and hackathons.</p>
-        </a>
+            <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">Limited slots available per city. We will contact you to finalize the schedule.</p>
+        </div>
+    </div>
 
-        <!-- Admin Dashboard -->
-        {% if user.is_superuser %}
-            <a href="{% url 'admin_dashboard' %}" class="service-card glass">
+    <!-- Admin Section -->
+    {% if user.is_superuser %}
+        <div class="mt-12">
+            <div style="flex-grow: 1; height: 1px; background: rgba(0,0,0,0.1); margin-bottom: 2rem;"></div>
+            <a href="{% url 'admin_dashboard' %}" class="service-card glass" style="max-width: 320px; margin: 0 auto; border: 1px dashed var(--warning);">
                 <div class="service-icon-wrapper" style="background: rgba(255, 165, 0, 0.2);">
                     <i class="fas fa-shield-alt" style="color: var(--warning);"></i>
                 </div>
                 <h3>Admin Dashboard</h3>
-                <p>Access administrative tools and user management.</p>
+                <p>Manage users and platform content.</p>
             </a>
-        {% endif %}
-
-    </div>
+        </div>
+    {% endif %}
 </div>
+
+<style>
+    .cursor-pointer:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg), 0 10px 20px -5px rgba(245, 158, 11, 0.2);
+        border-color: #f59e0b !important;
+        cursor: pointer;
+    }
+
+    .modal-overlay {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(15, 23, 42, 0.85); /* Removed backdrop-filter to prevent UI lag */
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        padding: 1.5rem;
+    }
+
+    .modal-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .modal-content {
+        background: var(--bg-surface);
+        max-width: 600px;
+        width: 100%;
+        border-radius: var(--radius-lg);
+        padding: 2.5rem;
+        position: relative;
+        transform: translateY(20px) scale(0.95);
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-overlay.open .modal-content {
+        transform: translateY(0) scale(1);
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 32px;
+        width: 32px;
+        border-radius: 50%;
+        background: rgba(0,0,0,0.05);
+    }
+
+    .modal-close:hover {
+        color: var(--error);
+        background: rgba(239, 68, 68, 0.1);
+    }
+</style>
 {% endblock %}

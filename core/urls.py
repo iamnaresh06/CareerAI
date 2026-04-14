@@ -29,6 +29,7 @@ urlpatterns = [
     
     # Dashboard (Currently hosted in analysis views)
     path('dashboard/', analysis_views.dashboard, name='dashboard'),
+    path('book-service/', auth_views.book_service, name='book_service'),
 
     # -------------------------------------------------------------------------
     # Job Board
@@ -50,6 +51,7 @@ urlpatterns = [
     # -------------------------------------------------------------------------
     path('admin-dashboard/', admin_views.admin_dashboard, name='admin_dashboard'),
     path('admin-dashboard/user/<int:user_id>/', admin_views.admin_user_profile, name='admin_user_profile'),
+    path('admin-dashboard/booking/<int:booking_id>/update/', admin_views.update_booking_status, name='update_booking_status'),
     
     # -------------------------------------------------------------------------
     # Resume Analysis & AI Tools

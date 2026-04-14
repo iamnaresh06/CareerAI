@@ -10,10 +10,10 @@ Author: Naresh Reddy
 """
 
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
-from core.models import JobPosting, Event, UserProfile
+from core.models import JobPosting, Event, UserProfile, ServiceBooking
 
 # ==============================
 # PERMISSION HELPERS
@@ -42,6 +42,7 @@ def admin_dashboard(request):
     total_users = User.objects.count()
     total_jobs = JobPosting.objects.count()
     total_events = Event.objects.count()
+    total_bookings = ServiceBooking.objects.count()
     
     # User Filtering (Search)
     if query:
@@ -55,14 +56,17 @@ def admin_dashboard(request):
     
     jobs = JobPosting.objects.all().order_by('-posted_at')
     events = Event.objects.all().order_by('-date')
+    bookings = ServiceBooking.objects.all().order_by('-created_at')
     
     context = {
         'total_users': total_users,
         'total_jobs': total_jobs,
         'total_events': total_events,
+        'total_bookings': total_bookings,
         'users': users,
         'jobs': jobs,
         'events': events,
+        'bookings': bookings,
         'query': query
     }
     
@@ -82,3 +86,18 @@ def admin_user_profile(request, user_id):
         'target_user': target_user,
         'profile': profile
     })
+
+
+@login_required
+@user_passes_test(is_admin)
+def update_booking_status(request, booking_id):
+    """
+    Updates the status of a specific service booking from the Admin Dashboard.
+    """
+    if request.method == "POST":
+        booking = get_object_or_404(ServiceBooking, id=booking_id)
+        new_status = request.POST.get("status")
+        if new_status:
+            booking.status = new_status
+            booking.save()
+    return redirect('admin_dashboard')

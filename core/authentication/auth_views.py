@@ -181,3 +181,33 @@ def profile_view(request):
         'user': user,
         'profile': profile
     })
+
+from core.models import ServiceBooking
+
+@login_required(login_url='login')
+def book_service(request):
+    """
+    Handles bookings for offline services from the dashboard.
+    """
+    if request.method == "POST":
+        service_type = request.POST.get("service_type", "")
+        phone_number = request.POST.get("phone_number", "").strip()
+        preferred_tech = request.POST.get("preferred_tech", "").strip()
+        preferred_timing = request.POST.get("preferred_timing", "").strip()
+
+        if not phone_number:
+            messages.error(request, "Phone number is required for booking.")
+            return redirect("dashboard")
+
+        ServiceBooking.objects.create(
+            user=request.user,
+            service_type=service_type,
+            phone_number=phone_number,
+            preferred_tech=preferred_tech,
+            preferred_timing=preferred_timing
+        )
+
+        messages.success(request, "Your booking request has been successfully captured! Our team will contact you shortly.")
+        return redirect("dashboard")
+
+    return redirect("dashboard")

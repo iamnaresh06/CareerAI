@@ -1,13 +1,13 @@
 {% extends 'core/base.html' %} {% load static %} {% block title %}Welcome to
 CareerAI{% endblock %} {% block content %}
 <div class="landing-container">
+  {% if not user.is_authenticated %}
   <!-- Hero Section -->
   <section
     class="hero flex flex-col items-center justify-center text-center py-8 hero-section"
     style="min-height: 85vh; position: relative; overflow: hidden;"
   >
     <!-- Background Blobs -->
-    <!-- Background Blobs - Optimized with transform3d and will-change -->
     <div style="position: absolute; top: -10%; left: -10%; width: 50vw; height: 50vw; background: rgba(37, 99, 235, 0.07); filter: blur(100px); border-radius: 50%; z-index: -1; transform: translate3d(0,0,0); will-change: transform;"></div>
     <div style="position: absolute; bottom: -10%; right: -10%; width: 40vw; height: 40vw; background: rgba(14, 165, 233, 0.07); filter: blur(80px); border-radius: 50%; z-index: -1; transform: translate3d(0,0,0); will-change: transform;"></div>
 
@@ -21,17 +21,18 @@ CareerAI{% endblock %} {% block content %}
     </p>
 
     <div class="flex gap-6 w-full-mobile justify-center">
-      <a href="{% url 'login' %}" class="btn btn-outline hero-btn animate-pop-in delay-2">
-        <i class="fas fa-sign-in-alt mt-0" style="margin-right:0.5rem"></i> Login
-      </a>
-      <a href="{% url 'register' %}" class="btn btn-primary hero-btn">
-        Get Started <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i>
-      </a>
+        <a href="{% url 'login' %}" class="btn btn-outline hero-btn animate-pop-in delay-2">
+          <i class="fas fa-sign-in-alt mt-0" style="margin-right:0.5rem"></i> Login
+        </a>
+        <a href="{% url 'register' %}" class="btn btn-primary hero-btn">
+          Get Started <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i>
+        </a>
     </div>
   </section>
 
   <!-- Features Section (Evolving Ecosystem) -->
   <section class="container py-8" style="margin-top: 2rem;">
+    <!-- (Existing Features Code) -->
     <div class="text-center mb-8 animate-scroll flex flex-col items-center">
       <div style="display: inline-block; padding: 0.5rem 1rem; border-radius: 20px; background: rgba(37, 99, 235, 0.1); color: var(--primary); font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem; letter-spacing: 0.5px;">
         <i class="fas fa-rocket" style="margin-right: 6px;"></i> Constantly Evolving
@@ -48,58 +49,64 @@ CareerAI{% endblock %} {% block content %}
     </div>
 
     <div class="bento-grid" style="margin-top: 3rem;">
-      <!-- Feature 1 (Large - The Core) -->
-      <div class="card glass p-8 animate-scroll delay-1 hover-3d" style="display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; border-top: 4px solid var(--primary); height: 100%;">
-        <div style="position: absolute; right: -5%; bottom: -10%; font-size: 12rem; opacity: 0.03; color: var(--text-main); pointer-events: none;">
-          <i class="fas fa-file-alt"></i>
-        </div>
-        <div class="flex items-center gap-4 mb-4" style="flex-wrap: wrap;">
-          <div style="width: 55px; height: 55px; background: rgba(37, 99, 235, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center;">
-            <i class="fas fa-magic" style="font-size: 1.6rem; color: var(--primary)"></i>
-          </div>
-          <h3 style="font-size: 1.5rem;">Intelligent Resume Suite</h3>
-        </div>
-        <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.05rem; line-height: 1.6; z-index: 2; position: relative;">
-          From a dynamic ATS-compliant builder that formats perfectly, to a rigorous AI analyzer that compares you against live job descriptions—everything needed to bypass screeners.
-        </p>
-        <div class="flex gap-2" style="flex-wrap: wrap; z-index: 2; position: relative; margin-top: auto;">
-          <span class="service-tag">ATS Builder</span>
-          <span class="service-tag">Instant Scoring</span>
-          <span class="service-tag">Missing Skills</span>
-        </div>
-      </div>
-
-      <!-- Feature 2 -->
-      <div class="card glass p-8 animate-scroll delay-2 hover-3d" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-        <div>
-          <div style="width: 55px; height: 55px; background: rgba(14, 165, 233, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
-            <i class="fas fa-chart-pie" style="font-size: 1.6rem; color: var(--accent)"></i>
-          </div>
-          <h3 style="font-size: 1.3rem; margin-bottom: 0.8rem;">Market Readiness Insights</h3>
-          <p style="color: var(--text-muted); line-height: 1.6;">
-            Know exactly where you stand. Real-time graphical scoring translates your background into clear employability metrics and actionable improvement plans.
-          </p>
-        </div>
-        <div style="margin-top: 1.5rem;">
-             <a href="{% url 'login' %}" style="display: inline-block; background: transparent; border: none; padding: 0; color: var(--accent); font-weight: 600; text-decoration: none; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">Explore Analytics &rarr;</a>
-        </div>
-      </div>
-
-      <!-- Feature 3 (Upcoming / Ecosystem Growth) -->
-      <div class="card glass p-8 animate-scroll delay-3 hover-3d" style="background: linear-gradient(135deg, rgba(37,99,235,0.03) 0%, rgba(16,185,129,0.03) 100%); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; border: 1px dashed rgba(16,185,129,0.4); height: 100%;">
-        <div style="position: relative; margin-bottom: 1.5rem;">
-            <div style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2;">
-              <i class="fas fa-layer-group" style="font-size: 1.5rem; color: var(--success)"></i>
+        <!-- (Keeping the 3 feature cards as they were) -->
+        <div class="card glass p-8 animate-scroll delay-1 hover-3d" style="display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; border-top: 4px solid var(--primary); height: 100%;">
+            <div style="position: absolute; right: -5%; bottom: -10%; font-size: 12rem; opacity: 0.03; color: var(--text-main); pointer-events: none;">
+              <i class="fas fa-file-alt"></i>
             </div>
-            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 2px solid rgba(16, 185, 129, 0.3); border-radius: 50%; animation: pulse-ring 2s infinite; z-index: 1;"></div>
+            <div class="flex items-center gap-4 mb-4" style="flex-wrap: wrap;">
+              <div style="width: 55px; height: 55px; background: rgba(37, 99, 235, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-magic" style="font-size: 1.6rem; color: var(--primary)"></i>
+              </div>
+              <h3 style="font-size: 1.5rem;">Intelligent Resume Suite</h3>
+            </div>
+            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.05rem; line-height: 1.6; z-index: 2; position: relative;">
+              From a dynamic ATS-compliant builder that formats perfectly, to a rigorous AI analyzer that compares you against live job descriptions—everything needed to bypass screeners.
+            </p>
+            <div class="flex gap-2" style="flex-wrap: wrap; z-index: 2; position: relative; margin-top: auto;">
+              <span class="service-tag">ATS Builder</span>
+              <span class="service-tag">Instant Scoring</span>
+              <span class="service-tag">Missing Skills</span>
+            </div>
         </div>
-        <h3 style="font-size: 1.3rem;">An Expanding Horizon</h3>
-        <p style="color: var(--text-muted); margin-top: 1rem; font-size: 0.95rem; line-height: 1.5;">
-          Our platform is never static. We are continuously integrating new modules like interview simulators, career pathing, and cover letter generators into your toolkit.
-        </p>
-      </div>
+        <div class="card glass p-8 animate-scroll delay-2 hover-3d" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+            <div>
+              <div style="width: 55px; height: 55px; background: rgba(14, 165, 233, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <i class="fas fa-chart-pie" style="font-size: 1.6rem; color: var(--accent)"></i>
+              </div>
+              <h3 style="font-size: 1.3rem; margin-bottom: 0.8rem;">Market Readiness Insights</h3>
+              <p style="color: var(--text-muted); line-height: 1.6;">
+                Know exactly where you stand. Real-time graphical scoring translates your background into clear employability metrics and actionable improvement plans.
+              </p>
+            </div>
+            <div style="margin-top: 1.5rem;">
+                 <a href="{% url 'login' %}" style="display: inline-block; background: transparent; border: none; padding: 0; color: var(--accent); font-weight: 600; text-decoration: none; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">Explore Analytics &rarr;</a>
+            </div>
+        </div>
+        <div class="card glass p-8 animate-scroll delay-3 hover-3d" style="background: linear-gradient(135deg, rgba(37,99,235,0.03) 0%, rgba(16,185,129,0.03) 100%); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; border: 1px dashed rgba(16,185,129,0.4); height: 100%;">
+            <div style="position: relative; margin-bottom: 1.5rem;">
+                <div style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2;">
+                  <i class="fas fa-layer-group" style="font-size: 1.5rem; color: var(--success)"></i>
+                </div>
+                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 2px solid rgba(16, 185, 129, 0.3); border-radius: 50%; animation: pulse-ring 2s infinite; z-index: 1;"></div>
+            </div>
+            <h3 style="font-size: 1.3rem;">An Expanding Horizon</h3>
+            <p style="color: var(--text-muted); margin-top: 1rem; font-size: 0.95rem; line-height: 1.5;">
+              Our platform is never static. We are continuously integrating new modules like interview simulators, career pathing, and cover letter generators into your toolkit.
+            </p>
+        </div>
+    </div>
     </div>
   </section>
+  {% else %}
+  <div style="text-align: center; padding: 5rem 1rem; color: var(--text-main);">
+    <h2>Redirecting to your Dashboard...</h2>
+    <p>If you are not redirected automatically, <a href="{% url 'dashboard' %}" style="color: var(--primary);">click here</a>.</p>
+    <script>
+      window.location.href = "{% url 'dashboard' %}";
+    </script>
+  </div>
+  {% endif %}
 </div>
 
 <style>

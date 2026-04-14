@@ -34,9 +34,9 @@
                 </div>
             </div>
 
-            <div class="grid grid-2">
-                <div class="input-group">
-                    <label>Password (Min 8 characters)</label>
+            <div class="grid grid-2" style="align-items: flex-end;">
+                <div class="input-group" style="margin-bottom: 0;">
+                    <label style="margin-bottom: 0.75rem;">Password (Min 8 characters)</label>
                     <div style="position: relative;">
                         <input type="password" name="password" id="reg-pass" required minlength="8" style="padding-right: 40px;">
                         <span onclick="togglePassword('reg-pass', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-muted);">
@@ -44,8 +44,8 @@
                         </span>
                     </div>
                 </div>
-                <div class="input-group">
-                    <label>Confirm</label>
+                <div class="input-group" style="margin-bottom: 0;">
+                    <label style="margin-bottom: 0.75rem;">Confirm Password</label>
                     <div style="position: relative;">
                         <input type="password" name="confirm_password" id="reg-confirm" required minlength="8" style="padding-right: 40px;">
                         <span onclick="togglePassword('reg-confirm', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-muted);">
@@ -55,7 +55,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
+            <button type="submit" class="btn btn-primary mt-4" style="width: 100%;">Sign Up</button>
         </form>
 
         <p class="mt-4 text-center" style="text-align: center; color: var(--text-muted);">

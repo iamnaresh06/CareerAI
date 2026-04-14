@@ -77,7 +77,29 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Profile ({self.student_id or 'No ID'})"
+# Booking Model for Offline Services
+class ServiceBooking(models.Model):
+    SERVICE_CHOICES = (
+        ('BUNDLE', 'Placement Success Bundle'),
+        ('TUITION', 'Home Tech Tuition'),
+    )
+    STATUS_CHOICES = (
+        ('PENDING', 'Pending'),
+        ('CONTACTED', 'Contacted'),
+        ('CONFIRMED', 'Confirmed'),
+        ('COMPLETED', 'Completed'),
+    )
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    service_type = models.CharField(max_length=20, choices=SERVICE_CHOICES)
+    phone_number = models.CharField(max_length=20)
+    preferred_tech = models.CharField(max_length=100, blank=True, null=True)
+    preferred_timing = models.CharField(max_length=100, blank=True, null=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.user.username} - {self.get_service_type_display()}"
 # -----------------------------------------------------------------------------
 # Signals
 # -----------------------------------------------------------------------------
@@ -85,22 +107,19 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 @receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
+def manage_user_profile(sender, instance, created, **kwargs):
+    """
+    Consolidated signal to handle UserProfile creation and updates.
+    Ensures every user has a profile and a unique student ID.
+    """
     if created:
-        UserProfile.objects.create(
+        UserProfile.objects.get_or_create(
             user=instance,
-            student_id=generate_student_id()
+            defaults={'student_id': generate_student_id()}
         )
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    # Use hasattr to prevent errors if profile was somehow not created
-    if hasattr(instance, 'userprofile'):
-        if not instance.userprofile.student_id:
-            instance.userprofile.student_id = generate_student_id()
-        instance.userprofile.save()
     else:
-        UserProfile.objects.create(
-            user=instance,
-            student_id=generate_student_id()
-        )
+        # For existing users, ensure profile exists and has a student ID
+        profile, p_created = UserProfile.objects.get_or_create(user=instance)
+        if not profile.student_id:
+            profile.student_id = generate_student_id()
+            profile.save()

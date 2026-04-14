@@ -684,6 +684,20 @@ textarea:focus {
   }
 }
 
+/* Visibility & Layout Utilities */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+  .mobile-column {
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+  }
+  .mobile-text-center {
+    text-align: center !important;
+  }
+}
+
 @keyframes slideDown {
   from {
     opacity: 0;
