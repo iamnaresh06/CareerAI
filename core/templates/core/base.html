@@ -43,21 +43,26 @@
           <i class="fas fa-bars"></i>
         </button>
 
-        <div class="nav-links" id="navLinks">
+        <div class="nav-links" id="navLinks" style="align-items: center;">
+          <a href="{% url 'about' %}">About</a>
           {% if user.is_authenticated %}
           <a href="{% url 'dashboard' %}">Dashboard</a>
-          <a href="{% url 'job_list' %}">Jobs & Internships</a>
-          <a href="{% url 'event_list' %}">Events & Hackathons</a>
-          <a href="{% url 'analyze' %}">Resume Analyzer</a>
-          <a href="{% url 'job_readiness' %}">Job Readiness</a>
-          <a href="{% url 'logout' %}">Logout</a>
+          <a href="{% url 'profile' %}" title="User Profile" class="profile-nav-link" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-left: 0.5rem;">
+            {% if user.userprofile and user.userprofile.profile_image %}
+              <div style="width: 32px; height: 32px; border-radius: 50%; overflow: hidden; border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; background: white;">
+                <img src="{{ user.userprofile.profile_image.url }}" alt="P" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+            {% else %}
+              <div style="width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg-surface); color: var(--primary); border: 2px solid var(--primary); font-size: 0.9rem;">
+                <i class="fas fa-user"></i>
+              </div>
+            {% endif %}
+            <span class="profile-text">Profile</span>
+          </a>
+          <a href="{% url 'logout' %}" style="margin-left: 0.5rem;">Logout</a>
           {% else %}
           <a href="{% url 'login' %}">Login</a>
-          <a
-            href="{% url 'register' %}"
-            class="btn btn-primary"
-            >Sign Up</a
-          >
+          <a href="{% url 'register' %}" class="btn btn-primary">Sign Up</a>
           {% endif %}
         </div>
       </div>
@@ -85,18 +90,31 @@
 
     <!-- Footer -->
     <footer>
-      <div class="container footer-content">
-        <p class="footer-text">&copy; 2026 CareerAI | Developed by Naresh Reddy.</p>
-        <div class="flex justify-center gap-4">
-          <a href="https://www.linkedin.com/in/iamnaresh06" target="_blank" class="social-link"><i class="fab fa-linkedin fa-lg"></i></a>
-          <a href="https://github.com/iamnaresh06" target="_blank" class="social-link"><i class="fab fa-github fa-lg"></i></a>
-          <a href="mailto:iamnaresh06@gmail.com" class="social-link"><i class="fas fa-envelope fa-lg"></i></a>
-        </div>
-        
-        <div style="margin-top: 0.5rem;">
-          <a href="{% url 'admin_dashboard' %}" style="color: var(--text-muted); font-size: 0.8rem; opacity: 0.6; transition: var(--transition);" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
-            <i class="fas fa-lock"></i> Admin Dashboard
-          </a>
+      <div class="container footer-content" style="padding-top: 0.8rem; padding-bottom: 0.8rem;">
+        <div class="flex flex-col items-center" style="gap: 0.5rem;">
+          
+          <div class="flex justify-center gap-4">
+            <a href="https://www.linkedin.com/in/iamnaresh06" target="_blank" class="social-link"><i class="fab fa-linkedin fa-lg"></i></a>
+            <a href="https://github.com/iamnaresh06" target="_blank" class="social-link"><i class="fab fa-github fa-lg"></i></a>
+            <a href="mailto:iamnaresh06@gmail.com" class="social-link"><i class="fas fa-envelope fa-lg"></i></a>
+          </div>
+
+          <div class="flex justify-center" style="font-size: 0.85rem; flex-wrap: wrap; gap: 1rem;">
+            <a href="#" style="color: var(--text-muted); text-decoration: none; transition: var(--transition);" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Privacy Policy</a>
+            <span style="color: var(--text-muted); opacity: 0.5;">|</span>
+            <a href="#" style="color: var(--text-muted); text-decoration: none; transition: var(--transition);" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Terms &amp; Conditions</a>
+            <span style="color: var(--text-muted); opacity: 0.5;">|</span>
+            <a href="#" style="color: var(--text-muted); text-decoration: none; transition: var(--transition);" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Refund Policy</a>
+          </div>
+
+          <div class="flex justify-center flex-wrap items-center gap-2" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
+             <span>&copy; 2026 CareerAI | Developed by Naresh Reddy.</span>
+             <span class="desktop-only" style="opacity: 0.5; margin: 0 0.5rem;">|</span>
+             <a href="{% url 'admin_dashboard' %}" style="color: inherit; text-decoration: none; opacity: 0.8; transition: var(--transition);" onmouseover="this.style.opacity='1'; this.style.color='var(--primary)'" onmouseout="this.style.opacity='0.8'; this.style.color='inherit'">
+                <i class="fas fa-lock"></i> Admin Dashboard
+             </a>
+          </div>
+
         </div>
       </div>
     </footer>
@@ -238,6 +256,14 @@
         .alert-card {
            font-size: 0.9rem;
            border-radius: var(--radius-md);
+        }
+        .profile-nav-link {
+            margin-left: 0 !important;
+        }
+      }
+      @media (min-width: 769px) {
+        .profile-text {
+            display: none;
         }
       }
     </style>

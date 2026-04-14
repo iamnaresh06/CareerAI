@@ -1,0 +1,70 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Login - CareerAI{% endblock %}
+
+{% block content %}
+<div class="container py-8 flex flex-col items-center justify-center p-4">
+    <!-- Intro text/animation -->
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <h1 class="animate-text heading-top-padding" style="font-size: 2.5rem; margin-bottom: 1rem; background: linear-gradient(to right, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            Your Future Starts Here
+        </h1>
+        <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+            Unlock your career potential with AI-driven insights, resume analysis, and job readiness tools.
+        </p>
+    </div>
+
+    <!-- Login Card -->
+    <div class="card glass" style="max-width: 400px; width: 100%;">
+        <h2 class="text-center mb-4" style="text-align: center;">Welcome Back</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="input-group">
+                <label><i class="fas fa-envelope"></i> Email Address</label>
+                <input type="email" name="email" required placeholder="example@gmail.com">
+            </div>
+            
+            <div class="input-group">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <div style="position: relative;">
+                    <input type="password" name="password" id="login-password" required style="padding-right: 40px;">
+                    <span onclick="togglePassword('login-password', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-muted);">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </div>
+            </div>
+            
+            <div class="flex justify-between items-center mb-4 text-sm" style="font-size: 0.9rem;">
+                <label class="flex items-center gap-2" style="margin:0;">
+                    <input type="checkbox" style="width: auto;"> Remember me
+                </label>
+                <a href="{% url 'password_reset' %}" style="color: var(--primary);">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+        </form>
+
+        <p class="mt-4 text-center" style="text-align: center; color: var(--text-muted);">
+            New user? <a href="{% url 'register' %}" style="color: var(--accent); font-weight: 600;">Create account</a>
+        </p>
+    </div>
+</div>
+
+<script>
+function togglePassword(inputId, iconSpan) {
+    const input = document.getElementById(inputId);
+    const icon = iconSpan.querySelector("i");
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("fas", "fa-eye");
+        icon.classList.add("fas", "fa-eye-slash");
+    } else {
+        input.type = "password";
+        icon.classList.remove("fas", "fa-eye-slash");
+        icon.classList.add("fas", "fa-eye");
+    }
+}
+</script>
+{% endblock %}

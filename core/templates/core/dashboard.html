@@ -3,50 +3,142 @@
 {% block title %}Dashboard - CareerAI{% endblock %}
 
 {% block content %}
-<div class="container py-8">
+<style>
+/* Floating Animation for Services Boxes - Optimized for Performance */
+@keyframes floatAnimation {
+    0% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -8px, 0); }
+    100% { transform: translate3d(0, 0, 0); }
+}
+
+.service-card {
+    will-change: transform, box-shadow;
+    padding: 1.5rem !important; 
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
+    /* Performance-optimized transitions */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                border-color 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transform: translate3d(0, 0, 0);
+}
+
+.service-card:hover {
+    transform: translate3d(0, -8px, 0) scale(1.02);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    border-color: var(--primary);
+    background: white;
+}
+
+.service-card h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-top: 0.75rem;
+    color: var(--text-main);
+}
+
+.service-card p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-top: 0.4rem !important;
+    color: var(--text-muted);
+}
+
+.service-icon-wrapper {
+    width: 50px !important; 
+    height: 50px !important; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    margin-bottom: 0.5rem !important;
+}
+
+.service-icon-wrapper i {
+    font-size: 1.25rem !important;
+}
+</style>
+
+<div class="container py-12">
     <div class="mb-4 heading-top-padding">
-        <h1>Welcome back, <span style="color: var(--primary);">{{ user.username }}</span>! 🚀</h1>
+        <h1>Welcome back, <span style="color: var(--primary);">{{ user.first_name|default:user.username }}</span>! 🚀</h1>
         <p style="color: var(--text-muted);">Manage your career journey from here.</p>
     </div>
 
-    <div class="grid grid-3">
+    <!-- Main Grid -->
+    <div class="grid grid-3 gap-6 mt-10">
+        
         <!-- Resume Analyzer -->
-        <a href="{% url 'analyze' %}" class="card job-card flex flex-col items-center text-center p-8 animate-fade-up delay-1 hover-3d">
-            <div style="width: 60px; height: 60px; background: rgba(99, 102, 241, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-                <i class="fas fa-file-alt" style="font-size: 1.5rem; color: var(--primary);"></i>
+        <a href="{% url 'analyze' %}" class="service-card glass">
+            <div class="service-icon-wrapper" style="background: rgba(99, 102, 241, 0.2);">
+                <i class="fas fa-file-alt" style="color: var(--primary);"></i>
             </div>
             <h3>Resume Analyzer</h3>
-            <p style="color: var(--text-muted); margin-top: 0.5rem;">Check how well your resume matches a job description using AI.</p>
+            <p>Check how well your resume matches a job description using AI.</p>
+        </a>
+
+        <!-- Resume Builder -->
+        <a href="{% url 'resume_builder' %}" class="service-card glass">
+            <div class="service-icon-wrapper" style="background: rgba(16, 185, 129, 0.2);">
+                <i class="fas fa-file-signature" style="color: var(--success);"></i>
+            </div>
+            <h3>ATS Resume Builder</h3>
+            <p>Create a professional, ATS-friendly resume from scratch.</p>
         </a>
 
         <!-- Job Readiness -->
-        <a href="{% url 'job_readiness' %}" class="card job-card flex flex-col items-center text-center p-8 animate-fade-up delay-2 hover-3d">
-            <div style="width: 60px; height: 60px; background: rgba(34, 211, 238, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-                <i class="fas fa-chart-line" style="font-size: 1.5rem; color: var(--accent);"></i>
+        <a href="{% url 'job_readiness' %}" class="service-card glass">
+            <div class="service-icon-wrapper" style="background: rgba(34, 211, 238, 0.2);">
+                <i class="fas fa-chart-line" style="color: var(--accent);"></i>
             </div>
             <h3>Job Readiness</h3>
-            <p style="color: var(--text-muted); margin-top: 0.5rem;">Get a score and action plan to improve your employability.</p>
+            <p>Get a score and action plan to improve your employability.</p>
         </a>
 
-        <!-- Jobs & Internships / Admin Dashboard -->
+        <!-- AI Mock Interview -->
+        <a href="{% url 'interview_hub' %}" class="service-card glass">
+            <div class="service-icon-wrapper" style="background: rgba(236, 72, 153, 0.2);">
+                <i class="fas fa-microphone-lines" style="color: #ec4899;"></i>
+            </div>
+            <h3>AI Mock Interview</h3>
+            <p>Practice voice-based interviews with real-time AI feedback.</p>
+        </a>
+
+        <!-- Find Jobs -->
+        <a href="{% url 'job_list' %}" class="service-card glass">
+            <div class="service-icon-wrapper" style="background: rgba(59, 130, 246, 0.2);">
+                <i class="fas fa-briefcase" style="color: #3b82f6;"></i>
+            </div>
+            <h3>Jobs & Internships</h3>
+            <p>Explore latest internships and full-time opportunities.</p>
+        </a>
+
+        <!-- Events & Hackathons -->
+        <a href="{% url 'event_list' %}" class="service-card glass">
+            <div class="service-icon-wrapper" style="background: rgba(168, 85, 247, 0.2);">
+                <i class="fas fa-calendar-alt" style="color: #a855f7;"></i>
+            </div>
+            <h3>Events & Hackathons</h3>
+            <p>Keep an eye on upcoming career events and hackathons.</p>
+        </a>
+
+        <!-- Admin Dashboard -->
         {% if user.is_superuser %}
-            <a href="{% url 'admin_dashboard' %}" class="card job-card flex flex-col items-center text-center p-8 animate-fade-up delay-3 hover-3d">
-                <div style="width: 60px; height: 60px; background: rgba(255, 165, 0, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-                    <i class="fas fa-shield-alt" style="font-size: 1.5rem; color: var(--warning);"></i>
+            <a href="{% url 'admin_dashboard' %}" class="service-card glass">
+                <div class="service-icon-wrapper" style="background: rgba(255, 165, 0, 0.2);">
+                    <i class="fas fa-shield-alt" style="color: var(--warning);"></i>
                 </div>
                 <h3>Admin Dashboard</h3>
-                <p style="color: var(--text-muted); margin-top: 0.5rem;">Access administrative tools and user management.</p>
-            </a>
-        {% else %}
-            <a href="{% url 'job_list' %}" class="card job-card flex flex-col items-center text-center p-8 animate-fade-up delay-3 hover-3d">
-                <div style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-                    <i class="fas fa-briefcase" style="font-size: 1.5rem; color: var(--success);"></i>
-                </div>
-                <h3>Find Jobs</h3>
-                <p style="color: var(--text-muted); margin-top: 0.5rem;">Explore latest internships and full-time opportunities.</p>
+                <p>Access administrative tools and user management.</p>
             </a>
         {% endif %}
-
 
     </div>
 </div>

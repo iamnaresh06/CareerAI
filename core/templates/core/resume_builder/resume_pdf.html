@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<style>
+@page {
+    size: A4;
+    margin: 20px 25px; /* Reduced vertical/horizontal margins */
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt; /* Slightly smaller base font */
+    line-height: 1.2; /* Tighten line height */
+    margin: 0;
+}
+
+/* HEADER */
+h1 {
+    text-align: center;
+    font-size: 20pt;
+    margin: 0 0 1px 0;
+}
+
+.header {
+    text-align: center;
+    font-size: 11pt;
+}
+
+.header-line {
+    border: none;
+    border-top: 1.5px solid #000;
+    margin: 1px 0 10px 0;
+}
+
+/* SECTION */
+.section {
+    margin-top: 6px; /* Decrease vertical gap between sections */
+    page-break-inside: avoid;
+}
+
+.section-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12.5pt; /* Scaled down section header */
+    letter-spacing: 0.2px;
+}
+
+/* HR — MOST IMPORTANT FIX */
+hr {
+    border: none;
+    border-top: 1.4px solid #000;
+    margin: 0px 0 6px 0;
+}
+
+/* TEXT */
+p {
+    margin: 0 0 3px 0;
+}
+.section p {
+  margin-bottom: 3px;
+}
+
+/* LIST */
+ul {
+    margin: 2px 0 4px 14px; /* Reduced top/bottom block margin */
+    padding: 0;
+    list-style-type: disc;
+}
+
+li {
+    margin-bottom: 2px;
+    padding-left: 1px;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Header Section -->
+<h1>{{ full_name }}</h1>
+
+<div class="header">
+{{ phone }} | {{ email }}
+
+{% if linkedin %}
+ | <a href="{{ linkedin }}">LinkedIn</a>
+{% endif %}
+
+{% if portfolio %}
+ | <a href="{{ portfolio }}">Portfolio</a>
+{% endif %}
+
+{% if github %}
+ | <a href="{{ github }}">GitHub</a>
+{% endif %}
+</div>
+
+<hr class="header-line">
+
+<!-- SUMMARY -->
+<div class="section">
+<div class="section-title">Professional Summary</div>
+<hr>
+<p>{{ summary }}</p>
+</div>
+
+<!-- EDUCATION -->
+<div class="section">
+<div class="section-title">Education</div>
+<hr>
+{% for e in education|slice:":2" %}
+<p>
+<strong>{{ e.degree }}</strong> | {{ e.start_display }} – {{ e.end_display }}<br>
+{{ e.college }}<br>
+<strong>CGPA:</strong> {{ e.score }}
+</p>
+{% endfor %}
+</div>
+
+
+<!-- SKILLS -->
+<div class="section">
+<div class="section-title">Skills</div>
+<hr>
+
+{% if show_skill_categories %}
+  {% for category_name, current_skills in skills.items %}
+      <p><b>{{ category_name }}:</b> {{ current_skills|join:", " }}</p>
+  {% endfor %}
+{% else %}
+  <p>{{ skills_flat|join:", " }}</p>
+{% endif %}
+</div>
+
+
+
+<div class="section">
+<div class="section-title">Experience</div>
+<hr>
+
+{% for x in experience %}
+<p>
+<strong>{{ x.role }}</strong>, {{ x.company }} | {{ x.start_display }} – {{ x.end_display }}
+</p>
+
+<ul>
+{% for bullet in x.desc|slice:":3" %}
+  <li>{{ bullet }}</li>
+{% endfor %}
+</ul>
+
+{% endfor %}
+</div>
+
+
+
+
+<!-- PROJECTS -->
+<div class="section">
+<div class="section-title">Projects</div>
+<hr>
+
+{% for p in projects %}
+<p>
+<strong>{{ p.name }}</strong> | {{ p.stack }}
+</p>
+
+<ul>
+{% for bullet in p.desc|slice:":3" %}
+  <li>{{ bullet }}</li>
+{% endfor %}
+</ul>
+
+{% endfor %}
+</div>
+
+
+
+
+<!-- CERTIFICATIONS -->
+<div class="section">
+<div class="section-title">Certifications</div>
+<hr>
+<ul>
+{% for c in certifications %}
+<li><b>{{ c.name }}</b> – {{ c.org }}</li>
+{% endfor %}
+</ul>
+</div>
+
+</body>
+</html>

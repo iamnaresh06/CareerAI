@@ -1,0 +1,107 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}My Profile - CareerAI{% endblock %}
+
+{% block content %}
+<div class="container py-8 flex justify-center">
+    <div class="card glass text-center animate-scroll" style="max-width: 600px; width: 100%; padding: 2.5rem; position: relative; overflow: hidden;">
+        
+        <!-- Decoration -->
+        <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: rgba(37, 99, 235, 0.05); border-radius: 50%; z-index: 0;"></div>
+
+        <div style="width: 120px; height: 120px; border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; border: 3px solid var(--primary); position: relative; z-index: 1; overflow: hidden; background: white;">
+            {% if profile.profile_image %}
+                <img src="{{ profile.profile_image.url }}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">
+            {% else %}
+                <i class="fas fa-user-circle" style="font-size: 4rem; color: var(--primary);"></i>
+            {% endif %}
+        </div>
+
+        <h2 style="margin-bottom: 0.2rem; color: var(--text-main); position: relative; z-index: 1;">{{ user.first_name }} {{ user.last_name }}</h2>
+        <div style="margin-bottom: 2rem; position: relative; z-index: 1;">
+            <p style="color: var(--text-muted); margin-bottom: 0.2rem;">@{{ user.username }}</p>
+            <div style="display: inline-block; padding: 0.3rem 0.8rem; background: rgba(37, 99, 235, 0.1); color: var(--primary); border-radius: 20px; font-size: 0.85rem; font-weight: 700; border: 1px solid rgba(37, 99, 235, 0.2);">
+                <i class="fas fa-id-card" style="margin-right: 5px;"></i> <span style="font-size: 0.7rem; opacity: 0.8; text-transform: uppercase; margin-right: 4px;">Student ID:</span> {{ profile.student_id|default:"Pending Assessment" }}
+            </div>
+        </div>
+
+        <form method="POST" action="{% url 'profile' %}" enctype="multipart/form-data" style="text-align: left; position: relative; z-index: 1;">
+            {% csrf_token %}
+            
+            <div class="input-group">
+                <label for="profile_image">Profile Photo</label>
+                <div style="position: relative;">
+                    <i class="fas fa-camera input-icon" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                    <input type="file" id="profile_image" name="profile_image" accept="image/*" style="padding-left: 2.5rem; width: 100%; padding-top: 0.6rem;">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="input-group">
+                    <label for="first_name">First Name</label>
+                    <div style="position: relative;">
+                        <i class="fas fa-user input-icon" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                        <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required placeholder="Enter first name" style="padding-left: 2.5rem; width: 100%;">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="last_name">Last Name</label>
+                    <div style="position: relative;">
+                        <i class="fas fa-user input-icon" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                        <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" required placeholder="Enter last name" style="padding-left: 2.5rem; width: 100%;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <div style="position: relative;">
+                    <i class="fas fa-envelope input-icon" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                    <input type="email" id="email" name="email" value="{{ user.email }}" required placeholder="Enter email address" style="padding-left: 2.5rem; width: 100%;">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="contact_number">Contact Number</label>
+                <div style="position: relative;">
+                    <i class="fas fa-phone input-icon" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                    <input type="tel" id="contact_number" name="contact_number" value="{{ profile.contact_number|default:'' }}" required placeholder="10-digit number" pattern="[0-9]{10}" maxlength="10" style="padding-left: 2.5rem; width: 100%;">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="username">Username (Cannot be changed)</label>
+                <div style="position: relative;">
+                    <i class="fas fa-at input-icon" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                    <input type="text" id="username" name="username" value="{{ user.username }}" disabled style="padding-left: 2.5rem; width: 100%; background-color: var(--bg-secondary); cursor: not-allowed; opacity: 0.7; border-color: rgba(0,0,0,0.05);">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="resume">Upload Resume (PDF only)</label>
+                <div style="position: relative;">
+                    <i class="fas fa-file-pdf input-icon" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                    <input type="file" id="resume" name="resume" accept=".pdf" style="padding-left: 2.5rem; width: 100%; padding-top: 0.6rem;">
+                </div>
+                {% if profile.resume %}
+                    <p style="font-size: 0.8rem; color: var(--success); margin-top: 0.5rem;"><i class="fas fa-check-circle"></i> Current: {{ profile.resume.name|cut:"resumes/" }}</p>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.8rem; font-size: 1.05rem;"><i class="fas fa-save" style="margin-right:0.5rem"></i> Save Changes</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* Small layout fix for mobile */
+    @media (max-width: 600px) {
+        form > div[style*="grid-template-columns"] {
+            grid-template-columns: 1fr !important;
+            gap: 0 !important;
+        }
+    }
+</style>
+{% endblock %}

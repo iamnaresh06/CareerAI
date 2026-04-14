@@ -1,0 +1,254 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Resume Builder - CareerAI{% endblock %}
+
+{% block content %}
+<script src="{% static 'js/resume.js' %}" defer></script>
+<style>
+    /* Scale down typography & inputs slightly based on user feedback */
+    h1 { font-size: 1.6rem !important; }
+    h3 { font-size: 1.15rem !important; margin-bottom: 1rem !important; }
+    .input-group label { font-size: 0.85rem !important; margin-bottom: 0.3rem !important; }
+    input[type="text"], input[type="email"], input[type="month"], input[type="file"], textarea, .form-control {
+        font-size: 0.85rem !important;
+        padding: 0.5rem 0.75rem !important;
+    }
+    .text-muted { font-size: 0.8rem !important; }
+    .btn { font-size: 0.85rem !important; padding: 0.4rem 1rem !important; }
+</style>
+
+<div class="container py-8">
+    <div class="flex justify-between items-center mb-4 heading-y-padding">
+        <h1>ATS Resume Builder</h1>
+
+        {% if user.is_superuser %}
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Admin Dashboard</a>
+        {% else %}
+            <a href="{% url 'dashboard' %}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Dashboard</a>
+        {% endif %}
+    </div>
+
+    <!-- Auto-Fill from Resume -->
+    <div class="card mb-8" style="border: 2px dashed var(--primary); background: rgba(var(--primary-rgb), 0.05);">
+        <h3 class="mb-3 text-primary" style="font-size: 1.1rem;"><i class="fas fa-magic"></i> Auto-Fill with AI</h3>
+        <p class="mb-4 text-muted" style="font-size: 0.9rem;">Upload your existing resume (PDF or DOCX) to automatically extract known fields and speed up the building process.</p>
+        <form method="POST" action="{% url 'resume_parse' %}" enctype="multipart/form-data" class="flex flex-col md:flex-row gap-4 items-center w-full">
+            {% csrf_token %}
+            <input type="file" name="resume_file" accept=".pdf,.docx" class="form-control" style="flex: 1; min-width: 0;" required>
+            <button type="submit" class="btn btn-primary whitespace-nowrap"><i class="fas fa-upload"></i> Scan & Autofill</button>
+        </form>
+    </div>
+
+    <form method="POST" action="{% url 'resume_save' %}">
+        {% csrf_token %}
+
+        <!-- Personal Info -->
+        <div class="card mb-8">
+            <h3 class="mb-4 text-accent"><i class="fas fa-user-circle"></i> Personal Information</h3>
+            <div class="grid grid-2">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input name="full_name" value="{{ full_name|default:'' }}" required>
+                </div>
+                <div class="input-group">
+                    <label>Email</label>
+                    <input name="email" value="{{ email|default:'' }}" required>
+                </div>
+                <div class="input-group">
+                    <label>Phone</label>
+                    <input name="phone" value="{{ phone|default:'' }}" required>
+                </div>
+                <div class="input-group">
+                    <label>LinkedIn</label>
+                    <input name="linkedin" value="{{ linkedin|default:'' }}">
+                </div>
+                <div class="input-group">
+                    <label>GitHub</label>
+                    <input name="github" value="{{ github|default:'' }}">
+                </div>
+                <div class="input-group">
+                    <label>Portfolio</label>
+                    <input name="portfolio" value="{{ portfolio|default:'' }}">
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="card mb-8">
+            <h3 class="mb-4 text-accent"><i class="fas fa-align-left"></i> Professional Summary</h3>
+            <textarea name="summary" rows="4" placeholder="Brief professional summary (2-4 lines)...">{{ summary|default:'' }}</textarea>
+        </div>
+
+        <!-- Skills -->
+        <div class="card mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-accent"><i class="fas fa-tools"></i> Skills</h3>
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" name="show_skill_categories" {% if show_skill_categories %}checked{% endif %} style="width: auto;">
+                    <span style="font-size: 0.9rem;">Categorize in PDF</span>
+                </label>
+            </div>
+            <input name="skills" value="{{ skills_raw|default:'' }}" placeholder="Python, Java, React, SQL, AWS (Comma separated)">
+        </div>
+
+        <!-- Education -->
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-accent"><i class="fas fa-graduation-cap"></i> Education <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted); margin-left: 0.5rem; text-transform: none;">(Add only recent 2 educations)</span></h3>
+                <button type="button" onclick="addEducation()" class="btn btn-sm btn-outline"><i class="fas fa-plus"></i> Add</button>
+            </div>
+            <div id="education-container">
+                {% if education %}
+                    {% for edu in education %}
+                    <div class="card mb-4 p-6">
+                        <div class="grid grid-2 gap-4 mb-4">
+                            <div class="input-group mb-0">
+                                <label>Degree</label>
+                                <input name="edu_degree[]" value="{{ edu.degree|default:'' }}" placeholder="e.g. B.Tech Computer Science" required>
+                            </div>
+                            <div class="input-group mb-0">
+                                <label>College / University</label>
+                                <input name="edu_college[]" value="{{ edu.college|default:'' }}" placeholder="e.g. IIT Madras" required>
+                            </div>
+                        </div>
+                        <div class="grid grid-2 gap-4 mb-4 items-end">
+                            <div class="input-group mb-0">
+                                <label>Start Date</label>
+                                <input type="month" name="edu_start[]" value="{{ edu.start|default:'' }}" required>
+                            </div>
+                            <div class="input-group mb-0">
+                                <label>End Date</label>
+                                <div class="flex gap-2 items-center">
+                                    <input type="month" name="edu_end[]" value="{{ edu.end|default:'' }}" style="flex: 1;" {% if edu.end == 'Present' %}disabled style="background-color: #e2e8f0; opacity: 0.7; cursor: not-allowed;"{% endif %}>
+                                    <label class="flex items-center gap-1" style="white-space: nowrap; cursor: pointer; margin-bottom: 0;">
+                                        <input type="checkbox" onchange="togglePresent(this, 'edu_end[]')" style="width: auto;" {% if edu.end == 'Present' %}checked{% endif %}>
+                                        <span>Present</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-0">
+                            <label>Score (CGPA/%)</label>
+                            <input name="edu_score[]" value="{{ edu.score|default:'' }}" placeholder="e.g. 8.5">
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Experience -->
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-accent"><i class="fas fa-briefcase"></i> Experience <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted); margin-left: 0.5rem; text-transform: none;">(Add only recent 2 experience details)</span></h3>
+                <button type="button" onclick="addExperience()" class="btn btn-sm btn-outline"><i class="fas fa-plus"></i> Add</button>
+            </div>
+            <div id="experience-container">
+                {% if experience %}
+                    {% for exp in experience %}
+                    <div class="card mb-4 p-6">
+                        <div class="grid grid-2 gap-4 mb-4">
+                            <div class="input-group mb-0">
+                                <label>Role / Position</label>
+                                <input name="exp_role[]" value="{{ exp.role|default:'' }}" placeholder="e.g. Software Engineer">
+                            </div>
+                            <div class="input-group mb-0">
+                                <label>Company Name</label>
+                                <input name="exp_company[]" value="{{ exp.company|default:'' }}" placeholder="e.g. Google">
+                            </div>
+                        </div>
+                        <div class="grid grid-2 gap-4 mb-4 items-end">
+                            <div class="input-group mb-0">
+                                <label>Start Date</label>
+                                <input type="month" name="exp_start[]" value="{{ exp.start|default:'' }}">
+                            </div>
+                            <div class="input-group mb-0">
+                                <label>End Date</label>
+                                <div class="flex gap-2 items-center">
+                                    <input type="month" name="exp_end[]" value="{{ exp.end|default:'' }}" style="flex: 1;" {% if exp.end == 'Present' %}disabled style="background-color: #e2e8f0; opacity: 0.7; cursor: not-allowed;"{% endif %}>
+                                    <label class="flex items-center gap-1" style="white-space: nowrap; cursor: pointer; margin-bottom: 0;">
+                                        <input type="checkbox" onchange="togglePresent(this, 'exp_end[]')" style="width: auto;" {% if exp.end == 'Present' %}checked{% endif %}>
+                                        <span>Present</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-0">
+                            <label>Work Description (MAX 3 points, separate by new lines)</label>
+                            <textarea name="exp_desc[]" rows="4" placeholder="Developed ...&#10;Collaborated ...">{% for d in exp.desc %}{{ d }}{% if not forloop.last %}&#10;{% endif %}{% endfor %}</textarea>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Projects -->
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-accent"><i class="fas fa-laptop-code"></i> Projects <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted); margin-left: 0.5rem; text-transform: none;">(Add only recent 2 projects)</span></h3>
+                <button type="button" onclick="addProject()" class="btn btn-sm btn-outline"><i class="fas fa-plus"></i> Add</button>
+            </div>
+            <div id="projects-container">
+                {% if projects %}
+                    {% for proj in projects %}
+                    <div class="card mb-4 p-6">
+                        <div class="grid grid-2 gap-4 mb-4">
+                            <div class="input-group mb-0">
+                                <label>Project Name</label>
+                                <input name="proj_name[]" value="{{ proj.name|default:'' }}" placeholder="e.g. E-Commerce App">
+                            </div>
+                            <div class="input-group mb-0">
+                                <label>Tech Stack</label>
+                                <input name="proj_stack[]" value="{{ proj.stack|default:'' }}" placeholder="e.g. React, Node.js, MongoDB">
+                            </div>
+                        </div>
+                        <div class="input-group mb-0">
+                            <label>Project Description</label>
+                            <textarea name="proj_desc[]" rows="4" placeholder="Briefly describe what you built...">{% for d in proj.desc %}{{ d }}{% if not forloop.last %}&#10;{% endif %}{% endfor %}</textarea>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-accent"><i class="fas fa-certificate"></i> Certifications <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted); margin-left: 0.5rem; text-transform: none;">(Add only recent 2 certifications)</span></h3>
+                <button type="button" onclick="addCertification()" class="btn btn-sm btn-outline"><i class="fas fa-plus"></i> Add</button>
+            </div>
+            <div id="certifications-container">
+                {% if certifications %}
+                    {% for cert in certifications %}
+                    <div class="card mb-4 p-6">
+                        <div class="grid grid-2 gap-4">
+                            <div class="input-group mb-0">
+                                <label>Certificate Name</label>
+                                <input name="cert_name[]" value="{{ cert.name|default:'' }}" placeholder="e.g. AWS Solutions Architect">
+                            </div>
+                            <div class="input-group mb-0">
+                                <label>Issued By / Organization</label>
+                                <input name="cert_org[]" value="{{ cert.org|default:'' }}" placeholder="e.g. Amazon Web Services">
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="card sticky-bottom p-4 flex gap-2 justify-center" style="position: sticky; bottom: 1rem; z-index: 40; border-top: 2px solid var(--primary); background: var(--bg-card);">
+            <button name="action" value="preview" class="btn btn-outline sticky-action-btn">
+                <i class="fas fa-eye"></i> Preview
+            </button>
+            <button name="action" value="download" class="btn btn-primary sticky-action-btn">
+                <i class="fas fa-download"></i> Download PDF
+            </button>
+        </div>
+
+    </form>
+</div>
+{% endblock %}

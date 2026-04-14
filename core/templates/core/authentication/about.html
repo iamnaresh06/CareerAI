@@ -1,0 +1,60 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}About Us - CareerAI{% endblock %}
+
+{% block content %}
+<div class="container py-8">
+    <div class="text-center mb-8 animate-scroll">
+        <h1 class="gradient-text hero-title" style="font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 1rem;">About CareerAI</h1>
+        <p class="hero-subtitle" style="font-size: 1.2rem; color: var(--text-muted);">Bridging the gap between students and their dream careers.</p>
+    </div>
+
+    <div class="grid-2" style="margin-top: 3rem;">
+        <!-- Our Story -->
+        <div class="card glass p-8 animate-scroll delay-1">
+            <div style="width: 50px; height: 50px; background: rgba(37, 99, 235, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <i class="fas fa-bullseye" style="font-size: 1.5rem; color: var(--primary);"></i>
+            </div>
+            <h2 style="margin-bottom: 1rem; color: var(--text-main); font-size: 1.8rem;">Our Story</h2>
+            <p style="color: var(--text-muted); line-height: 1.8;">
+                CareerAI was born out of a stark realization: the transition from academia to the professional world is incredibly daunting. Built <strong>by students, for students and freshers</strong>, our startup understands firsthand the challenges of crafting the perfect resume, preparing for rigorous interviews, and standing out in a hyper-competitive job market. We experienced the anxieties of the job hunt, which inspired us to build a platform that actually helps.
+            </p>
+        </div>
+
+        <!-- Our Mission -->
+        <div class="card glass p-8 animate-scroll delay-2">
+            <div style="width: 50px; height: 50px; background: rgba(16, 185, 129, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <i class="fas fa-rocket" style="font-size: 1.5rem; color: var(--success);"></i>
+            </div>
+            <h2 style="margin-bottom: 1rem; color: var(--text-main); font-size: 1.8rem;">Our Mission</h2>
+            <p style="color: var(--text-muted); line-height: 1.8;">
+                Our mission is simple: to democratize access to premium career preparation tools. We believe that professional guidance shouldn't be a luxury reserved for a few. That is why we provide our state-of-the-art AI Resume Analyzers, market readiness insights, and ATS-compliant builders at incredibly <strong>student-friendly prices</strong>. We are here to ensure that your talent, not your budget, dictates your career trajectory.
+            </p>
+        </div>
+    </div>
+
+    <div class="card glass p-8 animate-scroll delay-3 text-center" style="max-width: 800px; margin: 3rem auto 0; border: 1px dashed rgba(37, 99, 235, 0.4);">
+        <h2 style="margin-bottom: 1rem; color: var(--text-main); font-size: 2rem;">Why Choose Us?</h2>
+        <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem; font-size: 1.1rem;">
+            We aren't a massive corporate conglomerate trying to monetize your data. We are a passionate, student-led startup dedicating our evenings and weekends to fine-tuning machine learning models so that you can land that dream interview. We know what recruiters are looking for, and we've baked that intelligence directly into our tools.
+        </p>
+        {% if not user.is_authenticated %}
+        <a href="{% url 'register' %}" class="btn btn-primary pulse-btn" style="padding: 1rem 2rem; font-size: 1.1rem;"><i class="fas fa-user-plus" style="margin-right: 0.5rem;"></i> Join Our Community Today</a>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    @media (min-width: 768px) {
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+</style>
+{% endblock %}
