@@ -6,7 +6,12 @@
     {% csrf_token %}
     <!-- Header -->
     <div class="session-header">
-        <h2>Mock Interview: <span class="highlight">{{ category|title }}</span></h2>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+             <a href="{% url 'interview_hub' %}" class="btn btn-outline" style="padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.8rem;">
+                <i class="fas fa-arrow-left"></i> Exit
+            </a>
+            <h2 style="margin: 0;">Mock Interview: <span class="highlight">{{ category|title }}</span></h2>
+        </div>
         <div class="progress-indicator">Question <span id="current-q">1</span> / <span id="total-q">0</span></div>
     </div>
 

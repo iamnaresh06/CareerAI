@@ -3,72 +3,127 @@
 {% block title %}Jobs & Internships - CareerAI{% endblock %}
 
 {% block content %}
-<div class="container py-8">
-    <div class="flex flex-wrap justify-between items-center gap-4 mb-6 heading-y-padding">
-        <h1 class="page-title">
-            <span style="color: var(--primary);">Explore</span> Opportunities
-        </h1>
-        
-        {% if user.is_staff or user.is_superuser %}
-            <a href="{% url 'post_job' %}" class="btn btn-primary" style="padding: 0.6rem 1.2rem;">
-                <i class="fas fa-plus" style="margin-right: 0.5rem;"></i> Post Job
+<div class="container py-8 heading-top-padding">
+    <style>
+        .filter-chip {
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+        @media (max-width: 768px) {
+            .compact-header { 
+                flex-direction: column !important; 
+                align-items: flex-start !important; 
+                gap: 1rem !important;
+                margin-bottom: 2rem !important;
+            }
+            .job-card-mobile {
+                flex-direction: column !important;
+            }
+            .expiration-bar-mobile {
+                width: 100% !important;
+                height: 35px !important;
+                border-right: none !important;
+                border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+                padding: 0 1rem !important;
+            }
+            .expiration-text-mobile {
+                writing-mode: horizontal-tb !important;
+                transform: none !important;
+                font-size: 0.75rem !important;
+            }
+            .filter-container-mobile {
+                margin: 1.5rem 0 2rem 0 !important;
+                padding-bottom: 1rem !important;
+            }
+        }
+    </style>
+    <!-- Compact Header -->
+    <div class="flex flex-wrap justify-between items-center gap-3 mb-8 compact-header">
+        <div class="flex items-center gap-4">
+            <a href="{% url 'dashboard' %}" class="btn btn-outline back-btn-mobile" style="border-radius: 8px; padding: 0.4rem 0.8rem;">
+                <i class="fas fa-chevron-left" style="margin-right: 4px;"></i> Back
             </a>
-        {% endif %}
+            <h1 class="page-title" style="margin: 0;">
+                <span style="color: var(--primary);">Explore</span> Opportunities
+            </h1>
+        </div>
+        
+        <div class="flex items-center gap-3">
+            <a href="#" target="_blank" class="glass" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.8rem; border-radius: 30px; border: 1px solid rgba(30, 190, 165, 0.3); text-decoration: none; background: rgba(30, 190, 165, 0.05);">
+                <i class="fab fa-whatsapp" style="color: #1ebea5; font-size: 1rem;"></i>
+                <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-main);">Join WhatsApp <span class="desktop-only" style="font-weight: 400; opacity: 0.7;">for updates</span></span>
+            </a>
+            {% if user.is_staff or user.is_superuser %}
+                <a href="{% url 'post_job' %}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus"></i> Post Job
+                </a>
+            {% endif %}
+        </div>
     </div>
 
     <!-- Filters -->
-    <div class="flex gap-4 mb-4" style="overflow-x: auto; padding-bottom: 0.5rem;">
-        <a href="{% url 'job_list' %}" class="btn {% if not filter_type %}btn-primary{% else %}btn-outline{% endif %}">
+    <div class="flex gap-3 mb-8 filter-container-mobile" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+        <a href="{% url 'job_list' %}" class="filter-chip {% if not filter_type %}btn-primary{% else %}btn-outline{% endif %}">
             All
         </a>
-        <a href="?type=FULL_TIME" class="btn {% if filter_type == 'FULL_TIME' %}btn-primary{% else %}btn-outline{% endif %}">
+        <a href="?type=FULL_TIME" class="filter-chip {% if filter_type == 'FULL_TIME' %}btn-primary{% else %}btn-outline{% endif %}">
             Full Time
         </a>
-        <a href="?type=INTERNSHIP" class="btn {% if filter_type == 'INTERNSHIP' %}btn-primary{% else %}btn-outline{% endif %}">
+        <a href="?type=INTERNSHIP" class="filter-chip {% if filter_type == 'INTERNSHIP' %}btn-primary{% else %}btn-outline{% endif %}">
             Internships
         </a>
-        <a href="?type=PART_TIME" class="btn {% if filter_type == 'PART_TIME' %}btn-primary{% else %}btn-outline{% endif %}">
+        <a href="?type=PART_TIME" class="filter-chip {% if filter_type == 'PART_TIME' %}btn-primary{% else %}btn-outline{% endif %}">
             Part Time
         </a>
     </div>
 
-    <!-- Job Grid -->
-    <div class="grid grid-3">
+    <!-- Job Grid: Compact Optimized Cards -->
+    <div class="grid grid-3" style="gap: 1.5rem;">
         {% for job in jobs %}
-        <div class="card job-card flex flex-col justify-between">
-            <div>
-                <div class="flex justify-between items-start mb-2">
-                    <span class="tag">{{ job.get_job_type_display }}</span>
-                    <small style="color: var(--text-muted);">{{ job.posted_at|timesince }} ago</small>
-                </div>
-                
-                <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">{{ job.title }}</h3>
-                <p style="color: var(--accent); font-weight: 600; margin-bottom: 0.5rem;">
-                    <i class="fas fa-building"></i> {{ job.company_name }}
-                </p>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
-                    <i class="fas fa-map-marker-alt"></i> {{ job.location }}
-                </p>
-                
-                <div style="font-size: 0.95rem; margin-bottom: 1.5rem; max-height: 100px; overflow: hidden; position: relative;">
-                    {{ job.description|linebreaks }}
-                    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 40px; background: linear-gradient(transparent, var(--bg-card));"></div>
+        <div class="card glass animate-fade-up job-card-mobile" style="padding: 0; overflow: hidden; display: flex; flex-direction: row; border: 1px solid rgba(0,0,0,0.05); min-height: 160px;">
+            <!-- Expiration Left Bar -->
+            <div class="expiration-bar-mobile" style="width: 45px; background: {% if job.expires_at %}rgba(239, 68, 68, 0.1){% else %}rgba(37, 99, 235, 0.1){% endif %}; display: flex; flex-direction: column; align-items: center; justify-content: center; border-right: 1px solid rgba(0,0,0,0.05);">
+                <div class="expiration-text-mobile" style="writing-mode: vertical-lr; transform: rotate(180deg); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: {% if job.expires_at %}#ef4444{% else %}var(--primary){% endif %}; letter-spacing: 1px;">
+                    {% if job.expires_at %}
+                        EXPIRES: {{ job.expires_at|date:"M d" }}
+                    {% else %}
+                        ACTIVE
+                    {% endif %}
                 </div>
             </div>
-            
-            <div class="flex gap-2 mt-4">
-                <a href="{% url 'job_detail' job.id %}" class="btn btn-outline" style="flex: 1;">View Details</a>
-                <a href="{{ job.apply_link }}" target="_blank" class="btn btn-primary" style="flex: 1;">Apply <i class="fas fa-external-link-alt" style="margin-left: 5px;"></i></a>
-                {% if user.is_staff or user.is_superuser %}
-                    <a href="{% url 'delete_job' job.id %}" class="btn btn-danger" onclick="return confirm('Delete this job?');"><i class="fas fa-trash"></i></a>
-                {% endif %}
+
+            <!-- Card Content -->
+            <div style="flex: 1; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div class="flex justify-between items-start mb-1">
+                        <span style="font-size: 0.7rem; font-weight: 700; color: var(--primary); text-transform: uppercase; background: rgba(37, 99, 235, 0.08); padding: 2px 8px; border-radius: 4px;">{{ job.get_job_type_display }}</span>
+                        <small style="color: var(--text-muted); font-size: 0.75rem;">{{ job.posted_at|timesince }} ago</small>
+                    </div>
+                    
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); line-height: 1.2; margin-bottom: 0.25rem;">{{ job.title }}</h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">
+                        <span style="font-weight: 600; color: var(--accent);">{{ job.company_name }}</span> • {{ job.location }}
+                    </p>
+                </div>
+                
+                <div class="flex gap-2">
+                    <a href="{% url 'job_detail' job.id %}" class="btn btn-outline btn-sm" style="flex: 1; font-size: 0.75rem; padding: 0.4rem;">View Details</a>
+                    <a href="{{ job.apply_link }}" target="_blank" class="btn btn-primary btn-sm" style="flex: 1; font-size: 0.75rem; padding: 0.4rem;">Apply</a>
+                    {% if user.is_staff or user.is_superuser %}
+                        <a href="{% url 'delete_job' job.id %}" class="btn btn-danger btn-sm" style="padding: 0.4rem 0.6rem;" onclick="return confirm('Delete this job?');"><i class="fas fa-trash"></i></a>
+                    {% endif %}
+                </div>
             </div>
         </div>
         {% empty %}
-        <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
-            <i class="fas fa-search" style="font-size: 3rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
-            <h3>No jobs found matching your criteria.</h3>
-            <p style="color: var(--text-muted);">Check back later or try a different filter.</p>
+        <div class="card glass" style="grid-column: 1 / -1; text-align: center; padding: 3rem; border: 2px dashed rgba(0,0,0,0.1);">
+            <i class="fas fa-info-circle" style="font-size: 2.5rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
+            <h3>No active opportunities</h3>
+            <p style="color: var(--text-muted);">Check back later or try exploring other categories.</p>
         </div>
         {% endfor %}
     </div>

@@ -20,6 +20,7 @@ class JobPosting(models.Model):
     description = models.TextField()
     apply_link = models.URLField(help_text="Direct link to company application page")
     posted_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     
     # Optional: link to author (admin)
@@ -48,6 +49,7 @@ class Event(models.Model):
     date = models.DateTimeField(help_text="When the event starts")
     location = models.CharField(max_length=200, default="Online", help_text="Venue or Online")
     posted_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     posted_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 

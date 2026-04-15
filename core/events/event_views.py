@@ -12,6 +12,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from core.models import Event
+from django.utils import timezone
+from django.db.models import Q
 
 # ==============================
 # HELPERS
@@ -34,8 +36,13 @@ def event_list(request):
     Displays the Events Board.
     Lists all active events, sorted by upcoming dates.
     """
-    # Fetch active events and sort by date (soonest first)
-    events = Event.objects.filter(is_active=True).order_by('date')
+    # Fetch active and non-expired events, sorted by date (soonest first)
+    now = timezone.now()
+    events = Event.objects.filter(
+        is_active=True
+    ).filter(
+        Q(expires_at__isnull=True) | Q(expires_at__gte=now)
+    ).order_by('date')
     return render(request, 'core/events/event_list.html', {'events': events})
 
 
@@ -54,6 +61,7 @@ def post_event(request):
                 registration_link=request.POST.get('registration_link'),
                 date=request.POST.get('date'),
                 location=request.POST.get('location'),
+                expires_at=request.POST.get('expires_at') if request.POST.get('expires_at') else None,
                 posted_by=request.user
             )
             

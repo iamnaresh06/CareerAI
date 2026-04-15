@@ -2,14 +2,15 @@
 {% block title %}Job Readiness - CareerAI{% endblock %}
 
 {% block content %}
-<div class="container py-8">
-    <div class="flex flex-wrap justify-between items-center gap-3 mb-6 heading-y-padding">
-        <h1>Job Readiness <br class="mobile-break"> Assessment</h1>
-        {% if user.is_superuser %}
-            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline back-btn-mobile"><i class="fas fa-arrow-left"></i> Back to Admin Dashboard</a>
-        {% else %}
-            <a href="{% url 'dashboard' %}" class="btn btn-outline back-btn-mobile"><i class="fas fa-arrow-left"></i> Back</a>
-        {% endif %}
+<div class="container py-8 pb-32 heading-top-padding">
+    <div class="flex items-center justify-between gap-4 mb-10">
+        <div style="flex: 1;">
+            <a href="{% url 'dashboard' %}" class="btn btn-outline back-btn-mobile" style="border-radius: 8px; padding: 0.4rem 0.8rem;">
+                <i class="fas fa-chevron-left" style="margin-right: 4px;"></i> Back
+            </a>
+        </div>
+        <h1 style="margin: 0; font-size: 2.2rem; text-align: center; flex: 2; font-weight: 800;">Job <span style="color: var(--success);">Readiness</span></h1>
+        <div style="flex: 1;" class="desktop-only"></div>
     </div>
 
     <div class="grid grid-2">
@@ -17,10 +18,10 @@
         <div class="card text-center p-8">
             <h2 class="mb-4">Readiness Score</h2>
             <div class="score-circle-container">
-                <svg width="180" height="180" style="transform: rotate(-90deg);" class="score-svg">
-                    <circle cx="90" cy="90" r="80" stroke="rgba(255,255,255,0.1)" stroke-width="12" fill="transparent"></circle>
+                <svg width="180" height="180" style="transform: rotate(-90deg); --circumference: 502;" class="score-svg">
+                    <circle cx="90" cy="90" r="80" stroke="rgba(0,0,0,0.05)" stroke-width="12" fill="transparent"></circle>
                     <circle cx="90" cy="90" r="80" stroke="var(--success)" stroke-width="12" fill="transparent"
-                            style="stroke-dasharray: 502; stroke-dashoffset: calc(502 - (502 * {{ readiness_score }}) / 100); transition: stroke-dashoffset 1s ease-out;">
+                            style="stroke-dasharray: var(--circumference); stroke-dashoffset: calc(var(--circumference) - (var(--circumference) * {{ readiness_score }}) / 100); transition: stroke-dashoffset 1s ease-out;">
                     </circle>
                 </svg>
                 <div class="score-value-text">
@@ -41,27 +42,39 @@
         </div>
 
         <!-- Action Plan -->
-        <div class="card">
-            <h3 class="mb-4">🧭 30-Day Career Action Plan</h3>
-            <ul style="padding-left: 1.5rem;">
+        <div class="card glass shadow-lg" style="border: 1px solid rgba(0,0,0,0.05);">
+            <h3 class="mb-6 flex items-center gap-2">
+                <span style="background: var(--primary); color: white; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1.1rem;">🧭</span>
+                30-Day Career Action Plan
+            </h3>
+            <div style="position: relative; padding-left: 20px;">
+                <!-- Vertical Progress Line -->
+                <div style="position: absolute; left: 0; top: 10px; bottom: 10px; width: 2px; background: rgba(var(--primary-rgb), 0.1); border-radius: 10px;"></div>
+                
                 {% for step in action_plan %}
-                <li style="margin-bottom: 1rem; position: relative; list-style: none;">
-                    <i class="fas fa-check-circle" style="color: var(--primary); margin-right: 0.5rem;"></i>
-                    {{ step }}
-                </li>
+                <div class="step-item mb-6" style="position: relative;">
+                    <div style="position: absolute; left: -24px; top: 5px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary); border: 2px solid white; box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.1);"></div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text-main); margin: 0;">{{ step }}</p>
+                </div>
                 {% empty %}
-                <li style="color: var(--text-muted);">Analyze a resume to generate your action plan!</li>
+                <div style="text-align: center; padding: 2rem 0;">
+                    <i class="fas fa-search mb-3" style="font-size: 2rem; color: var(--text-muted); opacity: 0.3;"></i>
+                    <p style="color: var(--text-muted);">Analyze a resume to generate your action plan!</p>
+                </div>
                 {% endfor %}
-            </ul>
+            </div>
             
             {% if not action_plan %}
             <div class="mt-4 text-center">
                 <a href="{% url 'analyze' %}" class="btn btn-primary">Go to Analyzer</a>
             </div>
             {% else %}
-            <div class="mt-8 pt-4 text-center" style="border-top: 1px solid rgba(255,255,255,0.05);">
-                <a href="{% url 'resume_builder' %}" class="btn btn-primary pulse-btn" style="padding: 1rem 2rem;">
-                     <i class="fas fa-file-invoice"></i>   Build ATS Resume
+            <div class="mt-8 pt-6 flex flex-col sm:flex-row items-center justify-center gap-4" style="border-top: 1px solid rgba(0,0,0,0.05);">
+                <a href="{% url 'resume_builder' %}" class="btn btn-primary pulse-btn" style="flex: 1; min-width: 200px; justify-content: center;">
+                    <i class="fas fa-file-invoice mr-2"></i> Build ATS Resume
+                </a>
+                <a href="{% url 'roadmaps' %}" class="btn btn-outline" style="flex: 1; min-width: 200px; justify-content: center;">
+                    <i class="fas fa-map mr-2"></i> View Roadmaps
                 </a>
             </div>
             {% endif %}
@@ -97,16 +110,12 @@
         .score-svg {
             width: 140px;
             height: 140px;
+            --circumference: 377 !important;
         }
         .score-svg circle {
             cx: 70;
             cy: 70;
             r: 60;
-            stroke-dasharray: 377; /* 2 * PI * 60 */
-        }
-        /* Update the dynamic offset for smaller circle */
-        .score-svg circle[style*="stroke-dashoffset"] {
-            stroke-dashoffset: calc(377 - (377 * {{ readiness_score }}) / 100) !important;
         }
         .score-value-text {
             font-size: 1.75rem;

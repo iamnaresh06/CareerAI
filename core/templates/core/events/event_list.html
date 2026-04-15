@@ -3,64 +3,99 @@
 {% block title %}Events & Hackathons - CareerAI{% endblock %}
 
 {% block content %}
-<div class="container py-8">
-    <div class="flex justify-between items-center mb-6 heading-y-padding">
-        <h1 style="font-size: 2.5rem; font-weight: 800;">
-            <span style="color: var(--primary);">Exclusive</span> Events & Hackathons
-        </h1>
-        
-        {% if user.is_staff or user.is_superuser %}
-            <a href="{% url 'post_event' %}" class="btn btn-primary">
-                <i class="fas fa-plus" style="margin-right: 0.5rem;"></i> Post Event
+<div class="container py-8 heading-top-padding">
+    <style>
+        @media (max-width: 768px) {
+            .compact-header { 
+                flex-direction: column !important; 
+                align-items: flex-start !important; 
+                gap: 1.5rem !important;
+                margin-bottom: 2.5rem !important;
+            }
+            .event-card-mobile {
+                flex-direction: column !important;
+            }
+            .expiration-bar-mobile {
+                width: 100% !important;
+                height: 35px !important;
+                border-right: none !important;
+                border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+                padding: 0 1rem !important;
+            }
+            .expiration-text-mobile {
+                writing-mode: horizontal-tb !important;
+                transform: none !important;
+                font-size: 0.75rem !important;
+            }
+        }
+    </style>
+    <!-- Compact Header -->
+    <div class="flex flex-wrap justify-between items-center gap-3 mb-8 compact-header">
+        <div class="flex items-center gap-4">
+            <a href="{% url 'dashboard' %}" class="btn btn-outline back-btn-mobile" style="border-radius: 8px; padding: 0.4rem 0.8rem;">
+                <i class="fas fa-chevron-left" style="margin-right: 4px;"></i> Back
             </a>
-        {% endif %}
+            <h1 style="font-size: 1.5rem; font-weight: 800; margin: 0;">
+                <span style="color: var(--primary);">Exclusive</span> Events
+            </h1>
+        </div>
+        
+        <div class="flex items-center gap-3">
+            <a href="#" target="_blank" class="glass" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.8rem; border-radius: 30px; border: 1px solid rgba(30, 190, 165, 0.3); text-decoration: none; background: rgba(30, 190, 165, 0.05);">
+                <i class="fab fa-whatsapp" style="color: #1ebea5; font-size: 1rem;"></i>
+                <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-main);">Join WhatsApp <span class="desktop-only" style="font-weight: 400; opacity: 0.7;">for updates</span></span>
+            </a>
+            {% if user.is_staff or user.is_superuser %}
+                <a href="{% url 'post_event' %}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus" style="margin-right: 4px;"></i> Post
+                </a>
+            {% endif %}
+        </div>
     </div>
 
-    <!-- Event Grid -->
-    <div class="grid grid-3">
+
+    <!-- Event Grid: Compact Optimized Cards -->
+    <div class="grid grid-3" style="gap: 1.5rem;">
         {% for event in events %}
-        <div class="card job-card flex flex-col justify-between" style="border-left: 4px solid var(--accent);">
-            <div>
-                <div class="flex justify-between items-start mb-2">
-                    <span class="tag" style="background: rgba(6, 182, 212, 0.15); color: var(--accent);">{{ event.get_event_type_display }}</span>
-                    <small style="color: var(--text-muted);"><i class="far fa-calendar-alt"></i> {{ event.date|date:"M d, Y" }}</small>
-                </div>
-                
-                <h3 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-main);">{{ event.name }}</h3>
-                
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">
-                    <i class="fas fa-clock"></i> {{ event.date|date:"H:i" }} IST
-                </p>
-                
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
-                    <i class="fas fa-map-marker-alt"></i> {{ event.location }}
-                </p>
-                
-                <div style="font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6;">
-                    {{ event.description|linebreaks }}
+        <div class="card glass animate-fade-up event-card-mobile" style="padding: 0; overflow: hidden; display: flex; flex-direction: row; border: 1px solid rgba(0,0,0,0.05); min-height: 160px;">
+            <!-- Expiration Left Bar -->
+            <div class="expiration-bar-mobile" style="width: 45px; background: {% if event.expires_at %}rgba(245, 158, 11, 0.1){% else %}rgba(6, 182, 212, 0.1){% endif %}; display: flex; flex-direction: column; align-items: center; justify-content: center; border-right: 1px solid rgba(0,0,0,0.05);">
+                <div class="expiration-text-mobile" style="writing-mode: vertical-lr; transform: rotate(180deg); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: {% if event.expires_at %}#f59e0b{% else %}var(--accent){% endif %}; letter-spacing: 1px;">
+                    {% if event.expires_at %}
+                        EXPIRES: {{ event.expires_at|date:"M d" }}
+                    {% else %}
+                        UPCOMING
+                    {% endif %}
                 </div>
             </div>
-            
-            <div class="flex gap-2">
-                <a href="{{ event.registration_link }}" target="_blank" class="btn btn-primary" style="flex: 1;">
-                    Register Now <i class="fas fa-external-link-alt" style="margin-left: 8px;"></i>
-                </a>
-                {% if user.is_staff or user.is_superuser %}
-                    <a href="{% url 'delete_event' event.id %}" class="btn btn-danger" onclick="return confirm('Delete this event?');">
-                        <i class="fas fa-trash"></i>
-                    </a>
-                {% endif %}
+
+            <!-- Card Content -->
+            <div style="flex: 1; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div class="flex justify-between items-start mb-1">
+                        <span style="font-size: 0.7rem; font-weight: 700; color: var(--accent); text-transform: uppercase; background: rgba(6, 182, 212, 0.08); padding: 2px 8px; border-radius: 4px;">{{ event.get_event_type_display }}</span>
+                        <small style="color: var(--text-muted); font-size: 0.75rem;"><i class="far fa-calendar-alt"></i> {{ event.date|date:"M d" }}</small>
+                    </div>
+                    
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); line-height: 1.2; margin-bottom: 0.25rem;">{{ event.name }}</h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">
+                        <i class="fas fa-map-marker-alt"></i> {{ event.location }} • {{ event.date|date:"H:i" }} IST
+                    </p>
+                </div>
+                
+                <div class="flex gap-2">
+                    <a href="{{ event.registration_link }}" target="_blank" class="btn btn-primary btn-sm" style="flex: 1; font-size: 0.75rem; padding: 0.4rem;">Register Now</a>
+                    {% if user.is_staff or user.is_superuser %}
+                        <a href="{% url 'delete_event' event.id %}" class="btn btn-danger btn-sm" style="padding: 0.4rem 0.6rem;" onclick="return confirm('Delete this event?');"><i class="fas fa-trash"></i></a>
+                    {% endif %}
+                </div>
             </div>
         </div>
         {% empty %}
-        <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem;">
-            <div style="font-size: 4rem; color: var(--text-muted); opacity: 0.3; margin-bottom: 1.5rem;">
-                <i class="fas fa-calendar-times"></i>
-            </div>
-            <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">No Upcoming Events</h2>
-            <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto;">
-                We are currently planning some exciting hackathons and webinars. Stay tuned for updates!
-            </p>
+        <div class="card glass" style="grid-column: 1 / -1; text-align: center; padding: 3rem; border: 2px dashed rgba(0,0,0,0.1);">
+            <i class="fas fa-calendar-times" style="font-size: 2.5rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
+            <h3>No upcoming events</h3>
+            <p style="color: var(--text-muted);">We are currently planning some exciting hackathons. Stay tuned!</p>
         </div>
         {% endfor %}
     </div>

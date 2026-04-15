@@ -1,0 +1,131 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Career Roadmaps - CareerAI{% endblock %}
+
+{% block content %}
+<div class="container py-8 heading-top-padding">
+    <div class="flex items-center justify-between gap-4 mb-10">
+        <div style="flex: 1;">
+            <a href="{% url 'dashboard' %}" class="btn btn-outline back-btn-mobile" style="border-radius: 8px; padding: 0.4rem 0.8rem;">
+                <i class="fas fa-chevron-left" style="margin-right: 4px;"></i> Back
+            </a>
+        </div>
+        <h1 style="margin: 0; font-size: 2.2rem; text-align: center; flex: 2; font-weight: 800;">Career <span style="color: var(--primary);">Roadmaps</span></h1>
+        <div style="flex: 1;" class="desktop-only"></div>
+    </div>
+
+    <p style="text-align: center; color: var(--text-muted); max-width: 700px; margin: 0 auto 3rem auto; font-size: 1.1rem;">
+        Master your path with our curated, industry-standard learning roadmaps. Follow step-by-step guides to become an expert in your field.
+    </p>
+
+    <div class="grid grid-roadmaps" style="gap: 1.5rem;">
+        <!-- Python Fullstack -->
+        <a href="#" class="service-card glass animate-fade-up">
+            <div class="service-icon-wrapper" style="background: rgba(16, 185, 129, 0.1);">
+                <div style="font-size: 1.8rem;">🐍</div>
+            </div>
+            <h3>Python Fullstack</h3>
+            <p>Django, React & SQL</p>
+            <span class="btn btn-primary btn-sm mt-3" style="font-size: 0.75rem; padding: 0.4rem 1rem; border-radius: 8px; background: var(--success); border-color: var(--success);">View Roadmap</span>
+        </a>
+
+        <!-- Java Fullstack -->
+        <a href="#" class="service-card glass animate-fade-up">
+            <div class="service-icon-wrapper" style="background: rgba(59, 130, 246, 0.1);">
+                <div style="font-size: 1.8rem;">☕</div>
+            </div>
+            <h3>Java Fullstack</h3>
+            <p>Spring Boot & Frontend</p>
+            <span class="btn btn-primary btn-sm mt-3" style="font-size: 0.75rem; padding: 0.4rem 1rem; border-radius: 8px; background: #3b82f6; border-color: #3b82f6;">View Roadmap</span>
+        </a>
+
+        <!-- AI Engineer -->
+        <a href="#" class="service-card glass animate-fade-up">
+            <div class="service-icon-wrapper" style="background: rgba(168, 85, 247, 0.1);">
+                <div style="font-size: 1.8rem;">🤖</div>
+            </div>
+            <h3>AI Engineer</h3>
+            <p>LLMs & Neural Nets</p>
+            <span class="btn btn-primary btn-sm mt-3" style="font-size: 0.75rem; padding: 0.4rem 1rem; border-radius: 8px; background: #a855f7; border-color: #a855f7;">View Roadmap</span>
+        </a>
+
+        <!-- DevOps -->
+        <a href="#" class="service-card glass animate-fade-up">
+            <div class="service-icon-wrapper" style="background: rgba(236, 72, 153, 0.1);">
+                <div style="font-size: 1.8rem;">☁️</div>
+            </div>
+            <h3>DevOps</h3>
+            <p>AWS, Docker & CI/CD</p>
+            <span class="btn btn-primary btn-sm mt-3" style="font-size: 0.75rem; padding: 0.4rem 1rem; border-radius: 8px; background: #ec4899; border-color: #ec4899;">View Roadmap</span>
+        </a>
+    </div>
+
+    <div style="margin-top: 5rem; text-align: center;" class="animate-fade-up">
+        <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Stay Tuned for More!</h2>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 0.9rem;">
+            We are constantly adding new roadmaps for UI/UX Designer, Data Analyst, and Product Manager...
+        </p>
+    </div>
+</div>
+
+<style>
+    .grid-roadmaps {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .service-card {
+        padding: 1.5rem !important;
+        border-radius: var(--radius-lg);
+        background: var(--bg-card);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+    .service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--primary);
+        background: white;
+    }
+    .service-card h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-top: 0.75rem;
+        color: var(--text-main);
+    }
+    .service-card p {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-top: 0.4rem;
+    }
+    .service-icon-wrapper {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .grid-roadmaps {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 1rem !important;
+        }
+        .service-card {
+            padding: 1.25rem 0.5rem !important;
+        }
+        .service-card p {
+            display: none;
+        }
+        .service-card h3 {
+            font-size: 0.9rem !important;
+        }
+    }
+</style>
+{% endblock %}

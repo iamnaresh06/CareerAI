@@ -13,6 +13,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from core.models import JobPosting
+from django.utils import timezone
+from django.db.models import Q
 
 # ==============================
 # HELPERS
@@ -40,8 +42,13 @@ def job_list(request):
     """
     filter_type = request.GET.get('type') # e.g., 'INTERNSHIP' or 'FULL_TIME'
     
-    # Efficiently fetch only active jobs
-    jobs = JobPosting.objects.filter(is_active=True).order_by('-posted_at')
+    # Fetch only active and non-expired jobs (or jobs with no expiration)
+    now = timezone.now()
+    jobs = JobPosting.objects.filter(
+        is_active=True
+    ).filter(
+        Q(expires_at__isnull=True) | Q(expires_at__gte=now)
+    ).order_by('-posted_at')
     
     if filter_type:
         jobs = jobs.filter(job_type=filter_type)
@@ -83,6 +90,7 @@ def post_job(request):
                 job_type=request.POST.get('job_type'),
                 description=request.POST.get('description'),
                 apply_link=request.POST.get('apply_link'),
+                expires_at=request.POST.get('expires_at') if request.POST.get('expires_at') else None,
                 posted_by=request.user
             )
             

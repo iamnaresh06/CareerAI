@@ -2,22 +2,33 @@
 {% load static %}
 
 {% block content %}
-<div class="interview-hub-container">
-    <div class="hub-header">
-        <h1>AI Mock Interviewer 🤖</h1>
-        <p>Select a topic to start your voice-based mock interview session.</p>
+<div class="interview-hub-container heading-top-padding">
+    <div class="flex items-center justify-between gap-4 mb-8" style="max-width: 1200px; margin: 0 auto 2rem auto;">
+        <div style="flex: 1;">
+            <a href="{% url 'dashboard' %}" class="btn btn-outline back-btn-mobile" style="border-radius: 8px; padding: 0.4rem 0.8rem;">
+                <i class="fas fa-chevron-left" style="margin-right: 4px;"></i> Back
+            </a>
+        </div>
+        <h1 style="margin: 0; font-size: 2.2rem; text-align: center; flex: 2; font-weight: 800;">AI Mock <span style="color: var(--primary);">Interviewer</span> 🤖</h1>
+        <div style="flex: 1;" class="desktop-only"></div>
     </div>
 
-    <div class="topic-grid">
+    <div class="hub-header" style="text-align: center;">
+        <p style="margin-top: -1rem; margin-bottom: 3rem; color: var(--text-muted);">Select a topic to start your voice-based mock interview session.</p>
+    </div>
+
+    <div class="topic-grid" style="gap: 1.5rem;">
         {% for category in categories %}
-        <div class="topic-card">
-            <div class="card-icon">
-                {% if category == 'python' %}🐍{% elif category == 'django' %}🎸{% else %}💼{% endif %}
+        <a href="{% url 'start_interview' category %}" class="service-card glass animate-fade-up">
+            <div class="service-icon-wrapper" style="background: rgba(var(--primary-rgb), 0.1);">
+                <div style="font-size: 1.8rem;">
+                    {% if category == 'python' %}🐍{% elif category == 'django' %}🎸{% else %}💼{% endif %}
+                </div>
             </div>
-            <h2>{{ category|title }}</h2>
+            <h3>{{ category|title }}</h3>
             <p>Practice frequently asked {{ category }} interview questions.</p>
-            <a href="{% url 'start_interview' category %}" class="start-btn">Start Interview</a>
-        </div>
+            <span class="btn btn-primary btn-sm mt-3" style="font-size: 0.75rem; padding: 0.4rem 1rem; border-radius: 8px;">Start Interview</span>
+        </a>
         {% endfor %}
     </div>
 </div>
@@ -25,73 +36,69 @@
 <style>
     .interview-hub-container {
         max-width: 1200px;
-        margin: 40px auto;
-        padding: 20px;
-        text-align: center;
+        margin: 0 auto;
+        padding-bottom: 60px;
     }
-    
-    .hub-header h1 {
-        font-size: 2.5rem;
-        color: #2c3e50;
-        margin-bottom: 10px;
-    }
-    
-    .hub-header p {
-        color: #666;
-        font-size: 1.1rem;
-        margin-bottom: 40px;
-    }
-
     .topic-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 30px;
-        justify-content: center;
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1000px;
+        margin: 0 auto;
     }
-
-    .topic-card {
-        background: white;
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: 1px solid #eee;
-    }
-
-    .topic-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-    }
-
-    .card-icon {
-        font-size: 4rem;
-        margin-bottom: 20px;
-    }
-
-    .topic-card h2 {
-        font-size: 1.8rem;
-        margin-bottom: 10px;
-        color: #333;
-    }
-
-    .topic-card p {
-        color: #777;
-        margin-bottom: 25px;
-    }
-
-    .start-btn {
-        display: inline-block;
-        padding: 12px 30px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
+    .service-card {
+        padding: 1.5rem !important;
+        border-radius: var(--radius-lg);
+        background: var(--bg-card);
+        border: 1px solid rgba(0, 0, 0, 0.05);
         text-decoration: none;
-        border-radius: 50px;
-        font-weight: 600;
-        transition: transform 0.2s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+    .service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--primary);
+        background: white;
+    }
+    .service-card h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-top: 0.75rem;
+        color: var(--text-main);
+    }
+    .service-card p {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-top: 0.4rem;
+        line-height: 1.4;
+    }
+    .service-icon-wrapper {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.5rem;
     }
 
-    .start-btn:hover {
-        transform: scale(1.05);
+    @media (max-width: 768px) {
+        .topic-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 1rem !important;
+        }
+        .service-card {
+            padding: 1.25rem 0.5rem !important;
+        }
+        .service-card p {
+            display: none;
+        }
+        .service-card h3 {
+            font-size: 0.9rem !important;
+        }
     }
 </style>
 {% endblock %}

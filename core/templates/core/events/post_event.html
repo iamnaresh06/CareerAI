@@ -41,9 +41,16 @@
                     </div>
                 </div>
 
-                <div class="input-group">
-                    <label>Registration Link</label>
-                    <input type="url" name="registration_link" placeholder="https://..." required>
+                <div class="grid grid-2">
+                    <div class="input-group">
+                        <label>Registration Link</label>
+                        <input type="url" name="registration_link" placeholder="https://..." required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Expiration Date (Optional)</label>
+                        <input type="datetime-local" name="expires_at" title="Event will be automatically hidden after this date">
+                    </div>
                 </div>
 
                 <div class="input-group">

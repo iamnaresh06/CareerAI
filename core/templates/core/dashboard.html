@@ -64,18 +64,46 @@
 .service-icon-wrapper i {
     font-size: 1.25rem !important;
 }
+
+/* Mobile-Specific Compaction */
+@media (max-width: 768px) {
+    .grid-3 {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem !important;
+    }
+    .service-card {
+        padding: 1.25rem 0.75rem !important;
+    }
+    .service-card h3 {
+        font-size: 0.95rem !important;
+    }
+    .service-card p {
+        display: none; /* Hide description on mobile for compactness */
+    }
+    .service-icon-wrapper {
+        width: 42px !important;
+        height: 42px !important;
+        margin-bottom: 0.25rem !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .grid-3 {
+        gap: 0.75rem !important;
+    }
+}
 </style>
 
 <div class="container py-12">
     <div class="mb-4 heading-top-padding flex justify-between items-end" style="flex-wrap: wrap; gap: 1rem;">
         <div>
-            <h1>Welcome back, <span style="color: var(--primary);">{{ user.first_name|default:user.username }}</span>! 🚀</h1>
-            <p style="color: var(--text-muted);">Manage your career journey from here.</p>
+            <h1 style="margin-bottom: 0.25rem;">Welcome back, <span style="color: var(--primary);">{{ user.first_name|default:user.username }}</span>! 🚀</h1>
+            <p style="color: var(--text-muted); margin-top: 0;">Manage your career journey from here.</p>
         </div>
     </div>
 
     <!-- FREE Tools & Services -->
-    <div style="margin-top: 4rem; margin-bottom: 6rem;">
+    <div style="margin-top: 2.5rem; margin-bottom: 4rem;">
         <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
             <div style="width: 4px; height: 1.25rem; background: var(--primary); border-radius: 2px;"></div>
             <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main); white-space: nowrap; margin: 0; letter-spacing: -0.02em;">FREE Tools & Services</h2>
@@ -127,6 +155,15 @@
                 <p>Get a score and action plan to improve your employability.</p>
             </a>
 
+            <!-- Career Roadmaps -->
+            <a href="{% url 'roadmaps' %}" class="service-card glass">
+                <div class="service-icon-wrapper" style="background: rgba(245, 158, 11, 0.2);">
+                    <i class="fas fa-map" style="color: #f59e0b;"></i>
+                </div>
+                <h3>Career Roadmaps</h3>
+                <p>Follow industry-standard learning paths for Fullstack, AI, and DevOps.</p>
+            </a>
+
             <!-- AI Mock Interview -->
             <a href="{% url 'interview_hub' %}" class="service-card glass">
                 <div class="service-icon-wrapper" style="background: rgba(236, 72, 153, 0.2);">
@@ -139,7 +176,7 @@
     </div>
 
     <!-- Section: Priority Expert Services -->
-    <div style="margin-top: 6rem; margin-bottom: 6rem;">
+    <div style="margin-top: 3.5rem; margin-bottom: 4rem;">
         <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
             <div style="width: 4px; height: 1.25rem; background: var(--accent); border-radius: 2px;"></div>
             <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main); white-space: nowrap; margin: 0; letter-spacing: -0.02em;">Expert Offline Support</h2>
@@ -148,22 +185,22 @@
         
         <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
             <!-- Bundle Service Card -->
-            <div class="card glass cursor-pointer" onclick="document.getElementById('expertBundleModal').classList.add('open')" style="flex: 1; min-width: 300px; max-width: 500px; padding: 2rem; border: 2px dashed rgba(245, 158, 11, 0.4); text-align: center; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin: 0; box-shadow: var(--shadow-md);">
-               <div style="width: 60px; height: 60px; background: rgba(245, 158, 11, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
+            <div class="card glass cursor-pointer expert-service-card" onclick="document.getElementById('expertBundleModal').classList.add('open')" style="flex: 1; min-width: 280px; max-width: 500px; padding: 2rem; border: 2px dashed rgba(245, 158, 11, 0.4); text-align: center; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin: 0; box-shadow: var(--shadow-md);">
+               <div class="expert-icon-wrapper" style="width: 60px; height: 60px; background: rgba(245, 158, 11, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
                    <i class="fas fa-gem" style="color: #f59e0b; font-size: 1.5rem;"></i>
                </div>
-               <h3 style="font-size: 1.5rem; color: var(--text-main); margin-bottom: 0.5rem;">Placement Success Bundle</h3>
-               <p style="color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem;">Get professional 1-on-1 resume auditing, LinkedIn optimization, and a custom portfolio website all bundled into one premium service.</p>
+               <h3 class="expert-title" style="font-size: 1.5rem; color: var(--text-main); margin-bottom: 0.5rem;">Placement Success Bundle</h3>
+               <p class="expert-desc" style="color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem;">Strategic services delivered by our <strong>Team Experts</strong> to help you secure your dream role with expert resume modification and custom design.</p>
                <span class="btn btn-outline" style="border-color: #f59e0b; color: #f59e0b; width: 100%;">View Details</span>
             </div>
-
+ 
             <!-- Home Tech Tuition Card -->
-            <div class="card glass cursor-pointer" onclick="document.getElementById('techTuitionModal').classList.add('open')" style="flex: 1; min-width: 300px; max-width: 500px; padding: 2rem; border: 2px dashed rgba(16, 185, 129, 0.4); text-align: center; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin: 0; box-shadow: var(--shadow-md);">
-               <div style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
+            <div class="card glass cursor-pointer expert-service-card" onclick="document.getElementById('techTuitionModal').classList.add('open')" style="flex: 1; min-width: 280px; max-width: 500px; padding: 2rem; border: 2px dashed rgba(16, 185, 129, 0.4); text-align: center; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin: 0; box-shadow: var(--shadow-md);">
+               <div class="expert-icon-wrapper" style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
                    <i class="fas fa-laptop-house" style="color: var(--success); font-size: 1.5rem;"></i>
                </div>
-               <h3 style="font-size: 1.5rem; color: var(--text-main); margin-bottom: 0.5rem;">Home Tech Tuition</h3>
-               <p style="color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem;">Personalized at-home coding sessions. We bring the laptop, materials, and a dedicated mentor straight to your living room.</p>
+               <h3 class="expert-title" style="font-size: 1.5rem; color: var(--text-main); margin-bottom: 0.5rem;">Home Tech Tuition</h3>
+               <p class="expert-desc" style="color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem;">Personalized at-home coding sessions. We bring the laptop, materials, and a dedicated mentor straight to your living room.</p>
                <span class="btn btn-outline" style="border-color: var(--success); color: var(--success); width: 100%;">View Full Process</span>
             </div>
         </div>
@@ -174,7 +211,10 @@
         <div class="modal-content card glass">
             <button class="modal-close" onclick="document.getElementById('expertBundleModal').classList.remove('open')"><i class="fas fa-times"></i></button>
             <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--text-main);">Placement Success Bundle</h2>
-            <p style="color: var(--text-muted); margin-bottom: 2rem;">Everything you need to stand out to top recruiters.</p>
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
+                <span style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; border: 1px solid rgba(245, 158, 11, 0.2);">BY TEAM EXPERTS</span>
+                <p style="color: var(--text-muted); margin: 0;">High-impact tools to stand out to top recruiters.</p>
+            </div>
             
             <ul style="list-style: none; padding: 0; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1.5rem; text-align: left;">
                 <li style="display: flex; gap: 1rem; align-items: flex-start;">
@@ -182,8 +222,8 @@
                         <i class="fas fa-user-tie" style="color: var(--text-main); font-size: 1.2rem;"></i>
                     </div>
                     <div>
-                        <h4 style="font-size: 1.1rem; margin-bottom: 0.2rem;">Expert Resume Review</h4>
-                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Connect with a dedicated mentor for a professional 1-on-1 resume audit.</p>
+                        <h4 style="font-size: 1.1rem; margin-bottom: 0.2rem;">Expert Resume Optimization</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Get your resume professionally modified by our <strong>Team Experts</strong> into a high-scoring, ATS-friendly masterpiece.</p>
                     </div>
                 </li>
                 <li style="display: flex; gap: 1rem; align-items: flex-start;">
@@ -192,7 +232,7 @@
                     </div>
                     <div>
                         <h4 style="font-size: 1.1rem; margin-bottom: 0.2rem;">LinkedIn Optimization</h4>
-                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Get your profile optimized for maximum recruiter visibility.</p>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Get your profile optimized by our <strong>Team Experts</strong> for maximum recruiter visibility and networking.</p>
                     </div>
                 </li>
                 <li style="display: flex; gap: 1rem; align-items: flex-start;">
@@ -201,7 +241,7 @@
                     </div>
                     <div>
                         <h4 style="font-size: 1.1rem; margin-bottom: 0.2rem;">Portfolio Website</h4>
-                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Have our expert team custom design and host your professional bio website.</p>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Have our <strong>Team Experts</strong> custom design and host your professional, high-performance bio website.</p>
                     </div>
                 </li>
             </ul>
@@ -209,7 +249,7 @@
             <div style="background: rgba(0,0,0,0.02); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px dashed rgba(0,0,0,0.1);">
                 <div style="text-align: center; margin-bottom: 1.5rem;">
                     <div style="font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 0.5rem;">Bundled Price</div>
-                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-main); line-height: 1;">₹999 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">(One-time fee)</span></div>
+                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-main); line-height: 1;">₹499 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">(One-time fee)</span></div>
                 </div>
 
                 <form action="{% url 'book_service' %}" method="POST" style="display: flex; flex-direction: column; gap: 1rem;">
@@ -217,7 +257,7 @@
                     <input type="hidden" name="service_type" value="BUNDLE">
                     
                     <div class="input-group" style="margin-bottom: 0;">
-                        <input type="text" name="phone_number" placeholder="Your Phone Number (e.g. +91...)" required style="width: 100%; border: 1px solid rgba(0,0,0,0.1); background: white;">
+                        <input type="text" name="phone_number" placeholder="Phone Number (e.g. +91...)" required style="width: 100%; border: 1px solid rgba(0,0,0,0.1); background: white; font-size: 0.9rem; padding: 0.75rem; border-radius: 8px;">
                     </div>
 
                     <button type="submit" class="btn btn-primary shadow-glow" style="width: 100%; text-align: center; padding: 0.8rem;">
@@ -249,7 +289,7 @@
                     <div style="color: var(--success); font-size: 1.2rem; margin-top: 2px;"><i class="fas fa-check-circle"></i></div>
                     <div>
                         <h4 style="font-size: 1.05rem; margin-bottom: 0.2rem; color: var(--text-main);">Customized Skill Selection & Flexible Timing</h4>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">Learn Python, React, Data Science, or whatever you need. Choose any 2-hour window between Monday to Friday that fits your schedule.</p>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">Learn Python, DSA, React, Data Science, or whatever you need. Choose any 2-hour window between Monday to Friday that fits your schedule.</p>
                     </div>
                 </li>
                 
@@ -296,13 +336,13 @@
                     {% csrf_token %}
                     <input type="hidden" name="service_type" value="TUITION">
                     
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                        <input type="text" name="preferred_tech" placeholder="Tech Skill (e.g. React+Node)" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); background: white;">
-                        <input type="text" name="preferred_timing" placeholder="Preferred Slot (e.g. 5PM - 7PM)" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); background: white;">
+                    <div class="tuition-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <input type="text" name="preferred_tech" placeholder="Tech Skill (e.g. React)" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); background: white; font-size: 0.9rem;">
+                        <input type="text" name="preferred_timing" placeholder="Preferred Slot (e.g. 5-7PM)" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); background: white; font-size: 0.9rem;">
                     </div>
                     
                     <div style="margin-bottom: 0;">
-                        <input type="text" name="phone_number" placeholder="Your WhatsApp / Phone Number" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); background: white;">
+                        <input type="text" name="phone_number" placeholder="WhatsApp / Phone Number" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); background: white; font-size: 0.9rem;">
                     </div>
 
                     <button type="submit" class="btn btn-primary shadow-glow" style="width: 100%; text-align: center; padding: 0.8rem; background: var(--success); border-color: var(--success);">
@@ -396,6 +436,44 @@
     .modal-close:hover {
         color: var(--error);
         background: rgba(239, 68, 68, 0.1);
+    }
+
+    /* Mobile-optimized inputs */
+    .modal-content input::placeholder {
+        font-size: 0.8rem !important;
+        color: var(--text-muted);
+        opacity: 0.7;
+    }
+
+    @media (max-width: 480px) {
+        .modal-content {
+            padding: 1.5rem;
+        }
+        .tuition-grid {
+            grid-template-columns: 1fr !important;
+        }
+    }
+
+    /* Expert Service Compactness for Mobile */
+    @media (max-width: 768px) {
+        .expert-service-card {
+            padding: 1.25rem !important;
+            min-width: 100% !important;
+        }
+        .expert-icon-wrapper {
+            width: 45px !important;
+            height: 45px !important;
+        }
+        .expert-icon-wrapper i {
+            font-size: 1.1rem !important;
+        }
+        .expert-title {
+            font-size: 1.15rem !important;
+        }
+        .expert-desc {
+            font-size: 0.85rem !important;
+            margin-bottom: 1rem !important;
+        }
     }
 </style>
 {% endblock %}

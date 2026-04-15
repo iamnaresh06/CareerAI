@@ -135,6 +135,36 @@ def about_page(request):
     """
     return render(request, 'core/authentication/about.html')
 
+def privacy_policy(request):
+    """
+    Renders the professional Privacy Policy page.
+    """
+    return render(request, 'core/authentication/privacy.html')
+
+def terms_conditions(request):
+    """
+    Renders the professional Terms & Conditions page.
+    """
+    return render(request, 'core/authentication/terms.html')
+
+def refund_policy(request):
+    """
+    Renders the professional Refund Policy page.
+    """
+    return render(request, 'core/authentication/refund.html')
+
+def careers_page(request):
+    """
+    Renders the Careers page.
+    """
+    return render(request, 'core/authentication/careers.html')
+
+def roadmaps_view(request):
+    """
+    Renders the Career Roadmaps page.
+    """
+    return render(request, 'core/roadmaps.html')
+
 from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='login')

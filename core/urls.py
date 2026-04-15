@@ -26,6 +26,11 @@ urlpatterns = [
     path('login/', auth_views.login_view, name='login'),
     path('logout/', auth_views.logout_view, name='logout'),
     path('profile/', auth_views.profile_view, name='profile'),
+    path('privacy-policy/', auth_views.privacy_policy, name='privacy_policy'),
+    path('terms-conditions/', auth_views.terms_conditions, name='terms_conditions'),
+    path('refund-policy/', auth_views.refund_policy, name='refund_policy'),
+    path('careers/', auth_views.careers_page, name='careers'),
+    path('roadmaps/', auth_views.roadmaps_view, name='roadmaps'),
     
     # Dashboard (Currently hosted in analysis views)
     path('dashboard/', analysis_views.dashboard, name='dashboard'),

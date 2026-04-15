@@ -3,14 +3,19 @@
 {% block title %}Resume Analyzer - CareerAI{% endblock %}
 
 {% block content %}
-<div class="container py-12">
-    
+<div class="container py-8 heading-top-padding">
     {% if match_score is not None %}
-        <!-- RESULTS VIEW -->
-        <div class="mb-16 heading-top-padding text-center">
-            <h1 class="animate-pop-in">Analysis <span style="color: var(--primary);">Results</span></h1>
-            <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto;" class="animate-fade-up">Compare your resume against the job description requirements to identify gaps.</p>
+        <!-- RESULTS VIEW HEADER -->
+        <div class="mb-12 flex items-center justify-between gap-4">
+            <div style="flex: 1;">
+                <a href="{% url 'dashboard' %}" class="btn btn-outline back-btn-mobile" style="border-radius: 8px; padding: 0.4rem 0.8rem;">
+                    <i class="fas fa-chevron-left" style="margin-right: 4px;"></i> Back
+                </a>
+            </div>
+            <h1 style="margin: 0; font-size: 2.2rem; text-align: center; flex: 2; font-weight: 800;">Analysis <span style="color: var(--primary);">Results</span></h1>
+            <div style="flex: 1;" class="desktop-only"></div>
         </div>
+
 
         <!-- Score Section -->
         <div class="grid grid-3 gap-12 mb-20">
@@ -120,10 +125,17 @@
         </div>
 
     {% else %}
-        <!-- INPUT VIEW (FORM) remains the same but ensure spacing -->
-        <div class="max-w-2xl mx-auto">
-            <div class="text-center mb-12 heading-top-padding">
-                <h1 class="animate-pop-in">AI <span style="color: var(--primary);">Resume Analyzer</span></h1>
+        <!-- INPUT VIEW (FORM) HEADER -->
+        <div class="max-w-4xl mx-auto">
+            <div class="mb-12 flex items-center justify-between gap-4">
+                <div style="flex: 1;">
+                    <a href="{% url 'dashboard' %}" class="btn btn-outline back-btn-mobile" style="border-radius: 8px; padding: 0.4rem 0.8rem;">
+                        <i class="fas fa-chevron-left" style="margin-right: 4px;"></i> Back
+                    </a>
+                </div>
+                <h1 style="margin: 0; font-size: 2.2rem; text-align: center; flex: 2; font-weight: 800;">AI <span style="color: var(--primary);">Resume Analyzer</span></h1>
+                <div style="flex: 1;" class="desktop-only"></div>
+            </div>
                 <p style="color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem;">Upload your resume and paste the job description to get instant AI analysis.</p>
             </div>
 

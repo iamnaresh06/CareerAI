@@ -34,6 +34,32 @@
   <body>
     <!-- Navbar -->
     <nav class="navbar glass">
+      <!-- Welcome Notification Toast -->
+      {% if user.is_authenticated %}
+      <div id="welcome-toast" class="glass card" style="position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%) translateY(-150px); z-index: 9999; padding: 0.8rem 1.5rem; display: flex; align-items: center; gap: 0.8rem; border-left: 4px solid var(--primary); transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: var(--shadow-xl); border-radius: 12px; min-width: 320px; background: white;">
+          <div style="background: rgba(37, 99, 235, 0.1); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <i class="fas fa-user-edit" style="color: var(--primary); font-size: 1rem;"></i>
+          </div>
+          <div>
+            <p style="margin: 0; font-size: 0.85rem; font-weight: 700; color: var(--text-main); line-height: 1.2;">Profile Update</p>
+            <p style="margin: 0; font-size: 0.75rem; color: var(--text-muted);">Please complete your profile in the profile section!</p>
+          </div>
+      </div>
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              if (!sessionStorage.getItem('welcomeShown')) {
+                  const toast = document.getElementById('welcome-toast');
+                  setTimeout(() => {
+                      toast.style.transform = 'translateX(-50%) translateY(0)';
+                      sessionStorage.setItem('welcomeShown', 'true');
+                      setTimeout(() => {
+                          toast.style.transform = 'translateX(-50%) translateY(-150px)';
+                      }, 6000);
+                  }, 1500);
+              }
+          });
+      </script>
+      {% endif %}
       <div class="container nav-content">
         <a href="{% url 'home' %}" class="nav-logo">
           <img src="{% static 'core/img/logo.png' %}" alt="CareerAI Logo" />
@@ -44,9 +70,15 @@
         </button>
 
         <div class="nav-links" id="navLinks" style="align-items: center;">
-          <a href="{% url 'about' %}">About</a>
+          <button class="mobile-close-btn" onclick="toggleMenu()" style="display: none; position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 1.5rem; color: var(--text-main); cursor: pointer;">
+            <i class="fas fa-times"></i>
+          </button>
           {% if user.is_authenticated %}
-          <a href="{% url 'dashboard' %}">Dashboard</a>
+          <a href="{% url 'dashboard' %}"><i class="fas fa-house-chimney nav-icon"></i> Dashboard</a>
+          {% endif %}
+          <a href="{% url 'careers' %}"><i class="fas fa-briefcase nav-icon"></i> Careers</a>
+          <a href="{% url 'about' %}"><i class="fas fa-circle-info nav-icon"></i> About</a>
+          {% if user.is_authenticated %}
           <a href="{% url 'profile' %}" title="User Profile" class="profile-nav-link" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-left: 0.5rem;">
             {% if user.userprofile and user.userprofile.profile_image %}
               <div style="width: 32px; height: 32px; border-radius: 50%; overflow: hidden; border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; background: white;">
@@ -59,10 +91,10 @@
             {% endif %}
             <span class="profile-text">Profile</span>
           </a>
-          <a href="{% url 'logout' %}" style="margin-left: 0.5rem;">Logout</a>
+          <a href="{% url 'logout' %}" class="logout-link"><i class="fas fa-right-from-bracket nav-icon"></i> Logout</a>
           {% else %}
-          <a href="{% url 'login' %}">Login</a>
-          <a href="{% url 'register' %}" class="btn btn-primary">Sign Up</a>
+          <a href="{% url 'login' %}"><i class="fas fa-right-to-bracket nav-icon"></i> Login</a>
+          <a href="{% url 'register' %}" class="btn btn-primary"><i class="fas fa-user-plus nav-icon"></i> Sign Up</a>
           {% endif %}
         </div>
       </div>
@@ -100,11 +132,11 @@
           </div>
 
           <div class="flex justify-center mobile-column items-center" style="font-size: 0.85rem; flex-wrap: wrap; gap: 1rem;">
-            <a href="#" style="color: var(--text-muted); text-decoration: none; transition: var(--transition);" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Privacy Policy</a>
+            <a href="{% url 'privacy_policy' %}" style="color: var(--text-muted); text-decoration: none; transition: var(--transition);" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Privacy Policy</a>
             <span class="desktop-only" style="color: var(--text-muted); opacity: 0.5;">|</span>
-            <a href="#" style="color: var(--text-muted); text-decoration: none; transition: var(--transition);" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Terms &amp; Conditions</a>
+            <a href="{% url 'terms_conditions' %}" style="color: var(--text-muted); text-decoration: none; transition: var(--transition);" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Terms &amp; Conditions</a>
             <span class="desktop-only" style="color: var(--text-muted); opacity: 0.5;">|</span>
-            <a href="#" style="color: var(--text-muted); text-decoration: none; transition: var(--transition);" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Refund Policy</a>
+            <a href="{% url 'refund_policy' %}" style="color: var(--text-muted); text-decoration: none; transition: var(--transition);" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Refund Policy</a>
           </div>
 
           <div class="flex justify-center flex-wrap items-center gap-2 mobile-column" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
@@ -265,6 +297,21 @@
         .profile-text {
             display: none;
         }
+        .nav-icon {
+            display: none;
+        }
+      }
+      @media (max-width: 768px) {
+        .nav-icon {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        .logout-link {
+            margin-left: 0 !important;
+        }
       }
     </style>
 
@@ -272,6 +319,18 @@
       function toggleMenu() {
         document.getElementById("navLinks").classList.toggle("active");
       }
+
+      // Automatically close mobile menu when a link is clicked
+      document.addEventListener('DOMContentLoaded', function() {
+          const navLinks = document.querySelectorAll('.nav-links a');
+          navLinks.forEach(link => {
+              link.addEventListener('click', () => {
+                  if (window.innerWidth <= 768) {
+                      document.getElementById("navLinks").classList.remove("active");
+                  }
+              });
+          });
+      });
 
       function toggleBot() {
         document.getElementById("bot-box").classList.toggle("open");
