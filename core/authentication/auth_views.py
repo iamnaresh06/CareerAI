@@ -10,6 +10,7 @@ Author: Naresh Reddy
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from core.models import UserProfile
 
@@ -153,6 +154,7 @@ def refund_policy(request):
     """
     return render(request, 'core/authentication/refund.html')
 
+@login_required(login_url='login')
 def careers_page(request):
     """
     Renders the Careers page.
@@ -165,7 +167,19 @@ def roadmaps_view(request):
     """
     return render(request, 'core/roadmaps.html')
 
-from django.contrib.auth.decorators import login_required
+@login_required(login_url='login')
+def expert_bundle_view(request):
+    """
+    Renders the detailed step-by-step process for the Placement Success Bundle.
+    """
+    return render(request, 'core/services/expert_bundle.html')
+
+@login_required(login_url='login')
+def tech_tuition_view(request):
+    """
+    Renders the detailed step-by-step process for Online Tech Tuition (Hybrid Model).
+    """
+    return render(request, 'core/services/tech_tuition.html')
 
 @login_required(login_url='login')
 def profile_view(request):

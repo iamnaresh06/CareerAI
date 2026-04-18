@@ -19,6 +19,80 @@ import re
 # -----------------------------------------------------------------------------
 # Question Bank
 # -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+# Category Configuration (Priority Order)
+# -----------------------------------------------------------------------------
+INTERVIEW_CATEGORIES = [
+    {
+        "id": "programming",
+        "name": "Programming Languages",
+        "icon": "fas fa-code",
+        "skills": [
+            {"id": "python", "name": "Python", "icon": "🐍", "desc": "Object-oriented, interpreted, high-level language."},
+            {"id": "java", "name": "Java", "icon": "☕", "desc": "Class-based, object-oriented, write once run anywhere."},
+            {"id": "javascript", "name": "JavaScript", "icon": "📜", "desc": "Core language for web interactivity and Node.js."},
+            {"id": "cpp", "name": "C++", "icon": "⚙️", "desc": "High-performance language for systems and games."},
+            {"id": "c", "name": "C", "icon": "🧱", "desc": "Low-level language for firmware and OS development."},
+            {"id": "golang", "name": "Go (Golang)", "icon": "🐹", "desc": "Google's open-source language for cloud scale."},
+            {"id": "rust", "name": "Rust", "icon": "⚙️", "desc": "Safe, concurrent, and high-performance language."}
+        ]
+    },
+    {
+        "id": "web",
+        "name": "Web Technologies",
+        "icon": "fas fa-globe",
+        "skills": [
+            {"id": "html_css", "name": "HTML & CSS", "icon": "🎨", "desc": "Building the structure and design of the web."},
+            {"id": "react", "name": "React.js", "icon": "⚛️", "desc": "Facebook's frontend library for UI components."},
+            {"id": "nextjs", "name": "Next.js", "icon": "🔳", "desc": "React framework for production with SSR."},
+            {"id": "angular", "name": "Angular", "icon": "🅰️", "desc": "Google's platform for building mobile and web apps."},
+            {"id": "nodejs", "name": "Node.js", "icon": "🟢", "desc": "JavaScript runtime for scalable backend services."}
+        ]
+    },
+    {
+        "id": "frameworks",
+        "name": "Frameworks",
+        "icon": "fas fa-cubes",
+        "skills": [
+            {"id": "django", "name": "Django", "icon": "🎸", "desc": "Python-based high-level web framework."},
+            {"id": "springboot", "name": "Spring Boot", "icon": "🍃", "desc": "Java framework for production-grade apps."},
+            {"id": "flask", "name": "Flask", "icon": "🧪", "desc": "Python micro web framework."},
+            {"id": "express", "name": "Express.js", "icon": "🚈", "desc": "Minimalist web framework for Node.js."}
+        ]
+    },
+    {
+        "id": "core_cs",
+        "name": "Core CS & Systems",
+        "icon": "fas fa-microchip",
+        "skills": [
+            {"id": "dsa", "name": "Data Structures & Algorithms", "icon": "📑", "desc": "Fundamental computer science patterns."},
+            {"id": "databases", "name": "Databases (SQL/NoSQL)", "icon": "💾", "desc": "Data storage, relational and document stores."},
+            {"id": "system_design", "name": "System Design", "icon": "🏗️", "desc": "Designing scalable architectures."}
+        ]
+    },
+    {
+        "id": "cloud_ai",
+        "name": "Cloud, AI & Testing",
+        "icon": "fas fa-cloud",
+        "skills": [
+            {"id": "devops", "name": "Cloud & DevOps", "icon": "☁️", "desc": "AWS, Docker, Jenkins and CI/CD."},
+            {"id": "aiml", "name": "AI & Machine Learning", "icon": "🤖", "desc": "Deep learning, NLP and Generative AI."},
+            {"id": "testing", "name": "Software Testing", "icon": "🧪", "desc": "QA, Automation and Unit Testing."}
+        ]
+    },
+    {
+        "id": "hr",
+        "name": "Behavioral & HR",
+        "icon": "fas fa-users",
+        "skills": [
+            {"id": "behavioral", "name": "Behavioral Interviews", "icon": "👔", "desc": "STAR method and soft skills questions."}
+        ]
+    }
+]
+
+# -----------------------------------------------------------------------------
+# Question Bank
+# -----------------------------------------------------------------------------
 INTERVIEW_QUESTIONS = {
     "python": [
         {
@@ -33,11 +107,63 @@ INTERVIEW_QUESTIONS = {
             "ideal_answer": "Decorators are functions that modify the behavior of other functions or methods. They allow you to wrap another function in order to extend the behavior of the wrapped function, without permanently modifying it. They use the @ symbol.",
             "keywords": ["modify", "behavior", "wrap", "extend", "@ symbol", "function"]
         },
-         {
-            "id": 3,
-            "question": "What is the difference between shallow copy and deep copy?",
-            "ideal_answer": "A shallow copy creates a new object but inserts references into it. A deep copy creates a new object and recursively adds copies of the objects found in the original. Deep copy is used when you want a completely independent copy.",
-            "keywords": ["reference", "recursive", "independent", "copy module", "nested"]
+        {
+            "id": 101,
+            "question": "What is Python's Global Interpreter Lock (GIL)?",
+            "ideal_answer": "The GIL is a mutex that protects access to Python objects, preventing multiple native threads from executing Python bytecodes at once. This ensures thread safety but can limit performance in CPU-bound multi-threaded programs.",
+            "keywords": ["GIL", "mutex", "native threads", "bytecodes", "thread safety", "CPU-bound"]
+        }
+    ],
+    "java": [
+        {
+            "id": 201,
+            "question": "What is the difference between JDK, JRE, and JVM?",
+            "ideal_answer": "JVM runs the bytecode. JRE is JVM plus libraries to run apps. JDK is JRE plus tools like javac to develop apps.",
+            "keywords": ["JVM", "JRE", "JDK", "bytecode", "libraries", "development kit"]
+        },
+        {
+            "id": 202,
+            "question": "Explain the concept of Abstraction in Java.",
+            "ideal_answer": "Abstraction is the process of hiding implementation details and showing only functionality. It can be achieved using abstract classes and interfaces.",
+            "keywords": ["hiding", "implementation", "functionality", "abstract", "interface"]
+        }
+    ],
+    "javascript": [
+        {
+            "id": 301,
+            "question": "What is a Closure in JavaScript?",
+            "ideal_answer": "A closure is the combination of a function bundled together with references to its surrounding state (the lexical environment). It gives you access to an outer function's scope from an inner function.",
+            "keywords": ["closure", "lexical environment", "scope", "bundled", "inner function"]
+        },
+        {
+            "id": 302,
+            "question": "Explain the difference between '==' and '===' operators.",
+            "ideal_answer": "== is equality operator which performs type coercion. === is strict equality operator which checks both value and type without coercion.",
+            "keywords": ["equality", "strict", "type coercion", "value", "type"]
+        }
+    ],
+    "cpp": [
+        {
+            "id": 401,
+            "question": "What are Pointers in C++?",
+            "ideal_answer": "Pointers are variables that store the memory address of another variable. They are declared using the * operator and are fundamental for dynamic memory management.",
+            "keywords": ["pointers", "memory address", "variables", "* operator", "dynamic memory"]
+        }
+    ],
+    "golang": [
+        {
+            "id": 501,
+            "question": "What are Goroutines in Go?",
+            "ideal_answer": "Goroutines are lightweight threads managed by the Go runtime. They are used for concurrent execution and are much cheaper than OS threads.",
+            "keywords": ["goroutines", "lightweight", "threads", "concurrent", "runtime"]
+        }
+    ],
+    "react": [
+        {
+            "id": 601,
+            "question": "Explain the Virtual DOM in React.",
+            "ideal_answer": "Virtual DOM is a lightweight copy of the real DOM. When state changes, React updates the virtual DOM first, calculates the difference (diffing), and then updates only the necessary parts of the real DOM.",
+            "keywords": ["virtual dom", "lightweight", "diffing", "reconciliation", "state change"]
         }
     ],
     "django": [
@@ -52,6 +178,78 @@ INTERVIEW_QUESTIONS = {
             "question": "What are Django signals?",
             "ideal_answer": "Signals are a way to allow decoupled applications to get notified when certain actions occur elsewhere in the framework. For example, post_save signal is sent when a model instance is saved.",
             "keywords": ["decoupled", "notified", "actions", "post_save", "receiver", "sender"]
+        }
+    ],
+    "dsa": [
+        {
+            "id": 701,
+            "question": "What is the Time Complexity of searching in a Balanced Binary Search Tree?",
+            "ideal_answer": "The time complexity is O(log n) because half of the tree is eliminated at each step of the search.",
+            "keywords": ["O(log n)", "binary search tree", "balanced", "logarithmic", "efficiency"]
+        }
+    ],
+    "databases": [
+        {
+            "id": 801,
+            "question": "What is Database Normalization?",
+            "ideal_answer": "Normalization is the process of organizing data to minimize redundancy and dependency. It involves dividing large tables into smaller ones and defining relationships between them.",
+            "keywords": ["normalization", "redundancy", "dependency", "1NF", "2NF", "3NF"]
+        }
+    ],
+    "devops": [
+        {
+            "id": 901,
+            "question": "What is CI/CD?",
+            "ideal_answer": "CI/CD stands for Continuous Integration and Continuous Deployment. It's a method to frequently deliver apps to customers by introducing automation into the stages of app development.",
+            "keywords": ["automation", "integration", "deployment", "pipeline", "Jenkins", "GitLab"]
+        }
+    ],
+    "aiml": [
+        {
+            "id": 1001,
+            "question": "What is Overfitting in Machine Learning?",
+            "ideal_answer": "Overfitting occurs when a model learns the training data too well, including the noise, resulting in poor performance on new, unseen data. It can be reduced using regularization or more data.",
+            "keywords": ["overfitting", "noise", "generalization", "unseen data", "regularization", "training"]
+        }
+    ],
+    "html_css": [
+        {
+            "id": 1101,
+            "question": "What is the CSS Box Model?",
+            "ideal_answer": "The CSS box model is a container that contains multiple properties, including borders, margin, padding, and the content itself. It is used to create the design and layout of web pages.",
+            "keywords": ["border", "margin", "padding", "content", "layout", "box-sizing"]
+        }
+    ],
+    "nextjs": [
+        {
+            "id": 1201,
+            "question": "What is the benefit of Server-Side Rendering (SSR) in Next.js?",
+            "ideal_answer": "SSR improves performance and SEO by pre-rendering pages on the server for each request. This ensures that search engines can easily crawl the content and users see the page faster.",
+            "keywords": ["SEO", "performance", "pre-rendering", "server", "crawl", "getServerSideProps"]
+        }
+    ],
+    "springboot": [
+        {
+            "id": 1301,
+            "question": "What is Dependency Injection in Spring?",
+            "ideal_answer": "Dependency Injection is a design pattern where the objects' dependencies are provided by the Spring container rather than the objects creating them themselves. This promotes loose coupling and easier testing.",
+            "keywords": ["design pattern", "dependency", "coupling", "testing", "@Autowired", "IoC container"]
+        }
+    ],
+    "system_design": [
+        {
+            "id": 1401,
+            "question": "What is a Load Balancer and why is it used?",
+            "ideal_answer": "A load balancer distributes incoming network traffic across multiple servers. This ensures no single server bears too much load, improving responsiveness and availability of the application.",
+            "keywords": ["distributes", "traffic", "servers", "availability", "scalability", "redirect"]
+        }
+    ],
+    "testing": [
+        {
+            "id": 1501,
+            "question": "Difference between Unit Testing and Integration Testing?",
+            "ideal_answer": "Unit testing tests individual components or functions in isolation. Integration testing tests how different modules or services work together as a group.",
+            "keywords": ["isolation", "individual", "modules", "together", "group", "components"]
         }
     ],
     "behavioral": [

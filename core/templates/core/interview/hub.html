@@ -14,35 +14,102 @@
     </div>
 
     <div class="hub-header" style="text-align: center;">
-        <p style="margin-top: -1rem; margin-bottom: 3rem; color: var(--text-muted);">Select a topic to start your voice-based mock interview session.</p>
+        <p style="margin-top: -1.5rem; margin-bottom: 2rem; color: var(--text-muted);">Select a topic to start your voice-based mock interview session.</p>
     </div>
 
-    <div class="topic-grid" style="gap: 1.5rem;">
+    <!-- Search Section -->
+    <div class="search-container animate-fade-up">
+        <div class="search-input-wrapper">
+            <input type="text" id="topicSearch" class="search-input" placeholder="Search interview topics (e.g. Python, Django)...">
+            <i class="fas fa-search"></i>
+        </div>
+    </div>
+
+    <div id="noTopicResults" class="no-results-message animate-pop-in" style="display: none; max-width: 1000px; margin: 0 auto 3rem auto;">
+        <i class="fas fa-robot"></i>
+        <h3>No topics found</h3>
+        <p>Try searching for core subjects like "Python" or "Behavioral".</p>
+    </div>
+
+    <!-- Category Grouped Display -->
+    <div id="categoryWrapper">
         {% for category in categories %}
-        <a href="{% url 'start_interview' category %}" class="service-card glass animate-fade-up">
-            <div class="service-icon-wrapper" style="background: rgba(var(--primary-rgb), 0.1);">
-                <div style="font-size: 1.8rem;">
-                    {% if category == 'python' %}🐍{% elif category == 'django' %}🎸{% else %}💼{% endif %}
+        <div class="category-section mb-12 animate-fade-up">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="category-icon-main" style="background: rgba(var(--primary-rgb), 0.1); color: var(--primary); padding: 0.75rem; border-radius: 12px; font-size: 1.2rem;">
+                    <i class="{{ category.icon }}"></i>
                 </div>
+                <h2 style="margin: 0; font-size: 1.6rem; font-weight: 800;">{{ category.name }}</h2>
             </div>
-            <h3>{{ category|title }}</h3>
-            <p>Practice frequently asked {{ category }} interview questions.</p>
-            <span class="btn btn-primary btn-sm mt-3" style="font-size: 0.75rem; padding: 0.4rem 1rem; border-radius: 8px;">Start Interview</span>
-        </a>
+            
+            <div class="topic-grid" style="gap: 1.5rem; display: grid;">
+                {% for skill in category.skills %}
+                <a href="{% url 'start_interview' skill.id %}" class="service-card glass animate-fade-up" data-category="{{ category.id }}">
+                    <div class="service-icon-wrapper" style="background: rgba(var(--primary-rgb), 0.05); border: 1px solid rgba(var(--primary-rgb), 0.1);">
+                        <div style="font-size: 1.8rem;">
+                            {{ skill.icon }}
+                        </div>
+                    </div>
+                    <h3>{{ skill.name }}</h3>
+                    <p>{{ skill.desc }}</p>
+                    <span class="btn btn-primary btn-sm mt-3" style="font-size: 0.75rem; padding: 0.4rem 1rem; border-radius: 8px;">Start Interview</span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
         {% endfor %}
     </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('topicSearch');
+        const sections = document.querySelectorAll('.category-section');
+        const noResults = document.getElementById('noTopicResults');
+
+        searchInput.addEventListener('input', function() {
+            const query = searchInput.value.toLowerCase().trim();
+            let totalMatchCount = 0;
+
+            sections.forEach(section => {
+                const cards = section.querySelectorAll('.service-card');
+                let sectionMatchCount = 0;
+
+                cards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const desc = card.querySelector('p').textContent.toLowerCase();
+                    
+                    if (title.includes(query) || desc.includes(query)) {
+                        card.style.display = 'flex';
+                        sectionMatchCount++;
+                        totalMatchCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Show/Hide the whole category section
+                if (sectionMatchCount > 0) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+
+            if (totalMatchCount > 0) {
+                noResults.style.display = 'none';
+            } else {
+                noResults.style.display = 'block';
+            }
+        });
+    });
+</script>
+
 <style>
-    .interview-hub-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding-bottom: 60px;
-    }
     .topic-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        max-width: 1000px;
+        max-width: 1200px;
         margin: 0 auto;
     }
     .service-card {

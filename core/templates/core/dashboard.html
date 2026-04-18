@@ -185,175 +185,29 @@
         
         <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
             <!-- Bundle Service Card -->
-            <div class="card glass cursor-pointer expert-service-card" onclick="document.getElementById('expertBundleModal').classList.add('open')" style="flex: 1; min-width: 280px; max-width: 500px; padding: 2rem; border: 2px dashed rgba(245, 158, 11, 0.4); text-align: center; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin: 0; box-shadow: var(--shadow-md);">
+            <a href="{% url 'expert_bundle' %}" class="card glass cursor-pointer expert-service-card" style="flex: 1; min-width: 280px; max-width: 500px; padding: 2rem; border: 2px dashed rgba(245, 158, 11, 0.4); text-align: center; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin: 0; box-shadow: var(--shadow-md); text-decoration: none;">
                <div class="expert-icon-wrapper" style="width: 60px; height: 60px; background: rgba(245, 158, 11, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
                    <i class="fas fa-gem" style="color: #f59e0b; font-size: 1.5rem;"></i>
                </div>
                <h3 class="expert-title" style="font-size: 1.5rem; color: var(--text-main); margin-bottom: 0.5rem;">Placement Success Bundle</h3>
                <p class="expert-desc" style="color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem;">Strategic services delivered by our <strong>Team Experts</strong> to help you secure your dream role with expert resume modification and custom design.</p>
-               <span class="btn btn-outline" style="border-color: #f59e0b; color: #f59e0b; width: 100%;">View Details</span>
-            </div>
+               <span class="btn btn-outline" style="border-color: #f59e0b; color: #f59e0b; width: 100%;">View Full Process</span>
+            </a>
  
-            <!-- Home Tech Tuition Card -->
-            <div class="card glass cursor-pointer expert-service-card" onclick="document.getElementById('techTuitionModal').classList.add('open')" style="flex: 1; min-width: 280px; max-width: 500px; padding: 2rem; border: 2px dashed rgba(16, 185, 129, 0.4); text-align: center; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin: 0; box-shadow: var(--shadow-md);">
+            <!-- Online Tech Tuition Card -->
+            <a href="{% url 'tech_tuition' %}" class="card glass cursor-pointer expert-service-card" style="flex: 1; min-width: 280px; max-width: 500px; padding: 2rem; border: 2px dashed rgba(16, 185, 129, 0.4); text-align: center; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin: 0; box-shadow: var(--shadow-md); text-decoration: none;">
+               <div style="position: absolute; top: 10px; right: -30px; background: #f59e0b; color: white; padding: 5px 35px; transform: rotate(45deg); font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">BONUS</div>
                <div class="expert-icon-wrapper" style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
-                   <i class="fas fa-laptop-house" style="color: var(--success); font-size: 1.5rem;"></i>
+                   <i class="fas fa-laptop-code" style="color: var(--success); font-size: 1.5rem;"></i>
                </div>
-               <h3 class="expert-title" style="font-size: 1.5rem; color: var(--text-main); margin-bottom: 0.5rem;">Home Tech Tuition</h3>
-               <p class="expert-desc" style="color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem;">Personalized at-home coding sessions. We bring the laptop, materials, and a dedicated mentor straight to your living room.</p>
+               <h3 class="expert-title" style="font-size: 1.5rem; color: var(--text-main); margin-bottom: 0.5rem;">Online Tech Tuition</h3>
+               <p class="expert-desc" style="color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem;"><strong>3-Month Role Roadmaps:</strong> Python Fullstack, AI, Data Science & more. 1-to-1 mentorship with EMI options and home-delivered kits.</p>
                <span class="btn btn-outline" style="border-color: var(--success); color: var(--success); width: 100%;">View Full Process</span>
-            </div>
+            </a>
         </div>
     </div>
 
-    <!-- Modal for Expert Bundle Details -->
-    <div id="expertBundleModal" class="modal-overlay" onclick="if(event.target===this) this.classList.remove('open')">
-        <div class="modal-content card glass">
-            <button class="modal-close" onclick="document.getElementById('expertBundleModal').classList.remove('open')"><i class="fas fa-times"></i></button>
-            <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--text-main);">Placement Success Bundle</h2>
-            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
-                <span style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; border: 1px solid rgba(245, 158, 11, 0.2);">BY TEAM EXPERTS</span>
-                <p style="color: var(--text-muted); margin: 0;">High-impact tools to stand out to top recruiters.</p>
-            </div>
-            
-            <ul style="list-style: none; padding: 0; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1.5rem; text-align: left;">
-                <li style="display: flex; gap: 1rem; align-items: flex-start;">
-                    <div style="background: rgba(30, 41, 59, 0.1); padding: 0.8rem; border-radius: 12px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                        <i class="fas fa-user-tie" style="color: var(--text-main); font-size: 1.2rem;"></i>
-                    </div>
-                    <div>
-                        <h4 style="font-size: 1.1rem; margin-bottom: 0.2rem;">Expert Resume Optimization</h4>
-                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Get your resume professionally modified by our <strong>Team Experts</strong> into a high-scoring, ATS-friendly masterpiece.</p>
-                    </div>
-                </li>
-                <li style="display: flex; gap: 1rem; align-items: flex-start;">
-                    <div style="background: rgba(0, 119, 181, 0.1); padding: 0.8rem; border-radius: 12px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                        <i class="fab fa-linkedin" style="color: #0077b5; font-size: 1.2rem;"></i>
-                    </div>
-                    <div>
-                        <h4 style="font-size: 1.1rem; margin-bottom: 0.2rem;">LinkedIn Optimization</h4>
-                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Get your profile optimized by our <strong>Team Experts</strong> for maximum recruiter visibility and networking.</p>
-                    </div>
-                </li>
-                <li style="display: flex; gap: 1rem; align-items: flex-start;">
-                    <div style="background: rgba(245, 158, 11, 0.1); padding: 0.8rem; border-radius: 12px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                        <i class="fas fa-laptop-code" style="color: #f59e0b; font-size: 1.2rem;"></i>
-                    </div>
-                    <div>
-                        <h4 style="font-size: 1.1rem; margin-bottom: 0.2rem;">Portfolio Website</h4>
-                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Have our <strong>Team Experts</strong> custom design and host your professional, high-performance bio website.</p>
-                    </div>
-                </li>
-            </ul>
 
-            <div style="background: rgba(0,0,0,0.02); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px dashed rgba(0,0,0,0.1);">
-                <div style="text-align: center; margin-bottom: 1.5rem;">
-                    <div style="font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 0.5rem;">Bundled Price</div>
-                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-main); line-height: 1;">₹499 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">(One-time fee)</span></div>
-                </div>
-
-                <form action="{% url 'book_service' %}" method="POST" style="display: flex; flex-direction: column; gap: 1rem;">
-                    {% csrf_token %}
-                    <input type="hidden" name="service_type" value="BUNDLE">
-                    
-                    <div class="input-group" style="margin-bottom: 0;">
-                        <input type="text" name="phone_number" placeholder="Phone Number (e.g. +91...)" required style="width: 100%; border: 1px solid rgba(0,0,0,0.1); background: white; font-size: 0.9rem; padding: 0.75rem; border-radius: 8px;">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary shadow-glow" style="width: 100%; text-align: center; padding: 0.8rem;">
-                        <i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i> Request This Bundle
-                    </button>
-                </form>
-            </div>
-            <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">Our team will contact you shortly after submission.</p>
-        </div>
-    </div>
-
-    <!-- Modal for Tech Tuition Details -->
-    <div id="techTuitionModal" class="modal-overlay" onclick="if(event.target===this) this.classList.remove('open')">
-        <div class="modal-content card glass">
-            <button class="modal-close" onclick="document.getElementById('techTuitionModal').classList.remove('open')"><i class="fas fa-times"></i></button>
-            
-            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
-               <div style="width: 45px; height: 45px; background: rgba(16, 185, 129, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                   <i class="fas fa-laptop-house" style="color: var(--success); font-size: 1.2rem;"></i>
-               </div>
-               <h2 style="font-size: 1.8rem; color: var(--text-main); margin: 0;">Home Tech Tuition</h2>
-            </div>
-            
-            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem;">A radically personalized, hands-on learning experience delivered directly to your front door. You choose the tech stack, we bring the education.</p>
-            
-            <ul style="list-style: none; padding: 0; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1.25rem; text-align: left;">
-                
-                <li style="display: flex; gap: 1rem; align-items: flex-start;">
-                    <div style="color: var(--success); font-size: 1.2rem; margin-top: 2px;"><i class="fas fa-check-circle"></i></div>
-                    <div>
-                        <h4 style="font-size: 1.05rem; margin-bottom: 0.2rem; color: var(--text-main);">Customized Skill Selection & Flexible Timing</h4>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">Learn Python, DSA, React, Data Science, or whatever you need. Choose any 2-hour window between Monday to Friday that fits your schedule.</p>
-                    </div>
-                </li>
-                
-                <li style="display: flex; gap: 1rem; align-items: flex-start;">
-                    <div style="color: var(--success); font-size: 1.2rem; margin-top: 2px;"><i class="fas fa-check-circle"></i></div>
-                    <div>
-                        <h4 style="font-size: 1.05rem; margin-bottom: 0.2rem; color: var(--text-main);">Hardware & Materials Provided</h4>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">Don't have a reliable setup? No problem. Our instructors arrive fully equipped with a training laptop and comprehensive course materials.</p>
-                    </div>
-                </li>
-
-                <li style="display: flex; gap: 1rem; align-items: flex-start;">
-                    <div style="color: var(--success); font-size: 1.2rem; margin-top: 2px;"><i class="fas fa-check-circle"></i></div>
-                    <div>
-                        <h4 style="font-size: 1.05rem; margin-bottom: 0.2rem; color: var(--text-main);">The '1+1' Mastery Method</h4>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">Every session guarantees <strong>1 hour of core concept theory</strong> followed strictly by <strong>1 hour of hands-on practical coding</strong> under direct supervision.</p>
-                    </div>
-                </li>
-
-                <li style="display: flex; gap: 1rem; align-items: flex-start;">
-                    <div style="color: var(--success); font-size: 1.2rem; margin-top: 2px;"><i class="fas fa-check-circle"></i></div>
-                    <div>
-                        <h4 style="font-size: 1.05rem; margin-bottom: 0.2rem; color: var(--text-main);">Mini Project Development</h4>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">Build a real-world, industry-standard mini project during the sessions specifically designed to boost your resume and portfolio instantly.</p>
-                    </div>
-                </li>
-
-                <li style="display: flex; gap: 1rem; align-items: flex-start;">
-                    <div style="color: var(--success); font-size: 1.2rem; margin-top: 2px;"><i class="fas fa-check-circle"></i></div>
-                    <div>
-                        <h4 style="font-size: 1.05rem; margin-bottom: 0.2rem; color: var(--text-main);">Verified Completion Certificate</h4>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">Upon successful completion and evaluation, receive an industry-recognized certificate demonstrating your applied mastery of the chosen skill.</p>
-                    </div>
-                </li>
-            </ul>
-
-            <div style="background: rgba(16, 185, 129, 0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px dashed rgba(16, 185, 129, 0.2);">
-                <div style="text-align: center; margin-bottom: 1.5rem;">
-                    <div style="font-size: 0.9rem; color: var(--success); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 0.5rem;">Monthly Commitment</div>
-                    <div style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); line-height: 1;">₹5,999 <span style="font-size: 0.9rem; color: var(--text-muted); font-weight: 500;">/ month</span></div>
-                </div>
-
-                <form action="{% url 'book_service' %}" method="POST" style="display: flex; flex-direction: column; gap: 1rem;">
-                    {% csrf_token %}
-                    <input type="hidden" name="service_type" value="TUITION">
-                    
-                    <div class="tuition-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                        <input type="text" name="preferred_tech" placeholder="Tech Skill (e.g. React)" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); background: white; font-size: 0.9rem;">
-                        <input type="text" name="preferred_timing" placeholder="Preferred Slot (e.g. 5-7PM)" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); background: white; font-size: 0.9rem;">
-                    </div>
-                    
-                    <div style="margin-bottom: 0;">
-                        <input type="text" name="phone_number" placeholder="WhatsApp / Phone Number" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); background: white; font-size: 0.9rem;">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary shadow-glow" style="width: 100%; text-align: center; padding: 0.8rem; background: var(--success); border-color: var(--success);">
-                        <i class="fas fa-chalkboard-teacher" style="margin-right: 0.5rem;"></i> Book Your Slot
-                    </button>
-                </form>
-            </div>
-
-            <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">Limited slots available per city. We will contact you to finalize the schedule.</p>
-        </div>
-    </div>
 
     <!-- Admin Section -->
     {% if user.is_superuser %}

@@ -1,0 +1,257 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Placement Success Bundle - CareerAI{% endblock %}
+
+{% block content %}
+<style>
+    .service-hero {
+        padding: 6rem 0 4rem;
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(245, 158, 11, 0.05) 100%);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+
+    .roadmap-container {
+        position: relative;
+        max-width: 900px;
+        margin: 4rem auto;
+        padding: 0 1.5rem;
+    }
+
+    .roadmap-line {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(to bottom, var(--primary), var(--accent));
+        transform: translateX(-50%);
+        opacity: 0.3;
+        z-index: 1;
+    }
+
+    .roadmap-step {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4rem;
+        z-index: 2;
+    }
+
+    .roadmap-step:nth-child(even) {
+        flex-direction: row-reverse;
+    }
+
+    .step-content {
+        width: 45%;
+        padding: 2rem;
+        background: white;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+    }
+
+    .step-content:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary);
+    }
+
+    .step-icon {
+        position: absolute;
+        left: 50%;
+        width: 50px;
+        height: 50px;
+        background: white;
+        border: 3px solid var(--primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: translateX(-50%);
+        z-index: 3;
+        box-shadow: var(--shadow-glow);
+    }
+
+    .step-icon i {
+        color: var(--primary);
+        font-size: 1.2rem;
+    }
+
+    .badge-step {
+        display: inline-block;
+        padding: 0.2rem 0.8rem;
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary);
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        margin-bottom: 0.8rem;
+    }
+
+    @media (max-width: 768px) {
+        .roadmap-line {
+            left: 30px;
+        }
+        .roadmap-step {
+            flex-direction: row !important;
+            justify-content: flex-start;
+            padding-left: 60px;
+        }
+        .step-content {
+            width: 100%;
+        }
+        .step-icon {
+            left: 30px;
+        }
+    }
+
+    .booking-section {
+        background: var(--bg-surface);
+        padding: 5rem 0;
+        border-top: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .form-card {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 3rem;
+        border-top: 4px solid var(--primary);
+    }
+</style>
+
+<div class="service-hero">
+    <div class="container">
+        <div style="background: rgba(245, 158, 11, 0.1); display: inline-block; padding: 0.5rem 1.2rem; border-radius: 30px; margin-bottom: 1.5rem;">
+            <span style="color: #f59e0b; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.5px;">PREMIUM BUNDLE</span>
+        </div>
+        <h1 style="font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 1rem;">Placement Success <span class="gradient-text">Bundle</span></h1>
+        <p style="color: var(--text-muted); max-width: 700px; margin: 0 auto; font-size: 1.15rem; line-height: 1.6;">
+            A comprehensive career transformation package including high-impact resume modification, LinkedIn profile makeover, and a custom-designed portfolio website.
+        </p>
+    </div>
+</div>
+
+<div class="container py-12">
+    <div class="text-center mb-12">
+        <h2 style="font-size: 2.2rem; margin-bottom: 1rem;">How It <span class="gradient-text">Works</span></h2>
+        <p style="color: var(--text-muted);">Your step-by-step journey to professional excellence.</p>
+    </div>
+
+    <div class="roadmap-container">
+        <div class="roadmap-line"></div>
+        
+        <!-- Step 1 -->
+        <div class="roadmap-step">
+            <div class="step-icon">
+                <i class="fas fa-file-alt"></i>
+            </div>
+            <div class="step-content">
+                <span class="badge-step">STEP 01</span>
+                <h3>Request Submission</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
+                    Start by filling out the simple request form at the bottom of this page. Provide your contact details and current career status.
+                </p>
+            </div>
+            <div style="width: 45%;"></div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="roadmap-step">
+            <div class="step-icon">
+                <i class="fas fa-phone-alt"></i>
+            </div>
+            <div class="step-content">
+                <span class="badge-step">STEP 02</span>
+                <h3>Expert Consultation</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
+                    Our senior career expert will review your profile and reach out to you via WhatsApp or phone within 24 hours to discuss your goals.
+                </p>
+            </div>
+            <div style="width: 45%;"></div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="roadmap-step">
+            <div class="step-icon">
+                <i class="fas fa-magic"></i>
+            </div>
+            <div class="step-content">
+                <span class="badge-step">STEP 03</span>
+                <h3>Profile Modification</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
+                    Once we have the details, our team starts modifying your resume and LinkedIn profile for high-impact keywords and professional appeal.
+                </p>
+            </div>
+            <div style="width: 45%;"></div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="roadmap-step">
+            <div class="step-icon">
+                <i class="fas fa-laptop-code"></i>
+            </div>
+            <div class="step-content">
+                <span class="badge-step">STEP 04</span>
+                <h3>Custom Portfolio Design</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
+                    We design and build a high-performance portfolio website showcasing your skills and projects, hosted on a professional domain.
+                </p>
+            </div>
+            <div style="width: 45%;"></div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="roadmap-step">
+            <div class="step-icon" style="border-color: var(--success);">
+                <i class="fas fa-check-double" style="color: var(--success);"></i>
+            </div>
+            <div class="step-content" style="border-bottom: 4px solid var(--success);">
+                <span class="badge-step" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">STEP 05</span>
+                <h3>Final Delivery & Support</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
+                    Review your new assets! We provide one round of revisions and continuous support to ensure you are ready for your next big interview.
+                </p>
+            </div>
+            <div style="width: 45%;"></div>
+        </div>
+    </div>
+</div>
+
+<section class="booking-section" id="booking-form">
+    <div class="container">
+        <div class="form-card card glass animate-scroll">
+            <div style="text-align: center; margin-bottom: 2.5rem;">
+                <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Ready to Unlock Your Potential?</h2>
+                <p style="color: var(--text-muted);">Fill in your details and let's get started today.</p>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.02); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 1px dashed rgba(0,0,0,0.1); text-align: center;">
+                <div style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); line-height: 1;">₹499 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">(Complete Bundle)</span></div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Includes specialized Resume, LinkedIn, and Portfolio support.</p>
+            </div>
+
+            <form action="{% url 'book_service' %}" method="POST" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                {% csrf_token %}
+                <input type="hidden" name="service_type" value="BUNDLE">
+                
+                <div class="input-group" style="margin-bottom: 0;">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem;">Phone Number / WhatsApp</label>
+                    <input type="text" name="phone_number" placeholder="e.g. +91 9876543210" required style="width: 100%; padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1); background: white;">
+                </div>
+
+                <button type="submit" class="btn btn-primary shadow-glow" style="width: 100%; padding: 1rem; font-size: 1.1rem; border-radius: 10px;">
+                    <i class="fas fa-paper-plane" style="margin-right: 0.8rem;"></i> Request This Bundle
+                </button>
+            </form>
+            
+            <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 1.5rem;">
+                <i class="fas fa-lock" style="margin-right: 4px; opacity: 0.7;"></i> Your information is safe. Our team will contact you within 24 hours.
+            </p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

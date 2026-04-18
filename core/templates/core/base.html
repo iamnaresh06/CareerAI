@@ -29,7 +29,7 @@
     />
 
     <!-- Main CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.1" />
   </head>
   <body>
     <!-- Navbar -->
@@ -75,10 +75,8 @@
           </button>
           {% if user.is_authenticated %}
           <a href="{% url 'dashboard' %}"><i class="fas fa-house-chimney nav-icon"></i> Dashboard</a>
-          {% endif %}
           <a href="{% url 'careers' %}"><i class="fas fa-briefcase nav-icon"></i> Careers</a>
           <a href="{% url 'about' %}"><i class="fas fa-circle-info nav-icon"></i> About</a>
-          {% if user.is_authenticated %}
           <a href="{% url 'profile' %}" title="User Profile" class="profile-nav-link" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-left: 0.5rem;">
             {% if user.userprofile and user.userprofile.profile_image %}
               <div style="width: 32px; height: 32px; border-radius: 50%; overflow: hidden; border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; background: white;">
@@ -93,6 +91,7 @@
           </a>
           <a href="{% url 'logout' %}" class="logout-link"><i class="fas fa-right-from-bracket nav-icon"></i> Logout</a>
           {% else %}
+          <a href="{% url 'about' %}"><i class="fas fa-circle-info nav-icon"></i> About</a>
           <a href="{% url 'login' %}"><i class="fas fa-right-to-bracket nav-icon"></i> Login</a>
           <a href="{% url 'register' %}" class="btn btn-primary"><i class="fas fa-user-plus nav-icon"></i> Sign Up</a>
           {% endif %}

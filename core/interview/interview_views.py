@@ -12,17 +12,18 @@ Author: Naresh Reddy
 
 from django.shortcuts import render
 from django.http import JsonResponse
-from core.interview.engine import get_questions_by_category, analyze_interview_response, INTERVIEW_QUESTIONS
+from core.interview.engine import get_questions_by_category, analyze_interview_response, INTERVIEW_QUESTIONS, INTERVIEW_CATEGORIES
 import json
 import random
 
 def interview_hub(request):
     """
     Renders the interview topic selection hub.
-    Displays available categories like Python, Django, Behavioral, etc.
+    Displays categorized topics.
     """
-    categories = INTERVIEW_QUESTIONS.keys()
-    context = {"categories": categories}
+    # Filter out skills that don't have questions yet to avoid 404/errors
+    # For now, I'll pass everything and ensure basic questions exist in engine.py
+    context = {"categories": INTERVIEW_CATEGORIES}
     return render(request, "core/interview/hub.html", context)
 
 
