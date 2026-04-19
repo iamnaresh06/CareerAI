@@ -237,9 +237,15 @@
                 {% csrf_token %}
                 <input type="hidden" name="service_type" value="BUNDLE">
                 
-                <div class="input-group" style="margin-bottom: 0;">
-                    <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem;">Phone Number / WhatsApp</label>
-                    <input type="text" name="phone_number" placeholder="e.g. +91 9876543210" required style="width: 100%; padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1); background: white;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem;">WhatsApp Number</label>
+                        <input type="text" name="phone_number" placeholder="e.g. +91 9876543210" required style="width: 100%; padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1); background: white;">
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem;">Best Time to Contact</label>
+                        <input type="text" name="contact_time" placeholder="e.g. 2-4 PM" required style="width: 100%; padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1); background: white;">
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary shadow-glow" style="width: 100%; padding: 1rem; font-size: 1.1rem; border-radius: 10px;">

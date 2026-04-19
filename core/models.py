@@ -83,7 +83,8 @@ class UserProfile(models.Model):
 class ServiceBooking(models.Model):
     SERVICE_CHOICES = (
         ('BUNDLE', 'Placement Success Bundle'),
-        ('TUITION', 'Home Tech Tuition'),
+        ('TUITION', 'Online Tech Tuition'),
+        ('PROJECT', 'Capstone Project Pro'),
     )
     STATUS_CHOICES = (
         ('PENDING', 'Pending'),
@@ -95,8 +96,10 @@ class ServiceBooking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     service_type = models.CharField(max_length=20, choices=SERVICE_CHOICES)
     phone_number = models.CharField(max_length=20)
-    preferred_tech = models.CharField(max_length=100, blank=True, null=True)
-    preferred_timing = models.CharField(max_length=100, blank=True, null=True)
+    preferred_tech = models.CharField(max_length=200, blank=True, null=True, help_text="Domain / Technology Name")
+    contact_time = models.CharField(max_length=100, blank=True, null=True, help_text="When to contact the student")
+    payment_mode = models.CharField(max_length=20, choices=(('ONE_TIME', 'One-time Payment'), ('EMI', 'EMI Plan')), default='ONE_TIME')
+    notes = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
     created_at = models.DateTimeField(auto_now_add=True)
 

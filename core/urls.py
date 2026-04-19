@@ -36,6 +36,7 @@ urlpatterns = [
     path('dashboard/', analysis_views.dashboard, name='dashboard'),
     path('services/placement-success-bundle/', auth_views.expert_bundle_view, name='expert_bundle'),
     path('services/online-tech-tuition/', auth_views.tech_tuition_view, name='tech_tuition'),
+    path('services/capstone-project-pro/', auth_views.capstone_pro_view, name='capstone_pro'),
     path('book-service/', auth_views.book_service, name='book_service'),
 
     # -------------------------------------------------------------------------

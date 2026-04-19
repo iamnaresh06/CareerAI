@@ -183,27 +183,38 @@
             <div style="flex-grow: 1; height: 1px; background: linear-gradient(to right, rgba(0,0,0,0.1), transparent); margin-left: 0.5rem;"></div>
         </div>
         
-        <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
             <!-- Bundle Service Card -->
-            <a href="{% url 'expert_bundle' %}" class="card glass cursor-pointer expert-service-card" style="flex: 1; min-width: 280px; max-width: 500px; padding: 2rem; border: 2px dashed rgba(245, 158, 11, 0.4); text-align: center; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin: 0; box-shadow: var(--shadow-md); text-decoration: none;">
-               <div class="expert-icon-wrapper" style="width: 60px; height: 60px; background: rgba(245, 158, 11, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
+            <a href="{% url 'expert_bundle' %}" class="card glass cursor-pointer expert-service-card" style="padding: 2rem; border: 2px dashed rgba(245, 158, 11, 0.4); text-align: center; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin: 0; box-shadow: var(--shadow-md); text-decoration: none; display: flex; flex-direction: column;">
+               <div class="expert-icon-wrapper" style="width: 60px; height: 60px; background: rgba(245, 158, 11, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto; flex-shrink: 0;">
                    <i class="fas fa-gem" style="color: #f59e0b; font-size: 1.5rem;"></i>
                </div>
                <h3 class="expert-title" style="font-size: 1.5rem; color: var(--text-main); margin-bottom: 0.5rem;">Placement Success Bundle</h3>
-               <p class="expert-desc" style="color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem;">Strategic services delivered by our <strong>Team Experts</strong> to help you secure your dream role with expert resume modification and custom design.</p>
+               <p class="expert-desc" style="color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem; flex-grow: 1;">Strategic services by our <strong>Team Experts</strong> to secure your dream role with expert resume modification and custom design.</p>
                <span class="btn btn-outline" style="border-color: #f59e0b; color: #f59e0b; width: 100%;">View Full Process</span>
             </a>
  
             <!-- Online Tech Tuition Card -->
-            <a href="{% url 'tech_tuition' %}" class="card glass cursor-pointer expert-service-card" style="flex: 1; min-width: 280px; max-width: 500px; padding: 2rem; border: 2px dashed rgba(16, 185, 129, 0.4); text-align: center; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin: 0; box-shadow: var(--shadow-md); text-decoration: none;">
+            <a href="{% url 'tech_tuition' %}" class="card glass cursor-pointer expert-service-card" style="padding: 2rem; border: 2px dashed rgba(16, 185, 129, 0.4); text-align: center; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin: 0; box-shadow: var(--shadow-md); text-decoration: none; display: flex; flex-direction: column;">
                <div style="position: absolute; top: 10px; right: -30px; background: #f59e0b; color: white; padding: 5px 35px; transform: rotate(45deg); font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">BONUS</div>
-               <div class="expert-icon-wrapper" style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
+               <div class="expert-icon-wrapper" style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto; flex-shrink: 0;">
                    <i class="fas fa-laptop-code" style="color: var(--success); font-size: 1.5rem;"></i>
                </div>
                <h3 class="expert-title" style="font-size: 1.5rem; color: var(--text-main); margin-bottom: 0.5rem;">Online Tech Tuition</h3>
-               <p class="expert-desc" style="color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem;"><strong>3-Month Role Roadmaps:</strong> Python Fullstack, AI, Data Science & more. 1-to-1 mentorship with EMI options and home-delivered kits.</p>
+               <p class="expert-desc" style="color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem; flex-grow: 1;"><strong>3-Month Role Roadmaps:</strong> Python Fullstack, AI, Data Science & more. 1-to-1 mentorship with EMI options and physical kits.</p>
                <span class="btn btn-outline" style="border-color: var(--success); color: var(--success); width: 100%;">View Full Process</span>
             </a>
+
+            <!-- Capstone Project Pro -->
+            <a href="{% url 'capstone_pro' %}" class="card glass cursor-pointer expert-service-card" style="padding: 2rem; border: 2px dashed rgba(79, 70, 229, 0.4); text-align: center; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin: 0; box-shadow: var(--shadow-md); text-decoration: none; display: flex; flex-direction: column;">
+                <div style="position: absolute; top: 10px; right: -30px; background: #f59e0b; color: white; padding: 5px 35px; transform: rotate(45deg); font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">BONUS</div>
+                <div class="expert-icon-wrapper" style="width: 60px; height: 60px; background: rgba(79, 70, 229, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto; flex-shrink: 0;">
+                    <i class="fas fa-graduation-cap" style="color: var(--primary); font-size: 1.5rem;"></i>
+                </div>
+                <h3 class="expert-title" style="font-size: 1.5rem; color: var(--text-main); margin-bottom: 0.5rem;">Capstone Project Pro</h3>
+                <p class="expert-desc" style="color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem; flex-grow: 1;"><strong>Final Year Excellence:</strong> Domain training, full implementation, documentation & research paper publication support.</p>
+                <span class="btn btn-outline" style="border-color: var(--primary); color: var(--primary); width: 100%;">View Full Process</span>
+             </a>
         </div>
     </div>
 

@@ -149,54 +149,66 @@
         <div style="overflow-x: auto;">
             <table style="width: 100%; border-collapse: separate; border-spacing: 0 0.5rem;">
                 <thead>
-                    <tr style="text-align: left; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">
-                        <th style="padding: 0 0.75rem 0.5rem 0.75rem;">User</th>
-                        <th style="padding: 0 0.75rem 0.5rem 0.75rem;">Service Type</th>
-                        <th style="padding: 0 0.75rem 0.5rem 0.75rem;">Contact Number</th>
-                        <th style="padding: 0 0.75rem 0.5rem 0.75rem;">Details (Tech / Timing)</th>
+                    <tr style="text-align: left; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase;">
+                        <th style="padding: 0 0.75rem 0.5rem 0.75rem;">User Info</th>
+                        <th style="padding: 0 0.75rem 0.5rem 0.75rem;">Service & Payment</th>
+                        <th style="padding: 0 0.75rem 0.5rem 0.75rem;">Contact Details</th>
+                        <th style="padding: 0 0.75rem 0.5rem 0.75rem;">Domain / Notes</th>
                         <th style="padding: 0 0.75rem 0.5rem 0.75rem; text-align: right;">Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for booking in bookings %}
-                    <tr style="background: var(--bg-surface); font-size: 0.95rem; border: 1px solid rgba(0,0,0,0.02);">
-                        <td style="padding: 1rem 0.75rem; border-radius: 8px 0 0 8px;">
-                            <a href="{% url 'admin_user_profile' booking.user.id %}" style="font-weight: 600; color: var(--primary); text-decoration: none;">
+                    <tr style="background: var(--bg-surface); font-size: 0.85rem; border: 1px solid rgba(0,0,0,0.02);">
+                        <td style="padding: 0.75rem; border-radius: 8px 0 0 8px;">
+                            <a href="{% url 'admin_user_profile' booking.user.id %}" style="font-weight: 700; color: var(--primary); text-decoration: none;">
                                 {{ booking.user.username }}
                             </a>
-                            <div style="font-size: 0.75rem; color: var(--text-muted); font-family: monospace; margin-top: 0.2rem;">ID: {{ booking.user.userprofile.student_id|default:"No ID" }}</div>
-                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">
-                                <i class="far fa-clock" style="margin-right: 0.2rem;"></i> {{ booking.created_at|date:"M d, Y h:i A" }}
+                            <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.1rem;">ID: {{ booking.user.userprofile.student_id|default:"No ID" }}</div>
+                            <div style="font-size: 0.7rem; color: var(--text-muted); opacity: 0.8;">
+                                {{ booking.created_at|date:"M d, h:i A" }}
                             </div>
                         </td>
-                        <td style="padding: 1rem 0.75rem; font-weight: 500; color: var(--text-main);">
-                            {% if booking.service_type == 'BUNDLE' %}
-                            <span style="color: #f59e0b;"><i class="fas fa-gem" style="margin-right:0.3rem;"></i> Placement Bundle</span>
-                            {% else %}
-                            <span style="color: var(--success);"><i class="fas fa-laptop-house" style="margin-right:0.3rem;"></i> Home Tech Tuition</span>
+                        <td style="padding: 0.75rem;">
+                            <div style="font-weight: 700; color: var(--text-main); margin-bottom: 0.2rem;">
+                                {% if booking.service_type == 'BUNDLE' %}
+                                    <i class="fas fa-gem" style="color: #f59e0b; width: 15px;"></i> Placement Bundle
+                                {% elif booking.service_type == 'TUITION' %}
+                                    <i class="fas fa-chalkboard-teacher" style="color: var(--success); width: 15px;"></i> Tech Tuition
+                                {% elif booking.service_type == 'PROJECT' %}
+                                    <i class="fas fa-graduation-cap" style="color: var(--primary); width: 15px;"></i> Course Project
+                                {% else %}
+                                    {{ booking.get_service_type_display }}
+                                {% endif %}
+                            </div>
+                            <div style="font-size: 0.7rem;">
+                                {% if booking.payment_mode == 'EMI' %}
+                                    <span class="tag" style="background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 0.1rem 0.4rem;">EMI Plan</span>
+                                {% else %}
+                                    <span class="tag" style="background: rgba(99, 102, 241, 0.1); color: var(--primary); padding: 0.1rem 0.4rem;">One-time</span>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td style="padding: 0.75rem;">
+                            <div style="font-weight: 700;">{{ booking.phone_number }}</div>
+                            <div style="font-size: 0.7rem; color: var(--primary);"><i class="far fa-clock"></i> {{ booking.contact_time|default:"Anytime" }}</div>
+                        </td>
+                        <td style="padding: 0.75rem;">
+                            <div style="font-weight: 600; color: var(--text-main); margin-bottom: 0.2rem;">{{ booking.preferred_tech|default:"General" }}</div>
+                            {% if booking.notes %}
+                                <div style="font-size: 0.7rem; color: #ec4899; font-style: italic;">
+                                    <i class="fas fa-info-circle"></i> {{ booking.notes }}
+                                </div>
                             {% endif %}
                         </td>
-                        <td style="padding: 1rem 0.75rem;">
-                            <a href="tel:{{ booking.phone_number }}" style="color: var(--text-main); font-weight: 600; text-decoration: none;">
-                                <i class="fas fa-phone-alt" style="color: var(--text-muted); margin-right: 0.3rem; font-size: 0.8rem;"></i> {{ booking.phone_number }}
-                            </a>
-                        </td>
-                        <td style="padding: 1rem 0.75rem; color: var(--text-muted); font-size: 0.85rem;">
-                            {% if booking.service_type == 'TUITION' %}
-                                <div><strong>Tech:</strong> {{ booking.preferred_tech|default:"-" }}</div>
-                                <div><strong>Time:</strong> {{ booking.preferred_timing|default:"-" }}</div>
-                            {% else %}
-                                <span style="opacity: 0.5;">Not Applicable</span>
-                            {% endif %}
-                        </td>
-                        <td style="padding: 1rem 0.75rem; border-radius: 0 8px 8px 0; text-align: right;">
+                        <td style="padding: 0.75rem; border-radius: 0 8px 8px 0; text-align: right;">
                             <form action="{% url 'update_booking_status' booking.id %}" method="POST" style="display: inline-block;">
                                 {% csrf_token %}
                                 <select name="status" onchange="this.form.submit()" style="
                                     appearance: none; -moz-appearance: none; -webkit-appearance: none;
-                                    background: {% if booking.status == 'PENDING' %} rgba(245, 158, 11, 0.1) {% elif booking.status == 'CONTACTED' %} rgba(59, 130, 246, 0.1) {% elif booking.status == 'CONFIRMED' %} rgba(16, 185, 129, 0.1) {% else %} rgba(100, 116, 139, 0.1) {% endif %};
-                                    color: {% if booking.status == 'PENDING' %} #f59e0b {% elif booking.status == 'CONTACTED' %} #3b82f6 {% elif booking.status == 'CONFIRMED' %} var(--success) {% else %} var(--text-muted) {% endif %};
-                                    padding: 0.35rem 1.5rem 0.35rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid transparent; cursor: pointer; outline: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22currentColor%22 height=%2216%22 viewBox=%220 0 24 24%22 width=%2216%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/></svg>'); background-repeat: no-repeat; background-position: right 0.4rem center; background-size: 1rem;
+                                    background: {% if booking.status == 'PENDING' %} rgba(245, 158, 11, 0.1) {% elif booking.status == 'CONTACTED' %} rgba(59, 130, 246, 0.1) {% elif booking.status == 'CONFIRMED' or booking.status == 'COMPLETED' %} rgba(16, 185, 129, 0.1) {% elif booking.status == 'CANCELLED' %} rgba(239, 68, 68, 0.1) {% else %} rgba(100, 116, 139, 0.1) {% endif %};
+                                    color: {% if booking.status == 'PENDING' %} #f59e0b {% elif booking.status == 'CONTACTED' %} #3b82f6 {% elif booking.status == 'CONFIRMED' or booking.status == 'COMPLETED' %} var(--success) {% elif booking.status == 'CANCELLED' %} var(--error) {% else %} var(--text-muted) {% endif %};
+                                    padding: 0.25rem 1.25rem 0.25rem 0.5rem; border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; border: 1px solid transparent; cursor: pointer; outline: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22currentColor%22 height=%2214%22 viewBox=%220 0 24 24%22 width=%2214%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/></svg>'); background-repeat: no-repeat; background-position: right 0.3rem center; background-size: 0.8rem;
                                 ">
                                     <option value="PENDING" {% if booking.status == 'PENDING' %}selected{% endif %}>Pending</option>
                                     <option value="CONTACTED" {% if booking.status == 'CONTACTED' %}selected{% endif %}>Contacted</option>

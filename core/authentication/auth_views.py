@@ -182,6 +182,13 @@ def tech_tuition_view(request):
     return render(request, 'core/services/tech_tuition.html')
 
 @login_required(login_url='login')
+def capstone_pro_view(request):
+    """
+    Renders the detailed step-by-step process for Capstone Project Pro (Final Year Projects).
+    """
+    return render(request, 'core/services/capstone_pro.html')
+
+@login_required(login_url='login')
 def profile_view(request):
     """
     Allows authenticated users to view and update their profile details and photo.
@@ -237,18 +244,28 @@ def book_service(request):
         service_type = request.POST.get("service_type", "")
         phone_number = request.POST.get("phone_number", "").strip()
         preferred_tech = request.POST.get("preferred_tech", "").strip()
-        preferred_timing = request.POST.get("preferred_timing", "").strip()
-
+        contact_time = request.POST.get("contact_time", "").strip()
+        payment_mode = request.POST.get("payment_mode", "ONE_TIME")
+        
         if not phone_number:
             messages.error(request, "Phone number is required for booking.")
             return redirect("dashboard")
+
+        # Capture additional notes (EMI interest, Paper publication, etc.)
+        notes = []
+        if request.POST.get("need_paper"):
+            notes.append("Needs Research Paper Publication")
+        
+        notes_str = ", ".join(notes) if notes else None
 
         ServiceBooking.objects.create(
             user=request.user,
             service_type=service_type,
             phone_number=phone_number,
             preferred_tech=preferred_tech,
-            preferred_timing=preferred_timing
+            contact_time=contact_time,
+            payment_mode=payment_mode,
+            notes=notes_str
         )
 
         messages.success(request, "Your booking request has been successfully captured! Our team will contact you shortly.")

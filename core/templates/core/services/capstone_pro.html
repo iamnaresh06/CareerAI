@@ -1,0 +1,543 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Capstone Project Pro - CareerAI{% endblock %}
+
+{% block content %}
+<style>
+    .service-hero {
+        padding: 6rem 0 4rem;
+        background: linear-gradient(135deg, rgba(79, 70, 229, 0.05) 0%, rgba(236, 72, 153, 0.05) 100%);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+
+    .info-bar {
+        background: white;
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-main);
+    }
+
+    .info-item i {
+        color: var(--primary);
+    }
+
+    .roadmap-container {
+        position: relative;
+        max-width: 900px;
+        margin: 4rem auto;
+        padding: 0 1.5rem;
+    }
+
+    .roadmap-line {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(to bottom, var(--primary), var(--accent));
+        transform: translateX(-50%);
+        opacity: 0.3;
+        z-index: 1;
+    }
+
+    .roadmap-step {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4rem;
+        z-index: 2;
+    }
+
+    .roadmap-step:nth-child(even) {
+        flex-direction: row-reverse;
+    }
+
+    .step-content {
+        width: 45%;
+        padding: 2rem;
+        background: white;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+    }
+
+    .step-content:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary);
+    }
+
+    .step-icon {
+        position: absolute;
+        left: 50%;
+        width: 50px;
+        height: 50px;
+        background: white;
+        border: 3px solid var(--primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: translateX(-50%);
+        z-index: 3;
+        box-shadow: var(--shadow-glow);
+    }
+
+    .step-icon i {
+        color: var(--primary);
+        font-size: 1.2rem;
+    }
+
+    .badge-step {
+        display: inline-block;
+        padding: 0.2rem 0.8rem;
+        background: rgba(79, 70, 229, 0.1);
+        color: var(--primary);
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        margin-bottom: 0.8rem;
+    }
+
+    @media (max-width: 768px) {
+        .roadmap-line {
+            left: 30px;
+        }
+        .roadmap-step {
+            flex-direction: row !important;
+            justify-content: flex-start;
+            padding-left: 60px;
+        }
+        .step-content {
+            width: 100%;
+        }
+        .step-icon {
+            left: 30px;
+        }
+    }
+
+    .pricing-section {
+        background: var(--bg-surface);
+        padding: 5rem 0;
+        border-top: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2.5rem;
+        margin: 3rem 0;
+    }
+
+    .pricing-card {
+        background: white;
+        border-radius: var(--radius-xl);
+        padding: 3rem;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        box-shadow: var(--shadow-md);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pricing-card.popular {
+        border: 2px solid var(--primary);
+        transform: scale(1.02);
+    }
+
+    .pricing-card.popular::before {
+        content: 'MOST FLEXIBLE';
+        position: absolute;
+        top: 20px;
+        right: -35px;
+        background: var(--primary);
+        color: white;
+        padding: 0.5rem 3rem;
+        font-size: 0.7rem;
+        font-weight: 800;
+        transform: rotate(45deg);
+    }
+
+    .price-value {
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--text-main);
+        margin: 1.5rem 0;
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+    }
+
+    .price-value span {
+        font-size: 1rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 2rem 0;
+        flex-grow: 1;
+    }
+
+    .feature-list li {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 1.2rem;
+        font-size: 0.95rem;
+        color: var(--text-main);
+    }
+
+    .feature-list li i {
+        color: var(--success);
+        font-size: 1rem;
+    }
+
+    .addon-card {
+        background: rgba(236, 72, 153, 0.03);
+        border: 2px dashed rgba(236, 72, 153, 0.2);
+    }
+
+    .addon-card:hover {
+        border-color: #ec4899;
+    }
+
+    .addon-label {
+        background: #ec4899;
+        color: white;
+        padding: 0.3rem 1rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 800;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .form-card {
+        max-width: 650px;
+        margin: 4rem auto 0;
+        padding: 3rem;
+        border-top: 4px solid var(--primary);
+    }
+
+    /* EMI Steps Styling */
+    .emi-steps {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(0,0,0,0.05);
+        position: relative;
+    }
+
+    .emi-steps::before {
+        content: '';
+        position: absolute;
+        top: 25px;
+        left: 10px;
+        right: 10px;
+        height: 2px;
+        background: rgba(79, 70, 229, 0.1);
+        z-index: 1;
+    }
+
+    .emi-step {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .step-dot {
+        width: 12px;
+        height: 12px;
+        background: var(--primary);
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+    }
+
+    .step-label {
+        font-size: 0.65rem;
+        font-weight: 700;
+        color: var(--text-muted);
+    }
+
+    .step-amount {
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: var(--primary);
+    }
+</style>
+
+<div class="service-hero">
+    <div class="container">
+        <div style="background: rgba(79, 70, 229, 0.1); display: inline-block; padding: 0.5rem 1.2rem; border-radius: 30px; margin-bottom: 1.5rem;">
+            <span style="color: var(--primary); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.5px;">ACADEMIC EXCELLENCE</span>
+        </div>
+        <h1 style="font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 1rem;">Capstone <span style="color: var(--primary);">Project Pro</span></h1>
+        <p style="color: var(--text-muted); max-width: 750px; margin: 0 auto; font-size: 1.15rem; line-height: 1.6;">
+            Your final year project is more than just a requirement—it's your career's first major milestone. We provide end-to-end support from training to implementation and publication.
+        </p>
+    </div>
+</div>
+
+<div class="info-bar">
+    <div class="info-item"><i class="fas fa-calendar-alt"></i> 4 Months Duration</div>
+    <div class="info-item"><i class="fas fa-credit-card"></i> Pay Monthly (EMI Available)</div>
+    <div class="info-item"><i class="fas fa-gift" style="color: #f59e0b;"></i> FREE Placement Bundle</div>
+    <div class="info-item"><i class="fas fa-certificate"></i> Verified Certification</div>
+</div>
+
+<div class="container" style="margin-top: 3rem;">
+    <div style="background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%); padding: 1.5rem; border-radius: 15px; color: white; display: flex; align-items: center; gap: 2rem; box-shadow: var(--shadow-glow-yellow);">
+        <div style="width: 70px; height: 70px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 2rem;">
+            <i class="fas fa-gem"></i>
+        </div>
+        <div>
+            <h3 style="margin-bottom: 0.3rem; font-size: 1.4rem;">Special Student Benefit</h3>
+            <p style="font-size: 1.05rem; opacity: 0.9;">Enroll in any Project Plan today and get our <strong>Placement Success Bundle</strong> (Resume, LinkedIn & Portfolio) worth ₹499 for <strong>FREE</strong>.</p>
+        </div>
+    </div>
+</div>
+
+<div class="container py-16">
+    <div class="text-center mb-12">
+        <h2 style="font-size: 2.22rem; margin-bottom: 1rem;">The Engineering <span style="color: var(--primary);">Workflow</span></h2>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">We follow a systematic industrial approach to ensure you deeply understand your project's architecture and logic.</p>
+    </div>
+
+    <div class="roadmap-container">
+        <div class="roadmap-line"></div>
+        
+        <!-- Step 1 -->
+        <div class="roadmap-step">
+            <div class="step-icon">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <div class="step-content">
+                <span class="badge-step">MONTH 01 - 03</span>
+                <h3>Course Mastery & Training</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
+                    Intensive training in your chosen domain (AI, Web, IoT, etc.). Master the core logic and technical skills required to build production-level solutions.
+                </p>
+            </div>
+            <div style="width: 45%;"></div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="roadmap-step">
+            <div class="step-icon">
+                <i class="fas fa-laptop-code"></i>
+            </div>
+            <div class="step-content">
+                <span class="badge-step">MONTH 04</span>
+                <h3>Project Implementation</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
+                    Purely focused on building your final year project. We handle the architecture, clean code development, and ensure a bug-free functional product.
+                </p>
+            </div>
+            <div style="width: 45%;"></div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="roadmap-step">
+            <div class="step-icon">
+                <i class="fas fa-file-alt"></i>
+            </div>
+            <div class="step-content">
+                <span class="badge-step">FINAL PHASE</span>
+                <h3>Documentation & Handover</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
+                    Receive your detailed project report, diagrams, and completion certificate. We provide a full walkthrough so you're ready for your college viva.
+                </p>
+            </div>
+            <div style="width: 45%;"></div>
+        </div>
+    </div>
+</div>
+
+<section class="pricing-section" id="pricing">
+    <div class="container">
+        <div class="text-center mb-12">
+            <h2 style="font-size: 2.2rem; margin-bottom: 1rem;">Investment for <span style="color: var(--primary);">Success</span></h2>
+            <p style="color: var(--text-muted);">Transparent pricing for high-quality project mentorship.</p>
+        </div>
+
+        <div class="pricing-grid">
+            <!-- One Time Payment -->
+            <div class="pricing-card">
+                <div class="badge-step" style="background: rgba(99, 102, 241, 0.1); color: var(--primary);">SAVINGS PACK</div>
+                <h3 style="font-size: 1.6rem; margin-top: 0.8rem;">One Time Payment</h3>
+                <div class="price-value">₹7,999 <span>total</span></div>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">The most economical way to complete your project.</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> <span><strong>₹999</strong> Upfront Booking Fee</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span><strong>₹7,000</strong> Before Project Start</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span>3 Months Training + 1 Month Build</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span>Architecture & Full Documentation</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span>Plagiarism Check (Turnitin)</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span>FREE Placement Success Bundle</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span>Hands-on Code Walkthrough</span></li>
+                </ul>
+
+                <a href="#enroll-form" class="btn btn-outline-primary" style="width: 100%; border-radius: 12px; padding: 0.8rem;">Select This Plan</a>
+            </div>
+
+            <!-- EMI Plan -->
+            <div class="pricing-card popular">
+                <div class="badge-step" style="background: rgba(79, 70, 229, 0.1); color: var(--primary);">FLEXIBLE EMI</div>
+                <h3 style="font-size: 1.6rem; margin-top: 0.8rem;">4-Month EMI Plan</h3>
+                <div class="price-value">₹8,999 <span>total</span></div>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Spread the cost over the entire project duration.</p>
+                
+                <ul class="feature-list" style="margin-bottom: 1rem;">
+                    <li><i class="fas fa-check-circle"></i> <span><strong>₹999</strong> Upfront Booking Fee</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span><strong>₹2,000/mo</strong> for 4 Month tenure</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span>3 Months Training + 1 Month Build</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span>Architecture & Full Documentation</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span>Plagiarism Check (Turnitin)</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span>FREE Placement Success Bundle</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span>Hands-on Code Walkthrough</span></li>
+                </ul>
+
+                <div class="emi-steps">
+                    <div class="emi-step">
+                        <div class="step-dot"></div>
+                        <span class="step-label" style="font-size: 0.6rem;">MONTH 1</span>
+                        <span class="step-amount" style="font-size: 0.7rem;">₹2,000</span>
+                    </div>
+                    <div class="emi-step">
+                        <div class="step-dot"></div>
+                        <span class="step-label" style="font-size: 0.6rem;">MONTH 2</span>
+                        <span class="step-amount" style="font-size: 0.7rem;">₹2,000</span>
+                    </div>
+                    <div class="emi-step">
+                        <div class="step-dot"></div>
+                        <span class="step-label" style="font-size: 0.6rem;">MONTH 3</span>
+                        <span class="step-amount" style="font-size: 0.7rem;">₹2,000</span>
+                    </div>
+                    <div class="emi-step">
+                        <div class="step-dot"></div>
+                        <span class="step-label" style="font-size: 0.6rem;">MONTH 4</span>
+                        <span class="step-amount" style="font-size: 0.7rem;">₹2,000</span>
+                    </div>
+                </div>
+
+                <a href="#enroll-form" class="btn btn-primary" style="width: 100%; border-radius: 12px; padding: 0.8rem; margin-top: 1.5rem;">Select This Plan</a>
+            </div>
+        </div>
+
+        <!-- Research Publication Add-on at the Bottom -->
+        <div style="max-width: 900px; margin: 3rem auto 0;">
+            <div class="pricing-card addon-card" style="display: flex; flex-direction: row; gap: 2rem; align-items: center; padding: 2rem; flex-wrap: wrap; box-shadow: 0 4px 20px rgba(236, 72, 153, 0.1);">
+                <div style="flex: 1.2; min-width: 300px;">
+                    <span style="background: #ec4899; color: white; padding: 0.25rem 0.8rem; border-radius: 20px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase;">Optional Research Add-on</span>
+                    <h3 style="font-size: 1.6rem; margin: 1rem 0 0.5rem;">Research Paper Publication</h3>
+                    <div style="font-size: 2.2rem; font-weight: 800; color: #ec4899;">₹1,999 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">EXTRA</span></div>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin-top: 1rem;">Ideal for students aiming for premium R&D roles or higher studies (MS/Ph.D). We handle the complete technical writing and journal submission process.</p>
+                </div>
+                
+                <div style="flex: 1; min-width: 280px; border-left: 2px dashed rgba(236, 72, 153, 0.1); padding-left: 2rem;">
+                    <ul class="feature-list" style="margin: 0;">
+                        <li style="margin-bottom: 0.8rem;"><i class="fas fa-plus-circle" style="color: #ec4899;"></i> <span>Abstract & Full Paper Writing</span></li>
+                        <li style="margin-bottom: 0.8rem;"><i class="fas fa-plus-circle" style="color: #ec4899;"></i> <span>Plagiarism Check (Turnitin)</span></li>
+                        <li style="margin-bottom: 0.8rem;"><i class="fas fa-plus-circle" style="color: #ec4899;"></i> <span>Journal Formatting & Design</span></li>
+                        <li style="margin-bottom: 0.8rem;"><i class="fas fa-plus-circle" style="color: #ec4899;"></i> <span>Expert Co-authoring Guidance</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-card card glass" id="enroll-form">
+            <div style="text-align: center; margin-bottom: 2.5rem;">
+                <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Secure Your Project Slot</h2>
+                <p style="color: var(--text-muted);">Fill in the details below and we'll reach out to discuss your project domain.</p>
+            </div>
+
+            <div style="background: rgba(79, 70, 229, 0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 1px dashed rgba(79, 70, 229, 0.2); text-align: center;">
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; font-weight: 700; letter-spacing: 1px;">Booking Fee</div>
+                <div style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); line-height: 1;">₹999 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">Upfront Slot Fee</span></div>
+                <div style="margin-top: 1rem; padding: 0.5rem; background: rgba(37, 99, 235, 0.1); border-radius: 8px; display: inline-block;">
+                    <span style="font-size: 0.85rem; color: var(--primary); font-weight: 700;">₹7,000 balance to be paid before project start</span>
+                </div>
+            </div>
+
+            <form action="{% url 'book_service' %}" method="POST" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                {% csrf_token %}
+                <input type="hidden" name="service_type" value="PROJECT">
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem;">Project Domain / Technology</label>
+                        <input type="text" name="preferred_tech" placeholder="e.g. AI Mental Health Bot" required style="width: 100%; padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1); background: white;">
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem;">Best Time to Contact You</label>
+                        <input type="text" name="contact_time" placeholder="e.g. Evenings after 6 PM" required style="width: 100%; padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1); background: white;">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem;">WhatsApp Number</label>
+                        <input type="text" name="phone_number" placeholder="e.g. +91 9876543210" required style="width: 100%; padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1); background: white;">
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem;">Payment Mode Preference</label>
+                        <select name="payment_mode" required style="width: 100%; padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1); background: white;">
+                            <option value="ONE_TIME">One-time Payment (₹7,999)</option>
+                            <option value="EMI">4-Month EMI Plan (₹2,000/mo)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="background: rgba(79, 70, 229, 0.03); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(79, 70, 229, 0.1);">
+                    <label style="display: flex; align-items: flex-start; gap: 0.8rem; cursor: pointer;">
+                        <input type="checkbox" name="need_paper" style="margin-top: 4px; width: 18px; height: 18px; accent-color: #ec4899;">
+                        <span style="font-size: 0.9rem; color: var(--text-main); line-height: 1.4;">
+                            I also need <strong>Research Paper Publication</strong> support for my project (+₹1,999)
+                        </span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary shadow-glow" style="width: 100%; padding: 1rem; font-size: 1.1rem; border-radius: 10px; background: var(--primary); border-color: var(--primary);">
+                    <i class="fas fa-paper-plane" style="margin-right: 0.8rem;"></i> Request Project Consultation
+                </button>
+            </form>
+            
+            <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 1.5rem;">
+                <i class="fas fa-shield-halved" style="margin-right: 4px; opacity: 0.7;"></i> Booking is free. Our expert will call you to finalize your project requirements and abstract.
+            </p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
