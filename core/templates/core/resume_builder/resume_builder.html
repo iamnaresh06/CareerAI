@@ -17,23 +17,42 @@
     .btn { font-size: 0.85rem !important; padding: 0.4rem 1rem !important; }
 </style>
 
-<div class="container py-8 heading-top-padding">
-    <div class="flex items-center gap-4 mb-6">
-        <a href="{% url 'dashboard' %}" class="btn btn-outline back-btn-mobile" style="border-radius: 8px; padding: 0.4rem 0.8rem;">
+<div class="container py-4 heading-top-padding" style="max-width: 900px; margin: 0 auto; overflow: visible;">
+    <div class="flex items-center gap-4 mb-4">
+        <a href="{% url 'dashboard' %}" class="btn btn-outline back-btn-mobile" style="border-radius: 8px; padding: 0.3rem 0.6rem; font-size: 0.8rem;">
             <i class="fas fa-chevron-left" style="margin-right: 4px;"></i> Back
         </a>
-        <h1 style="margin: 0; font-size: 1.5rem;">ATS Resume Builder</h1>
+        <h1 style="margin: 0; font-size: 1.3rem !important;">ATS Resume Builder</h1>
     </div>
 
     <!-- Auto-Fill from Resume -->
-    <div class="card mb-8" style="border: 2px dashed var(--primary); background: rgba(var(--primary-rgb), 0.05);">
-        <h3 class="mb-3 text-primary" style="font-size: 1.1rem;"><i class="fas fa-magic"></i> Auto-Fill with AI</h3>
-        <p class="mb-4 text-muted" style="font-size: 0.9rem;">Upload your existing resume (PDF or DOCX) to automatically extract known fields and speed up the building process.</p>
-        <form method="POST" action="{% url 'resume_parse' %}" enctype="multipart/form-data" class="flex flex-col md:flex-row gap-4 items-center w-full">
-            {% csrf_token %}
-            <input type="file" name="resume_file" accept=".pdf,.docx" class="form-control" style="flex: 1; min-width: 0;" required>
-            <button type="submit" class="btn btn-primary whitespace-nowrap"><i class="fas fa-upload"></i> Scan & Autofill</button>
-        </form>
+    <div style="max-width: 600px; margin: 0 auto 1.5rem auto;">
+        <div class="card" style="border: 1.5px dashed var(--primary); background: rgba(var(--primary-rgb), 0.03); padding: 0.8rem 1.2rem !important; border-radius: 12px;">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-center sm:text-left">
+                    <h3 class="mb-0 text-primary" style="font-size: 0.9rem !important; display: flex; align-items: center; gap: 6px; justify-content: center; sm:justify-content: flex-start;">
+                        <i class="fas fa-magic"></i> AI Auto-Fill
+                    </h3>
+                    <p class="text-muted" style="font-size: 0.75rem !important; margin: 2px 0 0 0;">Upload PDF/DOCX to extract fields.</p>
+                </div>
+                
+                <form method="POST" action="{% url 'resume_parse' %}" enctype="multipart/form-data" class="flex items-center gap-2 w-full sm:w-auto">
+                    {% csrf_token %}
+                    <div style="position: relative; flex: 1;">
+                        <input type="file" name="resume_file" id="resume_file" accept=".pdf,.docx" 
+                               style="position: absolute; width: 0.1px; height: 0.1px; opacity: 0; overflow: hidden; z-index: -1;" required
+                               onchange="document.getElementById('file-label').textContent = this.files[0].name.substring(0, 15) + '...'">
+                        <label for="resume_file" id="file-label" class="btn btn-sm btn-outline" 
+                               style="cursor: pointer; padding: 0.4rem 0.8rem !important; font-size: 0.75rem; white-space: nowrap; border-radius: 8px; display: block; text-align: center; border-color: rgba(var(--primary-rgb), 0.2);">
+                            <i class="fas fa-file-upload"></i> Choose File
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="padding: 0.45rem 1.2rem !important; font-size: 0.8rem; border-radius: 8px; font-weight: 600;">
+                        <i class="fas fa-bolt"></i> Scan
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <form method="POST" action="{% url 'resume_save' %}">
@@ -92,7 +111,7 @@
         <div class="mb-8">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-accent"><i class="fas fa-graduation-cap"></i> Education <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted); margin-left: 0.5rem; text-transform: none;">(Add only recent 2 educations)</span></h3>
-                <button type="button" onclick="addEducation()" class="btn btn-sm btn-outline"><i class="fas fa-plus"></i> Add</button>
+                <button type="button" onclick="addEducation()" class="btn btn-sm btn-outline" style="border-radius: 6px; padding: 0.3rem 0.8rem !important; display: flex; align-items: center; gap: 4px; border-color: rgba(var(--primary-rgb), 0.3);"><i class="fas fa-plus" style="font-size: 0.7rem;"></i> Add</button>
             </div>
             <div id="education-container">
                 {% if education %}
@@ -134,116 +153,163 @@
             </div>
         </div>
 
-        <!-- Experience -->
-        <div class="mb-8">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-accent"><i class="fas fa-briefcase"></i> Experience <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted); margin-left: 0.5rem; text-transform: none;">(Add only recent 2 experience details)</span></h3>
-                <button type="button" onclick="addExperience()" class="btn btn-sm btn-outline"><i class="fas fa-plus"></i> Add</button>
-            </div>
-            <div id="experience-container">
-                {% if experience %}
-                    {% for exp in experience %}
-                    <div class="card mb-4 p-6">
-                        <div class="grid grid-2 gap-4 mb-4">
-                            <div class="input-group mb-0">
-                                <label>Role / Position</label>
-                                <input name="exp_role[]" value="{{ exp.role|default:'' }}" placeholder="e.g. Software Engineer">
+        <!-- Dynamic Sections (3 Groups) -->
+        <div id="dynamic-sections-container">
+            <!-- Section 1 -->
+            <div class="dynamic-section-group mb-10" id="section-group-1" data-default-type="experience">
+                <div class="flex justify-between items-center mb-4 gap-4 flex-wrap">
+                    <div class="flex items-center gap-3">
+                        <select class="section-type-select" onchange="changeSectionType(1, this.value)" style="font-weight: 700; color: var(--accent); border: none; background: transparent; font-size: 1.15rem; padding: 0; width: auto; cursor: pointer;">
+                            <option value="experience" selected>Experience</option>
+                            <option value="projects">Projects</option>
+                            <option value="certifications">Certifications</option>
+                            <option value="achievements">Achievements</option>
+                            <option value="hobbies">Hobbies</option>
+                        </select>
+                        <span class="text-muted section-hint" style="font-size: 0.8rem;">(Max 2 recent)</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="addItemToSection(1)" class="btn btn-sm btn-outline" style="border-radius: 6px; padding: 0.3rem 0.8rem !important; display: flex; align-items: center; gap: 4px; border-color: rgba(var(--primary-rgb), 0.3);"><i class="fas fa-plus" style="font-size: 0.7rem;"></i> Add Item</button>
+                    </div>
+                </div>
+                <div id="section-items-1" class="section-items-container">
+                    {% if experience %}
+                        {% for exp in experience|slice:":2" %}
+                        <div class="card mb-4 p-6 relative">
+                            <button type="button" onclick="this.parentElement.remove()" class="absolute top-2 right-2 text-muted hover:text-red-500" style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
+                            <div class="grid grid-2 gap-4 mb-4">
+                                <div class="input-group mb-0">
+                                    <label>Role / Position</label>
+                                    <input name="exp_role[]" value="{{ exp.role|default:'' }}" placeholder="e.g. Software Engineer">
+                                </div>
+                                <div class="input-group mb-0">
+                                    <label>Company Name</label>
+                                    <input name="exp_company[]" value="{{ exp.company|default:'' }}" placeholder="e.g. Google">
+                                </div>
+                            </div>
+                            <div class="grid grid-2 gap-4 mb-4 items-end">
+                                <div class="input-group mb-0">
+                                    <label>Start Date</label>
+                                    <input type="month" name="exp_start[]" value="{{ exp.start|default:'' }}">
+                                </div>
+                                <div class="input-group mb-0">
+                                    <label>End Date</label>
+                                    <div class="flex gap-2 items-center">
+                                        <input type="month" name="exp_end[]" value="{{ exp.end|default:'' }}" style="flex: 1;" {% if exp.end == 'Present' %}disabled style="background-color: #e2e8f0; opacity: 0.7; cursor: not-allowed;"{% endif %}>
+                                        <label class="flex items-center gap-1" style="white-space: nowrap; cursor: pointer; margin-bottom: 0;">
+                                            <input type="checkbox" onchange="togglePresent(this, 'exp_end[]')" style="width: auto;" {% if exp.end == 'Present' %}checked{% endif %}>
+                                            <span>Present</span>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="input-group mb-0">
-                                <label>Company Name</label>
-                                <input name="exp_company[]" value="{{ exp.company|default:'' }}" placeholder="e.g. Google">
+                                <label>Work Description (MAX 3 points, separate by new lines)</label>
+                                <textarea name="exp_desc[]" rows="4" placeholder="Developed ...&#10;Collaborated ...">{% for d in exp.desc %}{{ d }}{% if not forloop.last %}&#10;{% endif %}{% endfor %}</textarea>
                             </div>
                         </div>
-                        <div class="grid grid-2 gap-4 mb-4 items-end">
-                            <div class="input-group mb-0">
-                                <label>Start Date</label>
-                                <input type="month" name="exp_start[]" value="{{ exp.start|default:'' }}">
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="dynamic-section-group mb-10" id="section-group-2" data-default-type="projects">
+                <div class="flex justify-between items-center mb-4 gap-4 flex-wrap">
+                    <div class="flex items-center gap-3">
+                        <select class="section-type-select" onchange="changeSectionType(2, this.value)" style="font-weight: 700; color: var(--accent); border: none; background: transparent; font-size: 1.15rem; padding: 0; width: auto; cursor: pointer;">
+                            <option value="experience">Experience</option>
+                            <option value="projects" selected>Projects</option>
+                            <option value="certifications">Certifications</option>
+                            <option value="achievements">Achievements</option>
+                            <option value="hobbies">Hobbies</option>
+                        </select>
+                        <span class="text-muted section-hint" style="font-size: 0.8rem;">(Max 2 recent)</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="addItemToSection(2)" class="btn btn-sm btn-outline" style="border-radius: 6px; padding: 0.3rem 0.8rem !important; display: flex; align-items: center; gap: 4px; border-color: rgba(var(--primary-rgb), 0.3);"><i class="fas fa-plus" style="font-size: 0.7rem;"></i> Add Item</button>
+                    </div>
+                </div>
+                <div id="section-items-2" class="section-items-container">
+                    {% if projects %}
+                        {% for proj in projects|slice:":2" %}
+                        <div class="card mb-4 p-6 relative">
+                            <button type="button" onclick="this.parentElement.remove()" class="absolute top-2 right-2 text-muted hover:text-red-500" style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
+                            <div class="grid grid-2 gap-4 mb-4">
+                                <div class="input-group mb-0">
+                                    <label>Project Name</label>
+                                    <input name="proj_name[]" value="{{ proj.name|default:'' }}" placeholder="e.g. E-Commerce App">
+                                </div>
+                                <div class="input-group mb-0">
+                                    <label>Tech Stack</label>
+                                    <input name="proj_stack[]" value="{{ proj.stack|default:'' }}" placeholder="e.g. React, Node.js, MongoDB">
+                                </div>
                             </div>
                             <div class="input-group mb-0">
-                                <label>End Date</label>
-                                <div class="flex gap-2 items-center">
-                                    <input type="month" name="exp_end[]" value="{{ exp.end|default:'' }}" style="flex: 1;" {% if exp.end == 'Present' %}disabled style="background-color: #e2e8f0; opacity: 0.7; cursor: not-allowed;"{% endif %}>
-                                    <label class="flex items-center gap-1" style="white-space: nowrap; cursor: pointer; margin-bottom: 0;">
-                                        <input type="checkbox" onchange="togglePresent(this, 'exp_end[]')" style="width: auto;" {% if exp.end == 'Present' %}checked{% endif %}>
-                                        <span>Present</span>
-                                    </label>
+                                <label>Project Description</label>
+                                <textarea name="proj_desc[]" rows="4" placeholder="Briefly describe what you built...">{% for d in proj.desc %}{{ d }}{% if not forloop.last %}&#10;{% endif %}{% endfor %}</textarea>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Section 3 -->
+            <div class="dynamic-section-group mb-10" id="section-group-3" data-default-type="certifications">
+                <div class="flex justify-between items-center mb-4 gap-4 flex-wrap">
+                    <div class="flex items-center gap-3">
+                        <select class="section-type-select" onchange="changeSectionType(3, this.value)" style="font-weight: 700; color: var(--accent); border: none; background: transparent; font-size: 1.15rem; padding: 0; width: auto; cursor: pointer;">
+                            <option value="experience">Experience</option>
+                            <option value="projects">Projects</option>
+                            <option value="certifications" selected>Certifications</option>
+                            <option value="achievements">Achievements</option>
+                            <option value="hobbies">Hobbies</option>
+                        </select>
+                        <span class="text-muted section-hint" style="font-size: 0.8rem;">(Max 2 recent)</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="addItemToSection(3)" class="btn btn-sm btn-outline" style="border-radius: 6px; padding: 0.3rem 0.8rem !important; display: flex; align-items: center; gap: 4px; border-color: rgba(var(--primary-rgb), 0.3);"><i class="fas fa-plus" style="font-size: 0.7rem;"></i> Add Item</button>
+                    </div>
+                </div>
+                <div id="section-items-3" class="section-items-container">
+                    {% if certifications %}
+                        {% for cert in certifications|slice:":2" %}
+                        <div class="card mb-4 p-6 relative">
+                            <button type="button" onclick="this.parentElement.remove()" class="absolute top-2 right-2 text-muted hover:text-red-500" style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
+                            <div class="grid grid-2 gap-4">
+                                <div class="input-group mb-0">
+                                    <label>Certificate Name</label>
+                                    <input name="cert_name[]" value="{{ cert.name|default:'' }}" placeholder="e.g. AWS Solutions Architect">
+                                </div>
+                                <div class="input-group mb-0">
+                                    <label>Issued By / Organization</label>
+                                    <input name="cert_org[]" value="{{ cert.org|default:'' }}" placeholder="e.g. Amazon Web Services">
                                 </div>
                             </div>
                         </div>
-                        <div class="input-group mb-0">
-                            <label>Work Description (MAX 3 points, separate by new lines)</label>
-                            <textarea name="exp_desc[]" rows="4" placeholder="Developed ...&#10;Collaborated ...">{% for d in exp.desc %}{{ d }}{% if not forloop.last %}&#10;{% endif %}{% endfor %}</textarea>
-                        </div>
-                    </div>
-                    {% endfor %}
-                {% endif %}
-            </div>
-        </div>
-
-        <!-- Projects -->
-        <div class="mb-8">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-accent"><i class="fas fa-laptop-code"></i> Projects <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted); margin-left: 0.5rem; text-transform: none;">(Add only recent 2 projects)</span></h3>
-                <button type="button" onclick="addProject()" class="btn btn-sm btn-outline"><i class="fas fa-plus"></i> Add</button>
-            </div>
-            <div id="projects-container">
-                {% if projects %}
-                    {% for proj in projects %}
-                    <div class="card mb-4 p-6">
-                        <div class="grid grid-2 gap-4 mb-4">
-                            <div class="input-group mb-0">
-                                <label>Project Name</label>
-                                <input name="proj_name[]" value="{{ proj.name|default:'' }}" placeholder="e.g. E-Commerce App">
-                            </div>
-                            <div class="input-group mb-0">
-                                <label>Tech Stack</label>
-                                <input name="proj_stack[]" value="{{ proj.stack|default:'' }}" placeholder="e.g. React, Node.js, MongoDB">
-                            </div>
-                        </div>
-                        <div class="input-group mb-0">
-                            <label>Project Description</label>
-                            <textarea name="proj_desc[]" rows="4" placeholder="Briefly describe what you built...">{% for d in proj.desc %}{{ d }}{% if not forloop.last %}&#10;{% endif %}{% endfor %}</textarea>
-                        </div>
-                    </div>
-                    {% endfor %}
-                {% endif %}
-            </div>
-        </div>
-
-        <!-- Certifications -->
-        <div class="mb-8">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-accent"><i class="fas fa-certificate"></i> Certifications <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted); margin-left: 0.5rem; text-transform: none;">(Add only recent 2 certifications)</span></h3>
-                <button type="button" onclick="addCertification()" class="btn btn-sm btn-outline"><i class="fas fa-plus"></i> Add</button>
-            </div>
-            <div id="certifications-container">
-                {% if certifications %}
-                    {% for cert in certifications %}
-                    <div class="card mb-4 p-6">
-                        <div class="grid grid-2 gap-4">
-                            <div class="input-group mb-0">
-                                <label>Certificate Name</label>
-                                <input name="cert_name[]" value="{{ cert.name|default:'' }}" placeholder="e.g. AWS Solutions Architect">
-                            </div>
-                            <div class="input-group mb-0">
-                                <label>Issued By / Organization</label>
-                                <input name="cert_org[]" value="{{ cert.org|default:'' }}" placeholder="e.g. Amazon Web Services">
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
             </div>
         </div>
 
         <!-- Actions -->
-        <div class="card sticky-bottom p-4 flex gap-2 justify-center" style="position: sticky; bottom: 1rem; z-index: 40; border-top: 2px solid var(--primary); background: var(--bg-card);">
-            <button name="action" value="preview" class="btn btn-outline sticky-action-btn">
-                <i class="fas fa-eye"></i> Preview
-            </button>
-            <button name="action" value="download" class="btn btn-primary sticky-action-btn">
-                <i class="fas fa-download"></i> Download PDF
-            </button>
+        <div style="position: sticky; bottom: 0; left: 0; right: 0; padding: 1rem 0; background: linear-gradient(to top, var(--bg-body), transparent); z-index: 100; margin-top: 1rem;">
+            <div class="card p-2 shadow-lg flex gap-2 justify-center items-center" style="border: 1px solid var(--primary); background: var(--bg-card); border-radius: 40px; width: fit-content; margin: 0 auto; min-width: 250px;">
+                <button name="action" value="preview" class="btn btn-outline" style="border-radius: 30px; padding: 0.5rem 1.2rem !important; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                    <i class="fas fa-eye"></i> Preview
+                </button>
+                <button name="action" value="download" class="btn btn-primary" style="border-radius: 30px; padding: 0.5rem 1.2rem !important; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.25);">
+                    <i class="fas fa-download"></i> Download
+                </button>
+            </div>
         </div>
 
     </form>

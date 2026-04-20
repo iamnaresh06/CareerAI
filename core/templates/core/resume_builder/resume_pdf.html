@@ -142,6 +142,7 @@ a {
 
 
 
+{% if experience %}
 <div class="section">
 <div class="section-title">Experience</div>
 <hr>
@@ -159,11 +160,13 @@ a {
 
 {% endfor %}
 </div>
+{% endif %}
 
 
 
 
 <!-- PROJECTS -->
+{% if projects %}
 <div class="section">
 <div class="section-title">Projects</div>
 <hr>
@@ -181,11 +184,13 @@ a {
 
 {% endfor %}
 </div>
+{% endif %}
 
 
 
 
 <!-- CERTIFICATIONS -->
+{% if certifications %}
 <div class="section">
 <div class="section-title">Certifications</div>
 <hr>
@@ -195,6 +200,33 @@ a {
 {% endfor %}
 </ul>
 </div>
+{% endif %}
+
+<!-- ACHIEVEMENTS -->
+{% if achievements %}
+<div class="section">
+<div class="section-title">Achievements</div>
+<hr>
+<ul>
+{% for a in achievements %}
+<li><b>{{ a.title }}</b>, {{ a.org }} | {{ a.date }} — {{ a.desc }}</li>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+<!-- HOBBIES -->
+{% if hobbies %}
+<div class="section">
+<div class="section-title">Hobbies & Interests</div>
+<hr>
+<p>
+{% for h in hobbies %}
+<b>{{ h.name }}:</b> {{ h.desc }}{% if not forloop.last %} | {% endif %}
+{% endfor %}
+</p>
+</div>
+{% endif %}
 
 </body>
 </html>

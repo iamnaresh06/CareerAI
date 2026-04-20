@@ -358,6 +358,54 @@
     .checkbox-wrapper input:checked ~ .checkbox-checkmark:after {
         display: block;
     }
+    .benefit-card {
+        background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+        padding: 1.5rem;
+        border-radius: 15px;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        box-shadow: var(--shadow-glow-yellow);
+        transition: transform 0.3s ease;
+    }
+
+    .benefit-card:hover {
+        transform: scale(1.01);
+    }
+
+    .benefit-icon-wrapper {
+        width: 70px;
+        height: 70px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 2rem;
+    }
+
+    @media (max-width: 768px) {
+        .benefit-card {
+            padding: 1rem !important;
+            gap: 1rem !important;
+            border-radius: 12px !important;
+        }
+        .benefit-icon-wrapper {
+            width: 45px !important;
+            height: 45px !important;
+            font-size: 1.2rem !important;
+        }
+        .benefit-card h3 {
+            font-size: 1.1rem !important;
+            margin-bottom: 0.2rem !important;
+        }
+        .benefit-card p {
+            font-size: 0.85rem !important;
+            line-height: 1.4 !important;
+        }
+    }
 </style>
 
 <div class="service-hero">
@@ -381,8 +429,8 @@
 </div>
 
 <div class="container" style="margin-top: 3rem;">
-    <div style="background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%); padding: 1.5rem; border-radius: 15px; color: white; display: flex; align-items: center; gap: 2rem; box-shadow: var(--shadow-glow-yellow);">
-        <div style="width: 70px; height: 70px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 2rem;">
+    <div class="benefit-card">
+        <div class="benefit-icon-wrapper">
             <i class="fas fa-gem"></i>
         </div>
         <div>

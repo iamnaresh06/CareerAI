@@ -16,8 +16,7 @@ CareerAI{% endblock %} {% block content %}
       With AI Precision
     </h1>
     <p class="animate-text delay-1 mb-8 hero-subtitle" style="margin-bottom: 3rem;">
-      CareerAI helps you build ATS-friendly resumes, analyze job readiness, and
-      find the perfect opportunity with smart AI tools.
+      Empowering students with visual Career Roadmaps, a dynamic ATS Resume Builder, and expert 1-to-1 mentorship to navigate the modern job market.
     </p>
 
     <div class="flex gap-6 w-full-mobile justify-center">
@@ -49,7 +48,7 @@ CareerAI{% endblock %} {% block content %}
     </div>
 
     <div class="bento-grid" style="margin-top: 3rem;">
-        <!-- (Keeping the 3 feature cards as they were) -->
+        <!-- ATS Resume Builder -->
         <div class="card glass p-8 animate-scroll delay-1 hover-3d" style="display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; border-top: 4px solid var(--primary); height: 100%;">
             <div style="position: absolute; right: -5%; bottom: -10%; font-size: 12rem; opacity: 0.03; color: var(--text-main); pointer-events: none;">
               <i class="fas fa-file-alt"></i>
@@ -58,41 +57,88 @@ CareerAI{% endblock %} {% block content %}
               <div style="width: 55px; height: 55px; background: rgba(37, 99, 235, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center;">
                 <i class="fas fa-magic" style="font-size: 1.6rem; color: var(--primary)"></i>
               </div>
-              <h3 style="font-size: 1.5rem;">Intelligent Resume Suite</h3>
+              <h3 style="font-size: 1.5rem;">Dynamic Resume Builder</h3>
             </div>
             <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.05rem; line-height: 1.6; z-index: 2; position: relative;">
-              From a dynamic ATS-compliant builder that formats perfectly, to a rigorous AI analyzer that compares you against live job descriptions—everything needed to bypass screeners.
+              Create professional resumes with AI-powered field extraction and interchangeable sections. Fully optimized for modern Applicant Tracking Systems (ATS).
             </p>
             <div class="flex gap-2" style="flex-wrap: wrap; z-index: 2; position: relative; margin-top: auto;">
-              <span class="service-tag">ATS Builder</span>
-              <span class="service-tag">Instant Scoring</span>
-              <span class="service-tag">Missing Skills</span>
+              <span class="service-tag">AI Extraction</span>
+              <span class="service-tag">Custom Sections</span>
+              <span class="service-tag">ATS Optimized</span>
             </div>
         </div>
-        <div class="card glass p-8 animate-scroll delay-2 hover-3d" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+
+        <!-- Career Roadmaps -->
+        <div class="card glass p-8 animate-scroll delay-2 hover-3d" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; border-top: 4px solid var(--accent);">
             <div>
               <div style="width: 55px; height: 55px; background: rgba(14, 165, 233, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
-                <i class="fas fa-chart-pie" style="font-size: 1.6rem; color: var(--accent)"></i>
+                <i class="fas fa-map-marked-alt" style="font-size: 1.6rem; color: var(--accent)"></i>
               </div>
-              <h3 style="font-size: 1.3rem; margin-bottom: 0.8rem;">Market Readiness Insights</h3>
-              <p style="color: var(--text-muted); line-height: 1.6;">
-                Know exactly where you stand. Real-time graphical scoring translates your background into clear employability metrics and actionable improvement plans.
+              <h3 style="font-size: 1.5rem; margin-bottom: 0.8rem;">Visual Career Roadmaps</h3>
+              <p style="color: var(--text-muted); line-height: 1.6; font-size: 1.05rem;">
+                Explore step-by-step learning paths for 45+ professional roles. From AI Engineering to Cybersecurity, we map out every skill you need.
               </p>
             </div>
-            <div style="margin-top: 1.5rem;">
-                 <a href="{% url 'login' %}" style="display: inline-block; background: transparent; border: none; padding: 0; color: var(--accent); font-weight: 600; text-decoration: none; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">Explore Analytics &rarr;</a>
+            <div class="flex gap-2" style="flex-wrap: wrap; margin-top: auto;">
+                <span class="service-tag">45+ Roles</span>
+                <span class="service-tag">Visual Journeys</span>
+                <span class="service-tag">Tech Focused</span>
             </div>
         </div>
-        <div class="card glass p-8 animate-scroll delay-3 hover-3d" style="background: linear-gradient(135deg, rgba(37,99,235,0.03) 0%, rgba(16,185,129,0.03) 100%); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; border: 1px dashed rgba(16,185,129,0.4); height: 100%;">
-            <div style="position: relative; margin-bottom: 1.5rem;">
-                <div style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2;">
-                  <i class="fas fa-layer-group" style="font-size: 1.5rem; color: var(--success)"></i>
-                </div>
-                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 2px solid rgba(16, 185, 129, 0.3); border-radius: 50%; animation: pulse-ring 2s infinite; z-index: 1;"></div>
+
+        <!-- Online Tech Tuition -->
+        <div class="card glass p-8 animate-scroll delay-3 hover-3d" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; border-top: 4px solid var(--success);">
+            <div>
+              <div style="width: 55px; height: 55px; background: rgba(16, 185, 129, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <i class="fas fa-chalkboard-teacher" style="font-size: 1.6rem; color: var(--success)"></i>
+              </div>
+              <h3 style="font-size: 1.5rem; margin-bottom: 0.8rem;">Online Tech Tuition</h3>
+              <p style="color: var(--text-muted); line-height: 1.6; font-size: 1.05rem;">
+                A 4-month role-specific mentorship with physical kits, 1-to-1 online sessions, and a comprehensive placement success bundle.
+              </p>
             </div>
-            <h3 style="font-size: 1.3rem;">An Expanding Horizon</h3>
-            <p style="color: var(--text-muted); margin-top: 1rem; font-size: 0.95rem; line-height: 1.5;">
-              Our platform is never static. We are continuously integrating new modules like interview simulators, career pathing, and cover letter generators into your toolkit.
+            <div class="flex gap-2" style="flex-wrap: wrap; margin-top: auto;">
+                <span class="service-tag">1-to-1 Mentorship</span>
+                <span class="service-tag">Physical Kits</span>
+                <span class="service-tag">EMI Plan</span>
+            </div>
+        </div>
+
+        <!-- AI Career Chatbot -->
+        <div class="card glass p-8 animate-scroll delay-1 hover-3d" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; grid-column: span 1; background: rgba(var(--primary-rgb), 0.02);">
+            <div>
+              <div style="width: 55px; height: 55px; background: rgba(37, 99, 235, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <i class="fas fa-comments" style="font-size: 1.6rem; color: var(--primary)"></i>
+              </div>
+              <h3 style="font-size: 1.4rem; margin-bottom: 0.8rem;">AI Career Advisor</h3>
+              <p style="color: var(--text-muted); line-height: 1.6;">
+                Get instant answers to your career queries with our self-learning AI chatbot, specialized in current job trends and educational paths.
+              </p>
+            </div>
+        </div>
+
+        <!-- Capstone Project Pro -->
+        <div class="card glass p-8 animate-scroll delay-2 hover-3d" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; border-left: 3px solid var(--accent);">
+            <div>
+              <div style="width: 55px; height: 55px; background: rgba(14, 165, 233, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <i class="fas fa-project-diagram" style="font-size: 1.6rem; color: var(--accent)"></i>
+              </div>
+              <h3 style="font-size: 1.4rem; margin-bottom: 0.8rem;">Capstone Project Pro</h3>
+              <p style="color: var(--text-muted); line-height: 1.6;">
+                Final year project support with research paper publication assistance and end-to-end technical guidance.
+              </p>
+            </div>
+        </div>
+
+        <!-- Job Board -->
+        <div class="card glass p-8 animate-scroll delay-3 hover-3d" style="background: linear-gradient(135deg, rgba(37,99,235,0.03) 0%, rgba(16,185,129,0.03) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border: 1px dashed rgba(16,185,129,0.4); height: 100%;">
+            <div style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+              <i class="fas fa-briefcase" style="font-size: 1.5rem; color: var(--success)"></i>
+            </div>
+            <h3 style="font-size: 1.3rem;">Curated Job Board</h3>
+            <p style="color: var(--text-muted); margin-top: 0.5rem; font-size: 0.95rem;">
+              Access exclusive opportunities from top companies and direct hiring alerts.
             </p>
         </div>
     </div>

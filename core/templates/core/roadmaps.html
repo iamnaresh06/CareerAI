@@ -42,67 +42,1857 @@
     </div>
 </div>
 
+<!-- Roadmap Detail Modal -->
+<div id="roadmapModal" class="roadmap-modal-overlay">
+    <div class="roadmap-modal-content">
+        <button class="modal-close-btn" id="closeModal">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="modal-header">
+            <div id="modalIcon" class="modal-icon-large">🤖</div>
+            <div>
+                <h2 id="modalTitle">AI Engineer Roadmap</h2>
+                <p id="modalDesc">Detailed step-by-step master plan</p>
+            </div>
+        </div>
+
+        <div class="roadmap-timeline" id="modalTimeline">
+            <!-- Steps will be injected here -->
+        </div>
+
+        <div class="modal-footer">
+            <p>Ready to start this journey? Book our <strong>4-Month Online Tech Tuition</strong> for personalized mentorship.</p>
+            <a href="{% url 'tech_tuition' %}" class="btn btn-primary" style="margin-top: 1rem;">Get 1-to-1 Mentorship</a>
+        </div>
+    </div>
+</div>
+
 <script>
     const ROADMAPS_DATA = [
         // 1. AI & Modern Tech (Highest Trending)
-        { title: "AI Engineer", desc: "LLMs, Neural Networks & PyTorch", icon: "🤖", color: "rgba(168, 85, 247, 0.1)" },
-        { title: "Generative AI Engineer", desc: "Stable Diffusion, GPT & LangChain", icon: "🧠", color: "rgba(236, 72, 153, 0.1)" },
-        { title: "Prompt Engineer", desc: "Context Engineering & Model Fine-tuning", icon: "✍️", color: "rgba(245, 158, 11, 0.1)" },
-        { title: "MLOps Engineer", desc: "Machine Learning Operations & Pipelines", icon: "⚙️", color: "rgba(16, 185, 129, 0.1)" },
-        { title: "Machine Learning Engineer", desc: "Supervised, Unsupervised & Deep Learning", icon: "📊", color: "rgba(59, 130, 246, 0.1)" },
+        { 
+            title: "AI Engineer", 
+            desc: "LLMs, Neural Networks & PyTorch", 
+            icon: "🤖", 
+            color: "rgba(168, 85, 247, 0.1)",
+            steps: [
+                {
+                    title: "Mathematics & Statistics",
+                    desc: "The core foundation of AI. You need to understand the logic behind algorithms.",
+                    topics: ["Linear Algebra (Matrices, Vectors)", "Calculus (Derivatives, Gradients)", "Probability & Statistics", "Hypothesis Testing"]
+                },
+                {
+                    title: "Programming Mastery",
+                    desc: "Python is the language of AI. Master it along with essential data libraries.",
+                    topics: ["Python Fundamentals & OOPS", "NumPy (Array Manipulation)", "Pandas (Data Cleaning)", "Data Visualization (Matplotlib/Seaborn)"]
+                },
+                {
+                    title: "Classical Machine Learning",
+                    desc: "Learn how machines learn from data without explicit programming.",
+                    topics: ["Linear & Logistic Regression", "Decision Trees & Random Forests", "SVM & K-Nearest Neighbors", "Clustering (K-Means, PCA)"]
+                },
+                {
+                    title: "Deep Learning Foundations",
+                    desc: "Master the structure of human-like neural networks.",
+                    topics: ["Artificial Neural Networks (ANN)", "Backpropagation & Optimizers", "CNNs for Computer Vision", "RNNs & LSTMs for Sequences"]
+                },
+                {
+                    title: "Natural Language Processing",
+                    desc: "Teach machines to understand and process human language.",
+                    topics: ["Text Tokenization & Stopwords", "Word Embeddings (Word2Vec, GloVe)", "Attention Mechanisms", "Transformers Architecture"]
+                },
+                {
+                    title: "Modern AI & Generative AI",
+                    desc: "The cutting edge. Master Large Language Models (LLMs).",
+                    topics: ["GPT Models & BERT", "Prompt Engineering", "Fine-tuning Models (PEFT/LoRA)", "RAG (Retrieval Augmented Generation)"]
+                },
+                {
+                    title: "Deployment & MLOps",
+                    desc: "Turn your models into real-world applications.",
+                    topics: ["API Development (FastAPI/Flask)", "Model Quantization", "Docker & Containerization", "Cloud Deployment (AWS/GCP)"]
+                }
+            ]
+        },
+        { 
+            title: "Generative AI Engineer", 
+            desc: "Stable Diffusion, GPT & LangChain", 
+            icon: "🧠", 
+            color: "rgba(236, 72, 153, 0.1)",
+            steps: [
+                {
+                    title: "AI & NLP Foundations",
+                    desc: "Before Generative AI, you must understand the basics of language processing and neural networks.",
+                    topics: ["Recurrent Neural Networks (RNNs)", "LSTMs & GRUs", "Word Embeddings", "Text Preprocessing"]
+                },
+                {
+                    title: "The Transformer Era",
+                    desc: "Master the architecture that changed everything. Understanding Attention is key.",
+                    topics: ["Self-Attention Mechanism", "Multi-Head Attention", "Encoder-Decoder Architecture", "Positional Encoding"]
+                },
+                {
+                    title: "Large Language Models (LLMs)",
+                    desc: "Deep dive into the models that power modern AI applications.",
+                    topics: ["GPT Architecture", "Instruction Tuning", "RLHF (Reinforcement Learning from Human Feedback)", "Tokenization Strategies"]
+                },
+                {
+                    title: "Prompt Engineering Mastery",
+                    desc: "Learn how to effectively communicate with and steer LLMs.",
+                    topics: ["Zero-Shot & Few-Shot Learning", "Chain of Thought (CoT)", "System Prompts & Constraints", "Prompt Decomposition"]
+                },
+                {
+                    title: "Building LLM Applications",
+                    desc: "Use modern frameworks to build intelligent, autonomous agents.",
+                    topics: ["LangChain Framework", "LlamaIndex", "AI Agents & Tool Use", "Memory Management in LLMs"]
+                },
+                {
+                    title: "RAG & Vector Databases",
+                    desc: "Connect LLMs to private data for more accurate, real-time responses.",
+                    topics: ["Semantic Search", "Vector Databases (Chroma/Pinecone)", "Embedding Models", "Retrieval Strategies"]
+                },
+                {
+                    title: "Diffusion & Multi-modal AI",
+                    desc: "Master image generation and models that handle multiple types of data.",
+                    topics: ["Diffusion Models", "Stable Diffusion", "Vision-Language Models (CLIP)", "AI Video & Audio Generation"]
+                }
+            ]
+        },
+        { 
+            title: "Prompt Engineer", 
+            desc: "Context Engineering & Model Fine-tuning", 
+            icon: "✍️", 
+            color: "rgba(245, 158, 11, 0.1)",
+            steps: [
+                {
+                    title: "AI Concepts for Prompters",
+                    desc: "Understand the motor behind the magic. Learn how models think and predict.",
+                    topics: ["Autoregressive Models", "Temperature & Top-P", "Tokenization & Context Window", "Model Hallucinations"]
+                },
+                {
+                    title: "Foundation Prompting",
+                    desc: "Master the basic building blocks of effective AI communication.",
+                    topics: ["Instruction-based Prompts", "Zero-Shot Prompting", "Few-Shot Learning", "Delimiters & Keywords"]
+                },
+                {
+                    title: "Advanced Reasoning Frameworks",
+                    desc: "Enable AI to solve complex problems using structured reasoning paths.",
+                    topics: ["Chain of Thought (CoT)", "Self-Consistency", "Tree of Thoughts (ToT)", "Least-to-Most Prompting"]
+                },
+                {
+                    title: "Context & Persona Engineering",
+                    desc: "Transform the AI into a specialist for specific tasks and industries.",
+                    topics: ["Persona Adoption", "Style & Tone Control", "Knowledge Distillation", "Constraint Management"]
+                },
+                {
+                    title: "Multi-Modal & Artistic Prompting",
+                    desc: "Learn to prompt for visual and creative assets beyond text.",
+                    topics: ["Midjourney Parameters", "DALL-E 3 Precision", "Stable Diffusion Prompts", "Video Generation Prompts"]
+                },
+                {
+                    title: "Prompt Evaluation & Safety",
+                    desc: "Ensure consistency, reliability, and safety in your AI's outputs.",
+                    topics: ["Output Validation", "Prompt Injections", "Bias Mitigation", "A/B Testing Prompts"]
+                },
+                {
+                    title: "The Future: Auto-Prompting",
+                    desc: "Use AI to build better AI. The automated future of prompt engineering.",
+                    topics: ["DSPy Framework", "Auto-Prompt Builders", "Chain of Verification", "Agentic Prompting"]
+                }
+            ]
+        },
+        { 
+            title: "MLOps Engineer", 
+            desc: "Machine Learning Operations & Pipelines", 
+            icon: "⚙️", 
+            color: "rgba(16, 185, 129, 0.1)",
+            steps: [
+                {
+                    title: "DevOps for Machine Learning",
+                    desc: "Bridge the gap between development and operations with core DevOps principles.",
+                    topics: ["Git & Version Control", "Linux Command Line", "CI/CD Pipelines", "Github Actions"]
+                },
+                {
+                    title: "Experiment Tracking",
+                    desc: "Organize your training runs and manage model versions professionally.",
+                    topics: ["MLflow", "Weights & Biases", "Experiment Reproducibility", "Model Metadata Tracking"]
+                },
+                {
+                    title: "Data & Model Versioning",
+                    desc: "Master the tools to track data changes across different versions of your models.",
+                    topics: ["DVC (Data Version Control)", "Feature Stores (Feast)", "Data Quality Validation", "Artifact Management"]
+                },
+                {
+                    title: "Containerization & K8s",
+                    desc: "Package your models for consistent deployment across any environment.",
+                    topics: ["Docker for ML", "Kubernetes Basics", "Kubeflow", "Resource Optimization (GPU/CPU)"]
+                },
+                {
+                    title: "Model Serving Architecture",
+                    desc: "Deploy models as robust, scalable web services.",
+                    topics: ["FastAPI/BentoML", "Triton Inference Server", "Batch vs. Online Scoring", "Edge Deployment"]
+                },
+                {
+                    title: "Monitoring & Drift Detection",
+                    desc: "Ensure your models stay accurate after they go live.",
+                    topics: ["Data Drift Monitoring", "Model Performance Tracking", "Logging & Alerting", "Prometheus & Grafana"]
+                },
+                {
+                    title: "Automation & Orchestration",
+                    desc: "The pinnacle of MLOps: fully automated retraining and validation loops.",
+                    topics: ["Apache Airflow", "Model Pipelines", "Automated Validation", "Feedback Loops"]
+                }
+            ]
+        },
+        { 
+            title: "Machine Learning Engineer", 
+            desc: "Supervised, Unsupervised & Deep Learning", 
+            icon: "📊", 
+            color: "rgba(59, 130, 246, 0.1)",
+            steps: [
+                {
+                    title: "Python for Data Science",
+                    desc: "Master the data-handling libraries that are standard in the ML industry.",
+                    topics: ["NumPy & Matrix Operations", "Pandas for Dataframes", "Matplotlib/Seaborn Visualization", "Exploratory Data Analysis (EDA)"]
+                },
+                {
+                    title: "Applied Mathematics",
+                    desc: "Understand the statistical and algebraic engines behind every algorithm.",
+                    topics: ["Descriptive & Inferential Stats", "Probability Distributions", "Partial Derivatives", "Optimization Algorithms"]
+                },
+                {
+                    title: "Supervised Learning",
+                    desc: "Predict outcomes and classify data using labeled datasets.",
+                    topics: ["Linear & Ridge Regression", "Logistic & Softmax Regression", "Support Vector Machines", "Boosting & Bagging (XGBoost)"]
+                },
+                {
+                    title: "Unsupervised Learning",
+                    desc: "Find hidden patterns and structures in unlabeled data.",
+                    topics: ["K-Means & DBSCAN", "Principal Component Analysis", "t-SNE & Dimensionality Reduction", "Association Rule Learning"]
+                },
+                {
+                    title: "Validation & Hyper-tuning",
+                    desc: "Go beyond 'running models' to professional performance optimization.",
+                    topics: ["Cross-Validation Strategies", "Hyperparameter Search (Grid/Random)", "Imbalanced Class Handling", "Feature Selection Techniques"]
+                },
+                {
+                    title: "Neural Networks Intro",
+                    desc: "Begin your transition into the world of Artificial Intelligence.",
+                    topics: ["Perceptron & MLPs", "Activation Functions (ReLU, Sigmoid)", "Loss Functions (MSE, Cross-Entropy)", "Gradient Descent (SGD, Adam)"]
+                },
+                {
+                    title: "ML Engineering Lifecycle",
+                    desc: "Structure your work like a professional engineer, from scoping to delivery.",
+                    topics: ["Pipeline Development", "Experiment Management", "Feature Engineering", "API-based Deployment"]
+                }
+            ]
+        },
         
         // 2. Core Development
-        { title: "Full Stack Developer", desc: "Frontend, Backend & Deployment", icon: "💻", color: "rgba(37, 99, 235, 0.1)" },
-        { title: "Backend Developer", desc: "APIs, Databases & Server Logic", icon: "🗄️", color: "rgba(107, 114, 128, 0.1)" },
-        { title: "Frontend Developer", desc: "UI, UX & Web Interactivity", icon: "🎨", color: "rgba(249, 115, 22, 0.1)" },
-        { title: "Software Engineer", desc: "Problem Solving & System Architecture", icon: "🛠️", color: "rgba(59, 130, 246, 0.1)" },
-        { title: "Mobile App Developer", desc: "Native iOS & Android Development", icon: "📱", color: "rgba(16, 185, 129, 0.1)" },
-        { title: "Flutter Developer", desc: "Cross-platform Dart Apps", icon: "🦋", color: "rgba(6, 182, 212, 0.1)" },
-        { title: "React Native Developer", desc: "Cross-platform JS Apps", icon: "⚛️", color: "rgba(99, 102, 241, 0.1)" },
+        { 
+            title: "Full Stack Developer", 
+            desc: "Frontend, Backend & Deployment", 
+            icon: "💻", 
+            color: "rgba(37, 99, 235, 0.1)",
+            steps: [
+                {
+                    title: "Modern Frontend Mastery",
+                    desc: "Build the structural and aesthetic foundation of every modern web application.",
+                    topics: ["Semantic HTML5", "Modern CSS (Flex/Grid)", "Responsive Design Concepts", "CSS Frameworks (Tailwind)"]
+                },
+                {
+                    title: "JavaScript Deep Dive",
+                    desc: "Learn the engine that makes the web interactive and dynamic.",
+                    topics: ["ES6+ Features", "Async / Await & Promises", "DOM Manipulation", "Fetch / Axios API"]
+                },
+                {
+                    title: "Frontend Frameworks (React)",
+                    desc: "Master industry-standard tools for building component-based user interfaces.",
+                    topics: ["Hooks & State Management", "Component Lifecycle", "Routing (React Router)", "Global State (Redux/Zustand)"]
+                },
+                {
+                    title: "Backend Development",
+                    desc: "Build the server-side logic and systems that power applications.",
+                    topics: ["Node.js & Express", "API Design (RESTful)", "Middleware & Error Handling", "Authentication (JWT/OAuth)"]
+                },
+                {
+                    title: "Databases & Operations",
+                    desc: "Learn to store, retrieve, and manage application data securely.",
+                    topics: ["SQL (PostgreSQL/MySQL)", "NoSQL (MongoDB)", "ORM / ODM (Sequelize/Prisma)", "Caching (Redis)"]
+                },
+                {
+                    title: "Full Stack Integration",
+                    desc: "Bring everything together into a cohesive, high-performance product.",
+                    topics: ["CORS & Security Headers", "File Storage (S3/Cloudinary)", "Real-time Commun. (WebSockets)", "Performance Troubleshooting"]
+                },
+                {
+                    title: "DevOps & Deployment",
+                    desc: "Learn the final step: taking your code from local to live.",
+                    topics: ["Unit & Integration Testing", "Docker & Containerization", "Vercel / Render Deployment", "Basic CI/CD Pipelines"]
+                }
+            ]
+        },
+        { 
+            title: "Backend Developer", 
+            desc: "APIs, Databases & Server Logic", 
+            icon: "🗄️", 
+            color: "rgba(107, 114, 128, 0.1)",
+            steps: [
+                {
+                    title: "Backend Language Mastery",
+                    desc: "Choose a reliable server-side language and master its core features.",
+                    topics: ["Node.js / Python / Java / Go", "OOPS Concepts", "Data Structures & Algorithms", "Package Management"]
+                },
+                {
+                    title: "Framework Fundamentals",
+                    desc: "Learn to build structured applications using professional frameworks.",
+                    topics: ["Express.js (Node) or Django (Py)", "Routing & Request Handling", "Middleware Architecture", "Configuration Management"]
+                },
+                {
+                    title: "Relational Databases",
+                    desc: "Master the art of structured data storage and complex querying.",
+                    topics: ["SQL (PostgreSQL / MySQL)", "Database Normalization", "Query Indexing", "Transactions & ACID"]
+                },
+                {
+                    title: "NoSQL & Caching",
+                    desc: "Handle unstructured data and optimize performance for high traffic.",
+                    topics: ["MongoDB Foundations", "Redis for Caching", "NoSQL Schema Design", "Consistency vs Availability"]
+                },
+                {
+                    title: "Security & Authentication",
+                    desc: "Protect user data and secure your endpoints from external threats.",
+                    topics: ["JWT & session handling", "OAuth2 & Social Logins", "Encryption & Hashing", "CORS & Security Best Practices"]
+                },
+                {
+                    title: "Architecture & Scalability",
+                    desc: "Go from 'building apps' to 'designing systems' that can scale.",
+                    topics: ["REST vs GraphQL", "MVC vs Microservices", "Message Queues (RabbitMQ/Kafka)", "Monitoring & Logs"]
+                },
+                {
+                    title: "Networking & Cloud",
+                    desc: "Deploy your server to the world with proper infrastructure.",
+                    topics: ["Linux Server Mastery", "Nginx & Reverse Proxies", "Cloud Platforms (AWS/Digital Ocean)", "CI/CD Deployment"]
+                }
+            ]
+        },
+        { 
+            title: "Frontend Developer", 
+            desc: "UI, UX & Web Interactivity", 
+            icon: "🎨", 
+            color: "rgba(249, 115, 22, 0.1)",
+            steps: [
+                {
+                    title: "Structural Foundation",
+                    desc: "Master the building blocks of the web with modern standards.",
+                    topics: ["HTML5 Semantic Elements", "Forms & Validation", "SVG & Media", "Accessibility (A11y)"]
+                },
+                {
+                    title: "Advanced CSS & Styling",
+                    desc: "Go beyond basic colors. Learn to create beautiful, responsive layouts.",
+                    topics: ["Flexbox & Grid Mastery", "CSS Variables & Themes", "Tailwind CSS / Sass", "Responsive Design Tools"]
+                },
+                {
+                    title: "JavaScript Essentials",
+                    desc: "Master the logic that drives the modern front-end experience.",
+                    topics: ["ES6+ Syntax", "DOM & Event Handling", "Fetch API & Async JS", "Local Storage & Cookies"]
+                },
+                {
+                    title: "Modern React Mastery",
+                    desc: "Understand components, hooks, and the philosophy of reactive UIs.",
+                    topics: ["Hooks (useState, useEffect)", "Context API & Portals", "Custom Hooks", "React Design Patterns"]
+                },
+                {
+                    title: "State & Data Flow",
+                    desc: "Manage complex application data efficiently across multiple views.",
+                    topics: ["React Router (SPA)", "Redux / Zustand", "Query Libraries (Tanstack)", "Formik / React Hook Form"]
+                },
+                {
+                    title: "Testing & Performance",
+                    desc: "Ensure your UI is fast, reliable, and bug-free for all users.",
+                    topics: ["Vitest / Jest", "React Testing Library", "Code Splitting / Suspense", "Web Vitals Optimization"]
+                },
+                {
+                    title: "Build, Ship & Scale",
+                    desc: "Prepare your application for the real world with modern tooling.",
+                    topics: ["Vite & Module Bundlers", "Vercel / Netlify", "Storybook for Components", "Basic CI/CD for Frontend"]
+                }
+            ]
+        },
+        { 
+            title: "Software Engineer", 
+            desc: "Problem Solving & System Architecture", 
+            icon: "🛠️", 
+            color: "rgba(59, 130, 246, 0.1)",
+            steps: [
+                {
+                    title: "DS & Algorithms",
+                    desc: "Build the mental muscle for problem-solving and code efficiency.",
+                    topics: ["Big O Notation", "Arrays & Linked Lists", "Searching & Sorting", "Hash Tables & Trees"]
+                },
+                {
+                    title: "Master a Core Language",
+                    desc: "Go deep into one robust language to understand engineering principles.",
+                    topics: ["Java / C++ / Python", "Memory Management", "OOPS Mastery", "Concurrency & Threading"]
+                },
+                {
+                    title: "Clean Code & Patterns",
+                    desc: "Learn to write code that teams can maintain and scale effortlessly.",
+                    topics: ["SOLID Principles", "Design Patterns", "Unit Testing Essentials", "Effective Code Review"]
+                },
+                {
+                    title: "Databases & Persistence",
+                    desc: "Understand how data is stored, indexed, and retrieved in production.",
+                    topics: ["SQL Schema Design", "Transactions & ACID", "Indexing Strategies", "NoSQL Foundations"]
+                },
+                {
+                    title: "System Design Intro",
+                    desc: "Transition from writing code to designing scalable system architectures.",
+                    topics: ["Monolithic vs Microservices", "REST API Design", "Caching Implementation", "Load Balancing Basics"]
+                },
+                {
+                    title: "Engineering Tools",
+                    desc: "Master the developer's toolbox for professional productivity.",
+                    topics: ["Advanced Git Workflow", "Linux Server Mastery", "Docker & Containers", "Shell Scripting"]
+                },
+                {
+                    title: "Security & Operations",
+                    desc: "Ensure your applications are secure, observable, and reliably deployed.",
+                    topics: ["OWASP Security Risks", "Monitoring & Logging", "CI/CD Implementation", "Software Testing Lifecycle"]
+                }
+            ]
+        },
+        { 
+            title: "Mobile App Developer", 
+            desc: "Native iOS & Android Development", 
+            icon: "📱", 
+            color: "rgba(16, 185, 129, 0.1)",
+            steps: [
+                {
+                    title: "Platform Selection",
+                    desc: "Deep dive into Native (Java/Kotlin or Swift) or Cross-platform goals.",
+                    topics: ["Android SDK Basics", "Swift/iOS Concepts", "Runtime Life Cycles", "Mobile Native APIs"]
+                },
+                {
+                    title: "UI Design for Mobile",
+                    desc: "Master the unique constraints and design systems of mobile devices.",
+                    topics: ["Safe Areas & Layouts", "Touch Gestures", "Accessibility for Mobile", "Material vs Cupertino"]
+                },
+                {
+                    title: "State & Data Flow",
+                    desc: "Manage application data across complex mobile navigation flows.",
+                    topics: ["Architectural Patterns", "Reactive Programming", "Deep Linking", "Data Sync Strategies"]
+                },
+                {
+                    title: "Persistence & Offline",
+                    desc: "Ensure your app works seamlessly regardless of the user's connection.",
+                    topics: ["SQLite / CoreData", "Caching Strategies", "Offline-first Design", "Local Notifications"]
+                },
+                {
+                    title: "Networking & Security",
+                    desc: "Connect your mobile app to the cloud securely and efficiently.",
+                    topics: ["HTTP/Rest Integration", "JSON Parsing", "SSL Pinning", "OAuth for Mobile Apps"]
+                },
+                {
+                    title: "Native Features Mastery",
+                    desc: "Incorporate specialized device hardware for advanced applications.",
+                    topics: ["Camera & Gallery", "GPS & Maps", "Biometric Auth", "Push Notifications"]
+                },
+                {
+                    title: "Store Ops & Analytics",
+                    desc: "Learn the final step: testing, publishing, and monitoring your app.",
+                    topics: ["App Store Connect", "Play Store Publishing", "App Versioning", "Crashlytics & Analytics"]
+                }
+            ]
+        },
+        { 
+            title: "Flutter Developer", 
+            desc: "Cross-platform Dart Apps", 
+            icon: "🦋", 
+            color: "rgba(6, 182, 212, 0.1)",
+            steps: [
+                {
+                    title: "Dart Programming",
+                    desc: "Master the client-optimized language that powers the Flutter engine.",
+                    topics: ["Dart Syntax & Functions", "Null Safety", "Asynchronous (Streams/Futures)", "Generics & Collections"]
+                },
+                {
+                    title: "Widget Foundations",
+                    desc: "Learn 'everything is a widget' and master structural building blocks.",
+                    topics: ["Stateless vs Stateful", "Material & Cupertino Design", "Layout Widgets", "Scaffold & AppBars"]
+                },
+                {
+                    title: "Layout & Interactivity",
+                    desc: "Build complex, responsive UIs that look great on any device size.",
+                    topics: ["Flex, Rows & Columns", "Stack & Positioned", "Custom Painting", "Gestures & Inputs"]
+                },
+                {
+                    title: "State Management",
+                    desc: "Master the different approaches to managing data across your app.",
+                    topics: ["Provider / Riverpod", "Bloc / Cubit", "GetX Basics", "ChangeNotifier Flow"]
+                },
+                {
+                    title: "Backend & Persistence",
+                    desc: "Connect your Flutter app to real-time databases and local storage.",
+                    topics: ["Firebase Integration", "REST API Development", "Sembast / Hive (Local)", "Authentication Services"]
+                },
+                {
+                    title: "Native Bridge & Plugins",
+                    desc: "Learn to handle hardware when Flutter's built-in tools aren't enough.",
+                    topics: ["Method Channels", "Platform Views", "Custom Plugin Development", "Native Packages"]
+                },
+                {
+                    title: "Build & Release",
+                    desc: "Optimize your app for speed and publish it to the major app stores.",
+                    topics: ["App Size Optimization", "Build Flavors", "Codemagic / CI/CD", "Play Store & App Store"]
+                }
+            ]
+        },
+        { 
+            title: "React Native Developer", 
+            desc: "Cross-platform JS Apps", 
+            icon: "⚛️", 
+            color: "rgba(99, 102, 241, 0.1)",
+            steps: [
+                {
+                    title: "JavaScript Foundations",
+                    desc: "Master the core engine of React Native: Modern JavaScript.",
+                    topics: ["ES6 Essentials", "Arrow Functions", "Array Methods", "Classes & Modules"]
+                },
+                {
+                    title: "React Fundamentals",
+                    desc: "Learn the declarative UI library before diving into mobile specificities.",
+                    topics: ["JSX & Components", "Props & State", "Hooks (useState/useEffect)", "Virtual DOM Basics"]
+                },
+                {
+                    title: "RN Core Components",
+                    desc: "Master mobile-specific tags like View, Text, and ScrollView.",
+                    topics: ["Flexbox in Mobile", "StyleSheet API", "List Rendering (FlatList)", "Platform Specific Code"]
+                },
+                {
+                    title: "Navigation Architecture",
+                    desc: "Build complex screen transitions and intuitive user journeys.",
+                    topics: ["React Navigation", "Stack & Tab Navigation", "Drawer Layouts", "Passing Parameters"]
+                },
+                {
+                    title: "Native Modules & Expo",
+                    desc: "Master the bridge between JS and native hardware features.",
+                    topics: ["Expo Managed Workflow", "Bare Workflow", "Native Camera & Storage", "Native Bridge (Bridge vs JSI)"]
+                },
+                {
+                    title: "Advanced State & Auth",
+                    desc: "Manage high-level data and keep your mobile application secure.",
+                    topics: ["Redux / Zustland", "React Query for Mobile", "Firebase Auth", "Secure Keychain Storage"]
+                },
+                {
+                    title: "Release & Performance",
+                    desc: "Optimize frame rates and publish to the major app stores.",
+                    topics: ["Hermes Engine", "Performance Bottlenecks", "Fastlane Deployment", "IPA & APK Generation"]
+                }
+            ]
+        },
 
         // 3. Infrastructure & DevOps
-        { title: "DevOps Engineer", desc: "CI/CD, Docker & Kubernetes", icon: "☁️", color: "rgba(236, 72, 153, 0.1)" },
-        { title: "Cloud Engineer", desc: "AWS, Azure & Google Cloud", icon: "🌐", color: "rgba(14, 165, 233, 0.1)" },
-        { title: "Site Reliability Engineer (SRE)", desc: "System Reliability & Performance", icon: "⚖️", color: "rgba(244, 63, 94, 0.1)" },
+        { 
+            title: "DevOps Engineer", 
+            desc: "CI/CD, Docker & Kubernetes", 
+            icon: "☁️", 
+            color: "rgba(236, 72, 153, 0.1)",
+            steps: [
+                {
+                    title: "Linux & Shell Scripting",
+                    desc: "Master the operating system that powers the global internet infrastructure.",
+                    topics: ["Bash Scripting", "System Administration", "Process Management", "SSH & Networking Hub"]
+                },
+                {
+                    title: "CI/CD Mastery",
+                    desc: "Automate the entire software delivery lifecycle from commit to production.",
+                    topics: ["Jenkins / Github Actions", "GitLab CI", "Automated Testing", "Artifact Repositories"]
+                },
+                {
+                    title: "Infrastructure as Code",
+                    desc: "Learn to manage and provision infrastructure using code instead of manual setups.",
+                    topics: ["Terraform", "Ansible", "CloudFormation", "State Management"]
+                },
+                {
+                    title: "Containers & K8s",
+                    desc: "Master the technology used to scale applications across thousands of servers.",
+                    topics: ["Docker & Containerization", "Kubernetes Management", "Helm Charts", "Microservices Networking"]
+                },
+                {
+                    title: "Monitoring & Logging",
+                    desc: "Ensure complete visibility into your system's health and performance.",
+                    topics: ["Prometheus & Grafana", "ELK Stack (Elasticsearch)", "Distributed Tracing", "Alerting Strategies"]
+                },
+                {
+                    title: "Networking & Security",
+                    desc: "Build secure, high-performance connections between your global services.",
+                    topics: ["DNS & Load Balancing", "VPC & Firewalls", "SSL/TLS Lifecycle", "Secret Management (Vault)"]
+                },
+                {
+                    title: "DevSecOps Integration",
+                    desc: "Implement security protocols directly into your automated pipelines.",
+                    topics: ["Security Scanning", "Compliance as Code", "Policy Enforcement", "Zero Trust Architecture"]
+                }
+            ]
+        },
+        { 
+            title: "Cloud Engineer", 
+            desc: "AWS, Azure & Google Cloud", 
+            icon: "🌐", 
+            color: "rgba(14, 165, 233, 0.1)",
+            steps: [
+                {
+                    title: "Cloud Provider Core",
+                    desc: "Master the core services of a major provider like AWS, Azure, or GCP.",
+                    topics: ["Computing Services (EC2/Lambda)", "Global Infrastructure", "Storage Options (S3/EBS)", "DB Services (RDS)"]
+                },
+                {
+                    title: "Cloud Networking",
+                    desc: "Design and build virtual private networks that are fast and secure.",
+                    topics: ["VPC & Subnets", "Security Groups", "Direct Connect / VPN", "Edge Locations (CloudFront)"]
+                },
+                {
+                    title: "Storage & Databases",
+                    desc: "Learn to choose the right data storage for modern cloud applications.",
+                    topics: ["Object vs Block Storage", "Managed Databases", "Serverless DBs (DynamoDB)", "Data Backup & Recovery"]
+                },
+                {
+                    title: "Cloud Security & IAM",
+                    desc: "The 'Golden Rule' of cloud: Master Identity and Access Management.",
+                    topics: ["IAM Policies & Roles", "Encryption (KMS)", "Network Security", "CloudTrail Auditing"]
+                },
+                {
+                    title: "Serverless & FaaS",
+                    desc: "Build modern applications without managing the underlying servers.",
+                    topics: ["AWS Lambda / Functions", "Serverless Framework", "Event-Driven Logic", "API Gateways"]
+                },
+                {
+                    title: "Scaling & Availability",
+                    desc: "Design systems that handle millions of users and never go down.",
+                    topics: ["Auto Scaling Groups", "Multi-Region Design", "Disaster Recovery", "Route53 Networking"]
+                },
+                {
+                    title: "Cloud Cost Ops",
+                    desc: "Learn to optimize cloud spend while maintaining high performance.",
+                    topics: ["Billing Monitoring", "Budgeting Tools", "Reserved Instances", "Spot Instance Strategies"]
+                }
+            ]
+        },
+        { 
+            title: "Site Reliability Engineer (SRE)", 
+            desc: "System Reliability & Performance", 
+            icon: "⚖️", 
+            color: "rgba(244, 63, 94, 0.1)",
+            steps: [
+                {
+                    title: "System Programming",
+                    desc: "Master programming from a system-level perspective for better debugging.",
+                    topics: ["Go / Python / C++", "Memory Auditing", "Concurrency Handling", "System-level Debugging"]
+                },
+                {
+                    title: "Defining Reliability",
+                    desc: "Learn the quantitative metrics that define system health in production.",
+                    topics: ["SLIs / SLOs / SLAs", "Error Budgets", "Reliability Measurements", "Service Level Objectives"]
+                },
+                {
+                    title: "Eliminating Toil",
+                    desc: "The main task of an SRE: Automating repetitive, manual manual work.",
+                    topics: ["Automation Frameworks", "Infrastructure Lifecycle", "Provisioning Pipelines", "Self-Healing Systems"]
+                },
+                {
+                    title: "Observability Mastery",
+                    desc: "Master the three pillars of observability: Metrics, Logs, and Tracing.",
+                    topics: ["OpenTelemetry", "Distributed Tracing", "Log Aggregation", "Metric Visualization"]
+                },
+                {
+                    title: "Incident Management",
+                    desc: "Learn to handle system outages and perform blameless post-mortems.",
+                    topics: ["On-call Protocols", "Incident Response", "Root Cause Analysis", "Post-mortem Documentation"]
+                },
+                {
+                    title: "Capacity Planning",
+                    desc: "Predict and prepare for system load increases before they happen.",
+                    topics: ["Load Testing Tools", "Dynamic Resource Mgmt", "Traffic Routing", "Scalability Testing"]
+                },
+                {
+                    title: "Disaster Recovery",
+                    desc: "Build highly resilient systems that survive major region failures.",
+                    topics: ["High Availability Design", "Chaos Engineering", "Failover Strategies", "Backup Orchestration"]
+                }
+            ]
+        },
         
         // 4. Data & Analytics
-        { title: "Data Scientist", desc: "Statistics, Python & Data Insights", icon: "🧬", color: "rgba(139, 92, 246, 0.1)" },
-        { title: "Data Engineer", desc: "ETL, SQL & Big Data Pipelines", icon: "🏗️", color: "rgba(20, 184, 166, 0.1)" },
-        { title: "Data Analyst", desc: "Data Visualization & SQL", icon: "📉", color: "rgba(101, 163, 13, 0.1)" },
-        { title: "Business Intelligence Analyst", desc: "Tableau, PowerBI & Analytics", icon: "💼", color: "rgba(217, 70, 239, 0.1)" },
+        { 
+            title: "Data Scientist", 
+            desc: "Statistics, Python & Data Insights", 
+            icon: "🧬", 
+            color: "rgba(139, 92, 246, 0.1)",
+            steps: [
+                {
+                    title: "Applied Mathematics",
+                    desc: "Master the mathematical language that defines data patterns and AI logic.",
+                    topics: ["Probability Theory", "Linear Algebra", "Calculus for ML", "Statistical Significance"]
+                },
+                {
+                    title: "Python for Data Science",
+                    desc: "Learn to manipulate and explore large datasets using professional libraries.",
+                    topics: ["NumPy Array Ops", "Pandas Dataframes", "Matplotlib / Seaborn", "Advanced Wrangling"]
+                },
+                {
+                    title: "Exploratory Data Analysis",
+                    desc: "The art of understanding data, cleaning noise, and finding hidden trends.",
+                    topics: ["Data Cleaning", "Feature Engineering", "Correlation Analysis", "Outlier Detection"]
+                },
+                {
+                    title: "Machine Learning Master",
+                    desc: "Learn to build models that predict outcomes based on historical data.",
+                    topics: ["Supervised Learning", "Unsupervised Learning", "Model Tuning", "Evaluation Metrics"]
+                },
+                {
+                    title: "Deep Learning Foundations",
+                    desc: "Venture into the world of neural networks for complex data patterns.",
+                    topics: ["Neural Network Architecture", "CNNs / RNNs", "PyTorch / TensorFlow", "Backpropagation"]
+                },
+                {
+                    title: "Insights & Storytelling",
+                    desc: "Learn to translate complex technical findings into actionable business value.",
+                    topics: ["Data Visualization Lore", "Executive Presentation", "Dashboard Creation", "Domain Context"]
+                },
+                {
+                    title: "Deployment & Production",
+                    desc: "Go beyond notebooks. Learn to put your models into real-world use.",
+                    topics: ["Streamlit Apps", "FastAPI Wrappers", "Model Pickling", "Cloud Hosting Basics"]
+                }
+            ]
+        },
+        { 
+            title: "Data Engineer", 
+            desc: "ETL, SQL & Big Data Pipelines", 
+            icon: "🏗️", 
+            color: "rgba(20, 184, 166, 0.1)",
+            steps: [
+                {
+                    title: "Advanced SQL & Programming",
+                    desc: "Master the fundamental languages used to move and transform data.",
+                    topics: ["Advanced SQL Queries", "Python for Engineering", "Shell Scripting", "API Data Retrieval"]
+                },
+                {
+                    title: "Big Data Processing",
+                    desc: "Learn to handle massive datasets that don't fit on a single computer.",
+                    topics: ["Apache Spark", "Hadoop Ecosystem", "Distributed Computing", "Parallel Processing"]
+                },
+                {
+                    title: "ETL & Pipeline Design",
+                    desc: "Master the tools that automate the collection and cleaning of data.",
+                    topics: ["Apache Airflow", "Data Transformation (dbt)", "Workflow Orchestration", "Job Scheduling"]
+                },
+                {
+                    title: "Data Warehousing",
+                    desc: "Build modern, fast, and scalable storage for analytical workloads.",
+                    topics: ["Snowflake / BigQuery", "Star & Snowflake Schemas", "Slowly Changing Dimensions", "OLAP Optimization"]
+                },
+                {
+                    title: "NoSQL & Modern Storage",
+                    desc: "Master alternative data storage for non-relational and high-speed data.",
+                    topics: ["MongoDB / Cassandra", "Vector DBs (Pinecone)", "Object Storage / Data Lakes", "Schema-on-Read"]
+                },
+                {
+                    title: "Streaming & Real-time",
+                    desc: "Learn to process data as it happens, not hours or days later.",
+                    topics: ["Apache Kafka", "Flink Basics", "Message Brokers", "Real-time Analytics"]
+                },
+                {
+                    title: "Data Quality & Ops",
+                    desc: "Ensure the data flowing through your system is accurate and reliable.",
+                    topics: ["Data Quality Testing", "Governance & Privacy", "Cloud Infrastructure", "Monitoring Pipelines"]
+                }
+            ]
+        },
+        { 
+            title: "Data Analyst", 
+            desc: "Data Visualization & SQL", 
+            icon: "📉", 
+            color: "rgba(101, 163, 13, 0.1)",
+            steps: [
+                {
+                    title: "Excel & Foundation",
+                    desc: "Master the most common tool for business data organization and analysis.",
+                    topics: ["Advanced Formulas", "Pivot Tables & VLOOKUP", "Data Formatting", "Basic Charts"]
+                },
+                {
+                    title: "SQL Data Analysis",
+                    desc: "Learn to extract exactly the data you need from large business databases.",
+                    topics: ["SELECT & Filtering", "Aggregates (SUM/AVG)", "Table Joins", "Window Functions"]
+                },
+                {
+                    title: "Python for Analytics",
+                    desc: "Use Python to perform automated, advanced analysis that Excel cannot.",
+                    topics: ["Pandas for Analysis", "Data Cleaning in Python", "Statistical Visualization", "Notebooks Workflow"]
+                },
+                {
+                    title: "Visualization & BI Tools",
+                    desc: "Transform dry numbers into intuitive, interactive dashboards.",
+                    topics: ["Tableau / PowerBI", "Dashboard Design", "Interactivity Features", "Narrative Charts"]
+                },
+                {
+                    title: "Statistical Context",
+                    desc: "Learn the science behind your numbers to ensure your findings are valid.",
+                    topics: ["Hypothesis Testing", "A/B Testing Basics", "Correlations", "Outlier Significance"]
+                },
+                {
+                    title: "Business Communication",
+                    desc: "The most vital step: turning data insights into clear business value.",
+                    topics: ["Data Storytelling", "Executive Reporting", "Trend Analysis", "Actionable Writing"]
+                },
+                {
+                    title: "Advanced Data Context",
+                    desc: "Gain domain knowledge to provide deeper, more relevant analysis.",
+                    topics: ["Industry KPIs", "Predictive Trend Basics", "Data Documentation", "Collaboration Tools"]
+                }
+            ]
+        },
+        { 
+            title: "Business Intelligence Analyst", 
+            desc: "Tableau, PowerBI & Analytics", 
+            icon: "💼", 
+            color: "rgba(217, 70, 239, 0.1)",
+            steps: [
+                {
+                    title: "BI Tool Mastery",
+                    desc: "Deep dive into a primary BI platform like PowerBI or Tableau.",
+                    topics: ["DAX / Tableau Calcs", "Data Modeling in BI", "Custom Visuals", "Layout & Aesthetics"]
+                },
+                {
+                    title: "Data Architecture",
+                    desc: "Learn how to structure data specifically for reporting performance.",
+                    topics: ["Star Schema", "Snowflake Schema", "Data Denormalization", "Metadata Management"]
+                },
+                {
+                    title: "SQL for BI Operations",
+                    desc: "Master the queries that power automated reports and dashboards.",
+                    topics: ["Efficient Read Queries", "View & Materialized Views", "Query Optimization", "CTE Usage"]
+                },
+                {
+                    title: "KPI & Metric Design",
+                    desc: "Learn to define exactly what matters for a business's success.",
+                    topics: ["Financial KPIs", "Operational Metrics", "User Growth Metrics", "Conversion Tracking"]
+                },
+                {
+                    title: "Dashboard Logic & UI",
+                    desc: "Master the user experience of data consumption for non-technical users.",
+                    topics: ["Info Hierarchy", "Color Psychology", "Filter Logic", "Navigation in Dashboards"]
+                },
+                {
+                    title: "BI Ops & Automation",
+                    desc: "Learn to schedule reports and manage access across a company.",
+                    topics: ["Refresh Scheduling", "Row-Level Security", "Tenant MGMT", "Workspace Admin"]
+                },
+                {
+                    title: "Stakeholder Strategies",
+                    desc: "Bridge the gap between business leaders and technical data teams.",
+                    topics: ["Requirement Gathering", "User Training", "Feedback Loops", "Business Logic Consulting"]
+                }
+            ]
+        },
 
         // 5. Cybersecurity
-        { title: "Cybersecurity Analyst", desc: "Threat Detection & SecOps", icon: "🛡️", color: "rgba(220, 38, 38, 0.1)" },
-        { title: "Ethical Hacker", desc: "Penetration Testing & Security auditing", icon: "🎭", color: "rgba(31, 41, 55, 0.1)" },
-        { title: "Security Engineer", desc: "Encryption & Infrastructure Security", icon: "🔒", color: "rgba(75, 85, 99, 0.1)" },
+        { 
+            title: "Cybersecurity Analyst", 
+            desc: "Threat Detection & SecOps", 
+            icon: "🛡️", 
+            color: "rgba(220, 38, 38, 0.1)",
+            steps: [
+                {
+                    title: "Networking Hub",
+                    desc: "Master the protocols that power the internet and learn to spot anomalies.",
+                    topics: ["OSI Model", "TCP/IP & UDP", "DNS / HTTP / SSH", "Network Ports & Services"]
+                },
+                {
+                    title: "Security Principles",
+                    desc: "Learn the core frameworks used by professional security teams worldwide.",
+                    topics: ["CIA Triad", "NIST Framework", "ISO 27001 Basics", "Risk Assessment"]
+                },
+                {
+                    title: "OS Administration",
+                    desc: "Learn to secure and audit the world's most common operating systems.",
+                    topics: ["Linux Hardening", "Windows Active Directory", "User Privileges", "Event Log Analysis"]
+                },
+                {
+                    title: "Threat Intelligence",
+                    desc: "Learn to identify and categorize modern cyber threats and vulnerabilities.",
+                    topics: ["Malware Analysis", "SIEM (Splunk/ELK)", "Vulnerability Scanning", "Phishing Simulation"]
+                },
+                {
+                    title: "Incident Response",
+                    desc: "Master the protocol for responding to and recovering from a security breach.",
+                    topics: ["Containment Strategies", "Forensics Basics", "Disaster Recovery", "Incident Reporting"]
+                },
+                {
+                    title: "Defensive Tools",
+                    desc: "Learn to configure and manage professional-grade security hardware.",
+                    topics: ["Next-Gen Firewalls", "IDS / IPS Systems", "Endpoint Protection (EDR)", "VPN & Encryption"]
+                },
+                {
+                    title: "Compliance & Auditing",
+                    desc: "Ensure your organization meets legal and professional security standards.",
+                    topics: ["GDPR / HIPAA", "PCI-DSS Standards", "Security Auditing", "Governance Polices"]
+                }
+            ]
+        },
+        { 
+            title: "Ethical Hacker", 
+            desc: "Penetration Testing & Security auditing", 
+            icon: "🎭", 
+            color: "rgba(31, 41, 55, 0.1)",
+            steps: [
+                {
+                    title: "Recon & OSINT",
+                    desc: "Learn the art of gathering information about a target before an attack.",
+                    topics: ["Nmap & Masscan", "Google Dorking", "Shodan Intelligence", "Social Engineering Basics"]
+                },
+                {
+                    title: "Vulnerability Analysis",
+                    desc: "Identify the weak points in a system's defense using industry tools.",
+                    topics: ["Nessus / OpenVAS", "Web App Vulnerabilities", "Misconfiguration Audits", "Fuzzing Techniques"]
+                },
+                {
+                    title: "System Exploitation",
+                    desc: "Learn to safely and professionally gain access to vulnerable systems.",
+                    topics: ["Metasploit Framework", "Buffer Overflows", "Reverse Shells", "Exploit Development"]
+                },
+                {
+                    title: "Web Hacking Deep Dive",
+                    desc: "Master the vulnerabilities that plague modern web applications.",
+                    topics: ["SQL Injection (SQLi)", "Cross-Site Scripting (XSS)", "CSRF & Broken Auth", "Burp Suite Mastery"]
+                },
+                {
+                    title: "Post-Exploitation",
+                    desc: "What happens after access? Master privilege escalation and persistence.",
+                    topics: ["Linux/Windows PrivEsc", "Pivoting in Networks", "Hash Cracking (John/Hashcat)", "Data Exfiltration"]
+                },
+                {
+                    title: "Wireless & Mobile",
+                    desc: "Venture into specialized hacking areas like Wi-Fi and mobile apps.",
+                    topics: ["Aircrack-ng Suite", "Mobile App Pen-testing", "Bluetooth Exploits", "Hardware Hacking Basics"]
+                },
+                {
+                    title: "Professional Reporting",
+                    desc: "The final product: Write reports that help organizations fix their flaws.",
+                    topics: ["Pen-test Methodology", "Remediation Advice", "Executive Summaries", "Ethics & Legalities"]
+                }
+            ]
+        },
+        { 
+            title: "Security Engineer", 
+            desc: "Encryption & Infrastructure Security", 
+            icon: "🔒", 
+            color: "rgba(75, 85, 99, 0.1)",
+            steps: [
+                {
+                    title: "Secure SDLC",
+                    desc: "Design security directly into the software development process.",
+                    topics: ["DevSecOps Principles", "Static Analysis (SAST)", "Dynamic Analysis (DAST)", "Secure Code Review"]
+                },
+                {
+                    title: "Infrastructure Hardening",
+                    desc: "Build highly resistant infrastructure that can withstand sustained attacks.",
+                    topics: ["Network Segmentation", "Server Hardening", "Bastion Hosts", "Infrastructure as Code Security"]
+                },
+                {
+                    title: "Identity & Access (IAM)",
+                    desc: "Master the modern gates that control who gets access to what.",
+                    topics: ["OAuth2 / SAML / OIDC", "Zero Trust Architecture", "Multi-Factor Auth (MFA)", "Directory Services"]
+                },
+                {
+                    title: "Cryptography Mastery",
+                    desc: "Master the mathematical protection of data at rest and in transit.",
+                    topics: ["Symmetric & Asymmetric", "Public Key Infrastructure", "SSL / TLS Lifecycle", "Hashing Algorithms"]
+                },
+                {
+                    title: "Cloud & Virtual Security",
+                    desc: "Learn to secure dynamic, modern cloud environments (AWS/Azure/GCP).",
+                    topics: ["VPC Security Groups", "Cloud IAM Policies", "S3 Bucket Protection", "K8s Security Basics"]
+                },
+                {
+                    title: "Intrusion Logic",
+                    desc: "Configure systems that can automatically detect and block attackers.",
+                    topics: ["WAF Management", "HIDS / NIDS Config", "Log Correlation", "Threat Hunting Theory"]
+                },
+                {
+                    title: "Security Automation",
+                    desc: "Learn to automate your defenses to respond to threats at scale.",
+                    topics: ["Python for Security", "SOAR Workflows", "Automated Policy Tuning", "Threat Feed Integration"]
+                }
+            ]
+        },
 
         // 6. Specialized & Emerging
-        { title: "Blockchain Developer", desc: "Ethereum, Solidity & Web3", icon: "🔗", color: "rgba(249, 115, 22, 0.1)" },
-        { title: "Web3 Developer", desc: "DApps & Smart Contracts", icon: "🕸️", color: "rgba(16, 185, 129, 0.1)" },
-        { title: "Game Developer", desc: "Unity, Unreal Engine & C#", icon: "🎮", color: "rgba(244, 63, 94, 0.1)" },
-        { title: "AR/VR Developer", desc: "Virtual Reality & Metaverse", icon: "👓", color: "rgba(139, 92, 246, 0.1)" },
-        { title: "Robotics Engineer", desc: "Hardware, ROS & Automation", icon: "🦾", color: "rgba(30, 64, 175, 0.1)" },
-        { title: "IoT Engineer", desc: "Smart Sensors & Embedded Systems", icon: "📟", color: "rgba(5, 150, 105, 0.1)" },
-        { title: "Embedded Systems Engineer", desc: "Microcontrollers & C Programming", icon: "📟", color: "rgba(71, 85, 105, 0.1)" },
+        { 
+            title: "Blockchain Developer", 
+            desc: "Ethereum, Solidity & Web3", 
+            icon: "🔗", 
+            color: "rgba(249, 115, 22, 0.1)",
+            steps: [
+                {
+                    title: "Blockchain Foundations",
+                    desc: "Understand the decentralized philosophy and internal mechanics of the ledger.",
+                    topics: ["Distributed Ledger Tech", "Consensus (PoW/PoS)", "Network Nodes", "Mining vs Validating"]
+                },
+                {
+                    title: "Crypto Fundamentals",
+                    desc: "Master the advanced math that keeps blockchains secure and immutable.",
+                    topics: ["Hashing (SHA-256)", "Digital Signatures", "Asymmetric Encryption", "Merkle Trees"]
+                },
+                {
+                    title: "Smart Contract Dev",
+                    desc: "Learn to write autonomous, self-executing code on the Ethereum network.",
+                    topics: ["Solidity Mastery", "EVM Mechanics", "Gas Optimization", "Contract Design Patterns"]
+                },
+                {
+                    title: "Decentralized Apps (DApps)",
+                    desc: "Combine smart contracts with modern front-ends to build Web3 applications.",
+                    topics: ["Web3.js / Ethers.js", "IPFS Storage", "Wallet Integration", "Front-end for DApps"]
+                },
+                {
+                    title: "DeFi & Tokenomics",
+                    desc: "Learn the protocols and economic models that drive decentralized finance.",
+                    topics: ["ERC-20 & ERC-721", "DEXs & Liquidity", "Stablecoin Logic", "Yield Farming Basics"]
+                },
+                {
+                    title: "Layer 2 & Scaling",
+                    desc: "Master the technologies building the next generation of fast, cheap blockchains.",
+                    topics: ["Rollups (Optimistic/ZK)", "Sidechains (Polygon)", "State Channels", "Interoperability Protocols"]
+                },
+                {
+                    title: "Auditing & Security",
+                    desc: "The most vital step: Ensure your contracts are safe from multi-million dollar hacks.",
+                    topics: ["Reentrancy Analysis", "Logic Flaw Auditing", "Static Analysis (Slither)", "Hardhat / Foundry Testing"]
+                }
+            ]
+        },
+        { 
+            title: "Web3 Developer", 
+            desc: "DApps & Smart Contracts", 
+            icon: "🕸️", 
+            color: "rgba(16, 185, 129, 0.1)",
+            steps: [
+                {
+                    title: "The Web3 Ecosystem",
+                    desc: "Understand the shift from centralized servers to decentralized networks.",
+                    topics: ["Web 1.0 vs 2.0 vs 3.0", "Core Decentralization", "Decentralized Identifiers", "Governance Models"]
+                },
+                {
+                    title: "Blockchain Interaction",
+                    desc: "Learn to communicate with decentralized nodes via modern APIs.",
+                    topics: ["JSON-RPC Protocols", "Infura / Alchemy Hub", "Graph Protocol (Indexing)", "Block Explorers"]
+                },
+                {
+                    title: "Multi-Chain Development",
+                    desc: "Go beyond Ethereum. Master development on Solana, Polkadot, or Cosmos.",
+                    topics: ["Rust for Solana", "Cross-chain Bridges", "Polkadot Substrate", "Cosmos SDK"]
+                },
+                {
+                    title: "Modern Web3 Tech Stack",
+                    desc: "The professional toolkit for building scalable decentralized interfaces.",
+                    topics: ["React + Ethers.js", "RainbowKit / ConnectKit", "Alchemy SDK", "Wagmi Hooks"]
+                },
+                {
+                    title: "NFT & Digital Assets",
+                    desc: "Master the standards that power digital ownership and collectibles.",
+                    topics: ["ERC-721 / 1155", "Metadata Standards", "NFT Market Logic", "Royalties & Minting"]
+                },
+                {
+                    title: "DAO Infrastructure",
+                    desc: "Learn to build decentralized organizations with automated voting models.",
+                    topics: ["On-chain Governance", "Snapshot Voting", "Treasury Management", "Multi-sig Wallets (Gnosis)"]
+                },
+                {
+                    title: "Account Abstraction",
+                    desc: "Master the next wave of Web3 UX for the next billion users.",
+                    topics: ["ERC-4337", "Smart Contract Wallets", "Paymasters", "Social Recovery"]
+                }
+            ]
+        },
+        { 
+            title: "Game Developer", 
+            desc: "Unity, Unreal Engine & C#", 
+            icon: "🎮", 
+            color: "rgba(244, 63, 94, 0.1)",
+            steps: [
+                {
+                    title: "Game Design Logic",
+                    desc: "Learn the psychology and mechanics that make games fun and engaging.",
+                    topics: ["Game Mechanics", "Reward Loops", "Level Design", "Game Narrative"]
+                },
+                {
+                    title: "Engine Foundations",
+                    desc: "Master a professional game engine like Unity or Unreal Engine.",
+                    topics: ["Unity (C#) / Unreal (C++)", "Scene Graph / Hierarchy", "Component Systems", "Prefab / Blueprint Logic"]
+                },
+                {
+                    title: "3D & 2D Asset Pipeline",
+                    desc: "Understand how art and sounds are integrated into game environments.",
+                    topics: ["Sprite/Mesh Import", "Material & Shaders", "Animation Controllers", "Audio Integration"]
+                },
+                {
+                    title: "Physics & Game Math",
+                    desc: "Master the math required for movement, collisions, and realism.",
+                    topics: ["Vector Mathematics", "Quaternions & Rotation", "Collision Detection", "Rigid Body Physics"]
+                },
+                {
+                    title: "Advanced Scripting",
+                    desc: "Build the brains of your game, from player controls to complex AI.",
+                    topics: ["Player Input Systems", "Enemy AI (Pathfinding)", "State Management", "Event-Driven Logic"]
+                },
+                {
+                    title: "Special Effects (VFX)",
+                    desc: "Add juice and polish to your game with lighting and particles.",
+                    topics: ["Particle Systems", "Post-Processing", "Lighting Real-time/Baked", "UI Design for Games"]
+                },
+                {
+                    title: "Optimization & Launch",
+                    desc: "Lear to deploy your game to Mobile, PC, or Console with high performance.",
+                    topics: ["Memory Profiling", "Draw Call Reduction", "Mobile Optimization", "Asset Bundling"]
+                }
+            ]
+        },
+        { 
+            title: "AR/VR Developer", 
+            desc: "Virtual Reality & Metaverse", 
+            icon: "👓", 
+            color: "rgba(139, 92, 246, 0.1)",
+            steps: [
+                {
+                    title: "Spatial Computing",
+                    desc: "Understand the hardware and optics that enable immersive experiences.",
+                    topics: ["6-DOF vs 3-DOF", "FOV / Refresh Rates", "Latentcy Optimization", "HMD Hardware Overview"]
+                },
+                {
+                    title: "Immersive Engines",
+                    desc: "Learn to build immersive worlds using real-time 3D engines.",
+                    topics: ["Unity for XR", "Unreal (OpenXR)", "XR Interaction Toolkit", "Spatial Lighting"]
+                },
+                {
+                    title: "Interaction Design",
+                    desc: "Master how users interact with objects when buttons and screens disappear.",
+                    topics: ["Gaze Interaction", "Hand Tracking", "Controller Mapping", "Spatial Audio Design"]
+                },
+                {
+                    title: "AR Foundations",
+                    desc: "Learn to overlay digital data onto the real world with high precision.",
+                    topics: ["ARKit (iOS) / ARCore", "Plane Detection", "Image Tracking", "Occlusion & Lighting"]
+                },
+                {
+                    title: "Spatial UI/UX",
+                    desc: "Master the unique design principles of user interfaces in 3D space.",
+                    topics: ["Diegetic Interface Design", "User Comfort & Ergonomics", "3D Menu Systems", "Locomotion Patterns"]
+                },
+                {
+                    title: "Advanced Graphics",
+                    desc: "Optimize high-fidelity visuals for the strict constraints of XR headsets.",
+                    topics: ["Shader Graph for XR", "Foveated Rendering", "Mobile VR Optimization", "Baked Global Illumination"]
+                },
+                {
+                    title: "Prototyping & Testing",
+                    desc: "Learn the vital process of rapid testing for comfort and immersion.",
+                    topics: ["Simulator Testing", "User Comfort Auditing", "Multi-device Deployment", "Performance Tunneling"]
+                }
+            ]
+        },
+        { 
+            title: "Robotics Engineer", 
+            desc: "Hardware, ROS & Automation", 
+            icon: "🦾", 
+            color: "rgba(30, 64, 175, 0.1)",
+            steps: [
+                {
+                    title: "Robotic Foundations",
+                    desc: "Master the mechanics and electronic basics of physical automation.",
+                    topics: ["Robotic Kinematics", "Actuators & Servos", "Microcontroller Logic", "Electronic Circuits"]
+                },
+                {
+                    title: "Embedded Programming",
+                    desc: "Learn to write the low-level code that controls robotic hardware.",
+                    topics: ["C++ for Robotics", "Python Scripting", "Interrupts & Timers", "Real-time Constraints"]
+                },
+                {
+                    title: "Control Systems",
+                    desc: "Learn to guide robots smoothly using feedback loops and math.",
+                    topics: ["PID Control", "Kalman Filters", "Feedback Loops", "Stability Analysis"]
+                },
+                {
+                    title: "ROS (Robot OS) Mastery",
+                    desc: "Master the industry-standard framework for building complex robot logic.",
+                    topics: ["Nodes & Pub/Sub", "Topics & Services", "URDF Modeling", "Gazebo Simulation"]
+                },
+                {
+                    title: "Sensing & Perception",
+                    desc: "Teach your robot to understand its environment using advanced sensors.",
+                    topics: ["LIDAR & SLAM", "Computer Vision (OpenCV)", "IMU & Sensor Fusion", "Obstacle Detection"]
+                },
+                {
+                    title: "Path Planning",
+                    desc: "Develop the brain that helps a robot move intelligently through space.",
+                    topics: ["A* & RRT Algorithms", "Obstacle Avoidance", "Motion Profiles", "Global vs Local Planning"]
+                },
+                {
+                    title: "Industrial Automation",
+                    desc: "Learn the protocols and safety standards for robots in the real world.",
+                    topics: ["PLCs & SCADA", "Industrial Protocols", "Safety Certifications", "Fleet Management"]
+                }
+            ]
+        },
+        { 
+            title: "IoT Engineer", 
+            desc: "Smart Sensors & Embedded Systems", 
+            icon: "📟", 
+            color: "rgba(5, 150, 105, 0.1)",
+            steps: [
+                {
+                    title: "IoT Architecture",
+                    desc: "Understand the layers of an IoT system from sensors to the cloud.",
+                    topics: ["Edge vs Fog vs Cloud", "Sensors & Actuators", "Gateway Logic", "IoT Device Lifecycle"]
+                },
+                {
+                    title: "Hardware Integration",
+                    desc: "Master the modern electronics boards used for smart prototyping.",
+                    topics: ["ESP32 / Arduino / RPi", "Serial Protocols (I2C/SPI)", "GPIO Management", "Low Power Electronics"]
+                },
+                {
+                    title: "Communication Protocols",
+                    desc: "Learn the languages devices use to talk over low-bandwidth networks.",
+                    topics: ["MQTT / CoAP", "LoRaWAN & NB-IoT", "HTTP REST for Devices", "BLE & Zigbee"]
+                },
+                {
+                    title: "Embedded OS & Logic",
+                    desc: "Master the programming required for small, power-constrained devices.",
+                    topics: ["MicroPython / RTOS", "Interrupt Management", "Sleep Mode Logic", "Firmware Over-The-Air"]
+                },
+                {
+                    title: "IoT Cloud Platforms",
+                    desc: "Connect thousands of devices to a central cloud for data management.",
+                    topics: ["AWS IoT Core / Azure", "Digital Twins", "IoT Analytics", "Stream Processing"]
+                },
+                {
+                    title: "End-to-End Security",
+                    desc: "The most vital step for IoT: Protect devices from remote takeover.",
+                    topics: ["Secure Boot", "X.509 Certificates", "TLS for Devices", "Device Hardening"]
+                },
+                {
+                    title: "IoT Data Visualization",
+                    desc: "Build dashboards that make sense of massive streams of sensor data.",
+                    topics: ["Real-time Dashboards", "Alerting Systems", "Grafana for IoT", "Mobile App Controls"]
+                }
+            ]
+        },
+        { 
+            title: "Embedded Systems Engineer", 
+            desc: "Microcontrollers & C Programming", 
+            icon: "📟", 
+            color: "rgba(71, 85, 105, 0.1)",
+            steps: [
+                {
+                    title: "Computer Architecture",
+                    desc: "Deep dive into how silicon processors actually work.",
+                    topics: ["CPU Internals", "Memory Hierarchy", "Interrupt Controllers", "Instruction Sets (ARM)"]
+                },
+                {
+                    title: "Low-level Language Mastery",
+                    desc: "Master C and Assembly—the languages that live closest to the metal.",
+                    topics: ["Pointer Mastery", "Memory Management", "Bitwise Operations", "Assembly Basics"]
+                },
+                {
+                    title: "MCU & Peripherals",
+                    desc: "Learn to control hardware components using registers and drivers.",
+                    topics: ["ARM Cortex-M Basics", "GPIO / UART / DMA", "Analog-to-Digital (ADC)", "Timer Logic"]
+                },
+                {
+                    title: "Real-Time OS (RTOS)",
+                    desc: "Learn to manage multiple time-critical tasks on a single chip.",
+                    topics: ["FreeRTOS / Zephyr", "Task Scheduling", "Mutexes & Semaphores", "Inter-task Comm."]
+                },
+                {
+                    title: "Hardware Debugging",
+                    desc: "Master tools for seeing electricity and logic in physical circuits.",
+                    topics: ["JTAG / SWD Debugging", "Oscilloscopes", "Logic Analyzers", "Hardware Abstraction Layers"]
+                },
+                {
+                    title: "Reliability & Safety",
+                    desc: "Learn to build systems that never crash, especially in cars or medical gear.",
+                    topics: ["MISRA C Standards", "Watchdog Timers", "Unit Testing Hardware", "Safety-Critical Design"]
+                },
+                {
+                    title: "System Optimization",
+                    desc: "Fine-tune your firmware for maximum speed and minimum power.",
+                    topics: ["Power Management", "Code Size Optimization", "Interrupt Latency", "Bootloaders"]
+                }
+            ]
+        },
 
         // 7. Management & Design
-        { title: "Product Manager (Tech)", desc: "Product Strategy & Technical Specs", icon: "🚀", color: "rgba(245, 158, 11, 0.1)" },
-        { title: "UI/UX Designer", desc: "Figma, User Research & Design Systems", icon: "🎨", color: "rgba(236, 72, 153, 0.1)" },
-        { title: "Product Designer", desc: "Industrial & Experience Design", icon: "📐", color: "rgba(99, 102, 241, 0.1)" },
-        { title: "Technical Program Manager", desc: "Scheduling & Cross-team delivery", icon: "📅", color: "rgba(107, 114, 128, 0.1)" },
+        { 
+            title: "Product Manager (Tech)", 
+            desc: "Product Strategy & Technical Specs", 
+            icon: "🚀", 
+            color: "rgba(245, 158, 11, 0.1)",
+            steps: [
+                {
+                    title: "Strategic Foundations",
+                    desc: "Learn to identify market gaps and define products that solve real problems.",
+                    topics: ["Market Research", "User Personas", "MVP Definition", "Competitive Analysis"]
+                },
+                {
+                    title: "Technical Literacy",
+                    desc: "Bridge the gap between business and engineering by understanding the tech stack.",
+                    topics: ["API Fundamentals", "Tech Stack Overview", "Database Basics", "System Architecture"]
+                },
+                {
+                    title: "Agile & Execution",
+                    desc: "Master the methodologies used to build products in fast-paced software teams.",
+                    topics: ["Scrum / Kanban", "User Story Writing", "Backlog Grooming", "Sprint Planning"]
+                },
+                {
+                    title: "Data-Driven Discovery",
+                    desc: "Learn to use metrics to guide your product decisions and feature prioritization.",
+                    topics: ["Product Analytics", "A/B Testing", "Success Metrics (KPIs)", "Churn Analysis"]
+                },
+                {
+                    title: "Design Thinking",
+                    desc: "Master the art of intuitive user experiences and efficient wireframing.",
+                    topics: ["User Flows", "Low-fidelity Wireframes", "Usability Testing", "UX Principles"]
+                },
+                {
+                    title: "Product Roadmapping",
+                    desc: "Learn to align stakeholders and plan long-term product growth.",
+                    topics: ["Roadmap Tools", "Feature Prioritization", "Stakeholder Management", "Release Management"]
+                },
+                {
+                    title: "Launch & Growth",
+                    desc: "Master the final stage of taking a product to market and scaling its impact.",
+                    topics: ["Go-to-Market Strategy", "User Acquisition", "Growth Loops", "Feedback Integration"]
+                }
+            ]
+        },
+        { 
+            title: "UI/UX Designer", 
+            desc: "Figma, User Research & Design Systems", 
+            icon: "🎨", 
+            color: "rgba(236, 72, 153, 0.1)",
+            steps: [
+                {
+                    title: "Design Fundamentals",
+                    desc: "Master the visual rules that define professional-grade user interfaces.",
+                    topics: ["Typography", "Color Theory", "Visual Hierarchy", "Grid Systems"]
+                },
+                {
+                    title: "User Research",
+                    desc: "Learn to gather deep insights about users before you start designing.",
+                    topics: ["User Interviews", "Empathy Mapping", "User Personas", "Journey Mapping"]
+                },
+                {
+                    title: "Information Architecture",
+                    desc: "Master the art of organizing content for maximum clarity and ease of use.",
+                    topics: ["Sitemaps", "Content Hierarchy", "User Task Flows", "Navigation Design"]
+                },
+                {
+                    title: "Wireframing & Prototyping",
+                    desc: "Transform abstract ideas into interactive, testable design concepts.",
+                    topics: ["Low-fidelity Sketching", "Interactive Prototypes", "Figma Mastery", "Variable Components"]
+                },
+                {
+                    title: "Design Systems",
+                    desc: "Learn to build scalable, consistent design libraries for large products.",
+                    topics: ["Component Libraries", "Style Documentation", "Atomic Design", "Tokens Branding"]
+                },
+                {
+                    title: "Testing & Validation",
+                    desc: "Ensure your designs actually solve the user's problems through rigorous testing.",
+                    topics: ["Usability Testing", "Accessibility (WCAG)", "Iterative Design", "Heatmap Analysis"]
+                },
+                {
+                    title: "Developer Handoff",
+                    desc: "Master the final step of translating your visual designs into building instructions.",
+                    topics: ["Exporting Assets", "Inspect Tools Mastery", "Design Documentation", "CSS/HTML Fundamentals"]
+                }
+            ]
+        },
+        { 
+            title: "Product Designer", 
+            desc: "Industrial & Experience Design", 
+            icon: "📐", 
+            color: "rgba(99, 102, 241, 0.1)",
+            steps: [
+                {
+                    title: "Holistic Product Design",
+                    desc: "Learn to think about the product as a complete ecosystem, not just a screen.",
+                    topics: ["System Thinking", "Product Ecosystems", "Problem Definition", "Design Strategy"]
+                },
+                {
+                    title: "Advanced Interactions",
+                    desc: "Master the motion and feedback that make products feel alive and responsive.",
+                    topics: ["Micro-interactions", "Motion Design", "State Transitions", "Trigger Logic"]
+                },
+                {
+                    title: "Interaction Logic",
+                    desc: "Build highly complex, logic-driven prototypes that behave like real code.",
+                    topics: ["Logic in Figma", "Prototype Variables", "Conditional Actions", "Advanced Overlays"]
+                },
+                {
+                    title: "Business Logic Integration",
+                    desc: "Learn to align your design decisions with the company's core business KPIs.",
+                    topics: ["Business Strategy", "Conversion Design", "Growth Experiments", "Stakeholder Alignment"]
+                },
+                {
+                    title: "Complex Design Patterns",
+                    desc: "Master the design of intricate systems like dashboards and data-heavy interfaces.",
+                    topics: ["Dashboard UI", "Data Visualization", "Form Logic", "Bulk Action UX"]
+                },
+                {
+                    title: "Design Leadership",
+                    desc: "Learn to manage design processes and lead teams across large organizations.",
+                    topics: ["Design Ops", "Critique Culture", "Team Collaboration", "Project Management"]
+                },
+                {
+                    title: "End-to-End Delivery",
+                    desc: "Master the entire lifecycle of a design from concept to production support.",
+                    topics: ["Functional Specs", "Engineering Sync", "Release Testing", "Post-launch Audits"]
+                }
+            ]
+        },
+        { 
+            title: "Technical Program Manager", 
+            desc: "Scheduling & Cross-team delivery", 
+            icon: "📅", 
+            color: "rgba(107, 114, 128, 0.1)",
+            steps: [
+                {
+                    title: "Technical Planning",
+                    desc: "Learn to translate complex product goals into detailed technical initiatives.",
+                    topics: ["SDLC Mastery", "System Design Basics", "Project Scoping", "Tech Stack Analysis"]
+                },
+                {
+                    title: "Program Lifecycle",
+                    desc: "Master the end-to-end management of high-impact technical programs.",
+                    topics: ["Milestone Planning", "Objective Setting (OKRs)", "Project Charter", "Phase Management"]
+                },
+                {
+                    title: "Scheduling & Resources",
+                    desc: "Learn to manage time and talent across multiple engineering teams.",
+                    topics: ["Gantt Charts", "Critical Path Analysis", "Resource Allocation", "Capacity Planning"]
+                },
+                {
+                    title: "Risk & Dependency MGMT",
+                    desc: "Master the art of identifying and neutralizing bottlenecks before they happen.",
+                    topics: ["Risk Mitigation", "Dependency Mapping", "Cross-team Comms", "Conflict Resolution"]
+                },
+                {
+                    title: "Execution & Quality",
+                    desc: "Drive daily progress and ensure every release meets technical standards.",
+                    topics: ["Release Management", "QA Coordination", "Go/No-go Decisions", "KPI Tracking"]
+                },
+                {
+                    title: "Stakeholder Reporting",
+                    desc: "Learn to communicate technical progress to non-technical leadership.",
+                    topics: ["Executive Updates", "Technical Documentation", "Dashboard Syncing", "Status Reporting"]
+                },
+                {
+                    title: "Continuous Improvement",
+                    desc: "The final step: optimize your processes to make every future program better.",
+                    topics: ["Post-mortem Leadership", "Process Automation", "Agile Retrospectives", "Tool Optimization"]
+                }
+            ]
+        },
 
         // 8. Systems & Enterprise
-        { title: "Software Architect", desc: "System Scalability & Design Patterns", icon: "🏛️", color: "rgba(30, 58, 138, 0.1)" },
-        { title: "System Design Engineer", desc: "Microservices & Distributed Systems", icon: "🕸️", color: "rgba(15, 23, 42, 0.1)" },
-        { title: "Salesforce Developer", desc: "Apex, Lightning & CRM", icon: "☁️", color: "rgba(2, 132, 199, 0.1)" },
-        { title: "SAP Consultant", desc: "ABAP, ERP & Enterprise Logic", icon: "💼", color: "rgba(59, 130, 246, 0.1)" },
+        { 
+            title: "Software Architect", 
+            desc: "System Scalability & Design Patterns", 
+            icon: "🏛️", 
+            color: "rgba(30, 58, 138, 0.1)",
+            steps: [
+                {
+                    title: "Architectural Patterns",
+                    desc: "Master the fundamental blueprints used to organize complex software systems.",
+                    topics: ["Microservices vs Monolith", "Event-Driven Architecture", "Layered (N-tier) Pattern", "SOA Foundations"]
+                },
+                {
+                    title: "Deep Design Principles",
+                    desc: "Learn the core logic that ensures code is maintainable, scalable, and robust.",
+                    topics: ["SOLID Principles", "Design Patterns (GoF)", "DRY & KISS", "Separation of Concerns"]
+                },
+                {
+                    title: "Scalability Strategies",
+                    desc: "Learn to design systems that handle massive traffic increases effortlessly.",
+                    topics: ["Horizontal vs Vertical", "Load Balancing Logic", "Database Sharding", "Caching Hierarchies"]
+                },
+                {
+                    title: "Data Strategy",
+                    desc: "Master the art of selecting and structuring the right storage for any task.",
+                    topics: ["SQL vs NoSQL Selection", "Consistent Hashing", "Replication Models", "ACID vs BASE"]
+                },
+                {
+                    title: "Security Architecture",
+                    desc: "Build security into the very foundation of your system's design.",
+                    topics: ["Zero Trust Design", "OAuth / OpenID Logic", "Data Encryption Strategy", "Api Gateway Security"]
+                },
+                {
+                    title: "Infrastructure & Tools",
+                    desc: "Learn to select the right platforms and tools to host and run your architecture.",
+                    topics: ["Cloud vs On-prem", "Container Orchestration", "Serverless Evaluation", "Service Mesh Basics"]
+                },
+                {
+                    title: "Leadership & Vision",
+                    desc: "The final step: communicating your technical vision to both teams and leaders.",
+                    topics: ["Technical Roadmapping", "ADRs Documentation", "Stakeholder Alignment", "Cost-Benefit Analysis"]
+                }
+            ]
+        },
+        { 
+            title: "System Design Engineer", 
+            desc: "Microservices & Distributed Systems", 
+            icon: "🕸️", 
+            color: "rgba(15, 23, 42, 0.1)",
+            steps: [
+                {
+                    title: "Distributed Core",
+                    desc: "Master the fundamental laws that govern distributed computing systems.",
+                    topics: ["CAP Theorem", "PACELC Theory", "Consensus (Raft/Paxos)", "Clock Synchronization"]
+                },
+                {
+                    title: "Networking & Comms",
+                    desc: "Learn the high-speed protocols that allow global systems to talk to each other.",
+                    topics: ["gRPC & Protocol Buffers", "WebSockets / SSE", "DNS & CDNs", "HTTP/3 Protocols"]
+                },
+                {
+                    title: "Database Internals",
+                    desc: "Go deep into how data is actually written and indexed at the lowest levels.",
+                    topics: ["LSM Trees vs B-Trees", "Write-Ahead Logging", "Index Optimization", "Query Planning"]
+                },
+                {
+                    title: "Mastering Reliability",
+                    desc: "Build systems that stay alive even when specific components fail.",
+                    topics: ["Circuit Breakers", "Retry Policies", "Backpressure Logic", "Bulkheads Design"]
+                },
+                {
+                    title: "Messaging & Events",
+                    desc: "Learn to decouple systems using high-performance event streaming.",
+                    topics: ["Apache Kafka", "Message Queues", "Event Sourcing", "CQRS Pattern"]
+                },
+                {
+                    title: "Global Scalability",
+                    desc: "Design systems that work across multiple data centers and continents.",
+                    topics: ["Anycast Routing", "Geo-Replication", "Conflict Resolution", "Edge Computing"]
+                },
+                {
+                    title: "Capacity Planning",
+                    desc: "Master the math required to predict system load and resource needs.",
+                    topics: ["Throughput Estimation", "Latency Budgets", "Storage Math", "Hardware Selection"]
+                }
+            ]
+        },
+        { 
+            title: "Salesforce Developer", 
+            desc: "Apex, Lightning & CRM", 
+            icon: "☁️", 
+            color: "rgba(2, 132, 199, 0.1)",
+            steps: [
+                {
+                    title: "Salesforce Core",
+                    desc: "Understand the core CRM objects and the declarative (no-code) power of the platform.",
+                    topics: ["Standard vs Custom Objects", "Profiles & Permission Sets", "Flow Builder", "Validation Rules"]
+                },
+                {
+                    title: "Apex Programming",
+                    desc: "Master the Java-like language that brings custom logic to Salesforce.",
+                    topics: ["Apex Triggers", "Asynchronous Apex", "Collections & SOQL", "Governor Limits"]
+                },
+                {
+                    title: "Lightning Web Components",
+                    desc: "Build modern, high-performance user interfaces using standard web technologies.",
+                    topics: ["LWC Framework", "Shadow DOM Basics", "Events & Messaging", "Custom Styles (SLDS)"]
+                },
+                {
+                    title: "Salesforce Integration",
+                    desc: "Learn to connect Salesforce to external systems using modern APIs.",
+                    topics: ["REST / SOAP Integration", "Platform Events", "Named Credentials", "Callouts & Callbacks"]
+                },
+                {
+                    title: "Security & Sharing",
+                    desc: "Master the complex multi-layer security model that protects enterprise data.",
+                    topics: ["Organization-wide Defaults", "Role Hierarchy", "Sharing Rules", "Field Level Security"]
+                },
+                {
+                    title: "Data Management",
+                    desc: "Learn to handle massive amounts of customer data efficiently and safely.",
+                    topics: ["Bulk API Operations", "Data Loader Mastery", "Large Data Volumes", "External Objects"]
+                },
+                {
+                    title: "Modern DevOps (SFDX)",
+                    desc: "Master the final step: deploying and versioning your Salesforce code professionally.",
+                    topics: ["Scratch Orgs", "Version Control (Git)", "CLI Tooling", "CI/CD for Salesforce"]
+                }
+            ]
+        },
+        { 
+            title: "SAP Consultant", 
+            desc: "ABAP, ERP & Enterprise Logic", 
+            icon: "💼", 
+            color: "rgba(59, 130, 246, 0.1)",
+            steps: [
+                {
+                    title: "SAP Ecosystem Core",
+                    desc: "Understand the primary modules that run the world's largest enterprises.",
+                    topics: ["SAP FI/CO (Finance)", "SAP MM (Materials)", "SAP SD (Sales)", "SAP PP (Production)"]
+                },
+                {
+                    title: "ABAP Programming",
+                    desc: "Master the language used to customize and extend SAP business logic.",
+                    topics: ["Data Dictionary", "Reports & BAPIs", "IDocs & Interfaces", "Enhancement Framework"]
+                },
+                {
+                    title: "S/4HANA Database",
+                    desc: "Learn the power of in-memory computing and modern SAP data structures.",
+                    topics: ["HANA In-memory DB", "CDS Views", "HANA Modeling", "SQLScript Basics"]
+                },
+                {
+                    title: "Modern SAP UX (Fiori)",
+                    desc: "Master the modern web-based UI standard for all new SAP applications.",
+                    topics: ["SAPUI5 / OpenUI5", "Fiori Design Apps", "OData Services", "User Personalization"]
+                },
+                {
+                    title: "Business Performance",
+                    desc: "Learn to translate complex corporate requirements into SAP functional specs.",
+                    topics: ["Requirement Analysis", "Gap Analysis", "Functional Specs", "UAT Testing"]
+                },
+                {
+                    title: "SAP Methodology",
+                    desc: "Master the professional implementation frameworks like ASAP or SAP Activate.",
+                    topics: ["Project Preparation", "Business Blueprint", "Realization Phase", "Go-Live Support"]
+                },
+                {
+                    title: "SAP Migration Ops",
+                    desc: "Learn the vital process of moving organizations from legacy systems to S/4HANA.",
+                    topics: ["System Conversion", "Greenfield vs Brownfield", "Data Migration Cockpit", "Cloud Extensions"]
+                }
+            ]
+        },
 
         // 9. Testing & Support
-        { title: "QA Engineer (Automation)", desc: "Selenium, Pytest & Cypress", icon: "🤖", color: "rgba(5, 150, 105, 0.1)" },
-        { title: "Manual Tester", desc: "Regression & Quality Analysis", icon: "🔍", color: "rgba(220, 38, 38, 0.1)" },
-        { title: "IT Support Specialist", desc: "Helpdesk & Desktop Support", icon: "🎧", color: "rgba(71, 85, 105, 0.1)" },
-        { title: "Network Engineer", desc: "Cisco, Routing & Switches", icon: "🔌", color: "rgba(14, 165, 233, 0.1)" },
-        { title: "System Administrator", desc: "Server Management & Linux", icon: "🖥️", color: "rgba(31, 41, 55, 0.1)" }
+        { 
+            title: "QA Engineer (Automation)", 
+            desc: "Selenium, Pytest & Cypress", 
+            icon: "🤖", 
+            color: "rgba(5, 150, 105, 0.1)",
+            steps: [
+                {
+                    title: "Testing Foundations",
+                    desc: "Master the psychology and core terminology behind professional software testing.",
+                    topics: ["STLC Lifecycle", "Test Case Design", "Bug Reporting Logic", "Black vs White Box"]
+                },
+                {
+                    title: "Programming for QA",
+                    desc: "Learn to write the code that tests other code with a focus on reliability.",
+                    topics: ["Python / JS for QA", "Assertion Logic", "Test Frameworks (Pytest/Jest)", "OOPS for Testers"]
+                },
+                {
+                    title: "Web Automation",
+                    desc: "Master the industry-standard tools for controlling and testing web browsers.",
+                    topics: ["Selenium WebDriver", "Cypress / Playwright", "Selector Strategies", "Page Object Model"]
+                },
+                {
+                    title: "API Automation",
+                    desc: "Learn to test the 'engine' of applications before the user interface is even built.",
+                    topics: ["Postman Automation", "REST Assured", "JSON Schema Validation", "Mocking & Stubbing"]
+                },
+                {
+                    title: "Mobile Automation",
+                    desc: "Venture into the complex world of automated testing for iOS and Android.",
+                    topics: ["Appium Foundations", "Emulator Management", "Mobile Specific Gestures", "Cross-Device Testing"]
+                },
+                {
+                    title: "Perf & Load Testing",
+                    desc: "Ensure your applications don't crash when thousands of users arrive at once.",
+                    topics: ["JMeter Basics", "K6 Scripting", "Throughput Analysis", "Resource Monitoring"]
+                },
+                {
+                    title: "CI/CD for Testing",
+                    desc: "Integrate your automated tests directly into the developer's build pipeline.",
+                    topics: ["Jenkins Integration", "Parallel Execution", "Report Generation", "GitHub Actions for QA"]
+                }
+            ]
+        },
+        { 
+            title: "Manual Tester", 
+            desc: "Regression & Quality Analysis", 
+            icon: "🔍", 
+            color: "rgba(220, 38, 38, 0.1)",
+            steps: [
+                {
+                    title: "QA Core Concepts",
+                    desc: "Learn why things break and how to systematically find those breaking points.",
+                    topics: ["Software Quality Rules", "Requirement Analysis", "Boundary Value Analysis", "Equivalence Partitioning"]
+                },
+                {
+                    title: "Test Documentation",
+                    desc: "Master the art of writing clear, professional instructions for quality checks.",
+                    topics: ["Test Plan Creation", "Writing Test Cases", "Traceability Matrix", "Strategy Documents"]
+                },
+                {
+                    title: "Defect Management",
+                    desc: "Learn to track bugs throughout their lifecycle using professional platforms.",
+                    topics: ["Jira / Bugzilla", "Defect Severity vs Priority", "Bug Life Cycle", "Clean Bug Reports"]
+                },
+                {
+                    title: "Exploratory Testing",
+                    desc: "Go beyond the script. Learn the creative techniques to find hidden flaws.",
+                    topics: ["Ad-hoc Testing", "User Persona Testing", "Scenario-based Testing", "Session-based Testing"]
+                },
+                {
+                    title: "Platform Specifics",
+                    desc: "Learn the unique quality checks required for web, mobile, and desktop apps.",
+                    topics: ["Responsive UI Testing", "Mobile Gestures", "Network Latency Testing", "Cross-browser Audits"]
+                },
+                {
+                    title: "UX & Accessibility",
+                    desc: "Ensure the product is not just 'working' but actually usable by everyone.",
+                    topics: ["Usability Auditing", "A11y (Screen Readers)", "Consistency Checks", "Visual Regression Basics"]
+                },
+                {
+                    title: "Database Verification",
+                    desc: "Learn to look 'under the hood' to ensure the data is being stored correctly.",
+                    topics: ["Basic SQL for QA", "Data Integrity Checks", "Constraint Validation", "Backend Verification"]
+                }
+            ]
+        },
+        { 
+            title: "IT Support Specialist", 
+            desc: "Helpdesk & Desktop Support", 
+            icon: "🎧", 
+            color: "rgba(71, 85, 105, 0.1)",
+            steps: [
+                {
+                    title: "Hardware Foundations",
+                    desc: "Master the physical components that make up modern computing systems.",
+                    topics: ["PC Architecture", "Peripherals & Drivers", "Hardware Assembly", "Troubleshooting Logic"]
+                },
+                {
+                    title: "Operating Systems",
+                    desc: "Learn to support, install, and troubleshoot Windows, macOS, and Linux.",
+                    topics: ["OS Installation", "User Account MGMT", "File System Support", "System Updates/Patches"]
+                },
+                {
+                    title: "Network Fundamentals",
+                    desc: "Master the basic connectivity that allows users to access company resources.",
+                    topics: ["Wi-Fi & Ethernet", "DNS / IP Addressing", "Router Configuration", "VPN Connectivity"]
+                },
+                {
+                    title: "Modern Cybersecurity",
+                    desc: "Be the first line of defense protecting users and corporate data.",
+                    topics: ["Antivirus Deployment", "Phishing Awareness", "Password Policies", "Encryption Basics"]
+                },
+                {
+                    title: "Helpdesk Operations",
+                    desc: "Master the professional tools used to manage and track user support requests.",
+                    topics: ["ServiceNow / Zendesk", "SLA Management", "Ticket Categorization", "Remote Desktop Tools"]
+                },
+                {
+                    title: "Software Deployment",
+                    desc: "Learn to manage and distribute corporate software at scale across hundreds of devices.",
+                    topics: ["MDM Basics", "Software Licensing", "Cloud App Support (SaaS)", "Imaging/Provisioning"]
+                },
+                {
+                    title: "Customer communication",
+                    desc: "The most vital skill: translating technical problems into human solutions.",
+                    topics: ["Professional Empathy", "De-escalation Skills", "Technical Writing", "Listening Techniques"]
+                }
+            ]
+        },
+        { 
+            title: "Network Engineer", 
+            desc: "Cisco, Routing & Switches", 
+            icon: "🔌", 
+            color: "rgba(14, 165, 233, 0.1)",
+            steps: [
+                {
+                    title: "Networking Core",
+                    desc: "Master the theoretical models that define global data communication.",
+                    topics: ["IPv4 & IPv6 Subnetting", "ICMP / ARP / DHCP", "OSI Layer Mastery", "Packet Analysis"]
+                },
+                {
+                    title: "Routing & Switching",
+                    desc: "Learn to configure the 'traffic controllers' of the internet.",
+                    topics: ["VLANs & Trunking", "OSPF & BGP Routing", "Spanning Tree Protocol", "Static vs Dynamic Routes"]
+                },
+                {
+                    title: "Network Security",
+                    desc: "Build secure walls and encrypted tunnels for corporate data.",
+                    topics: ["Access Control Lists", "Site-to-Site VPNs", "Firewall Configuration", "NAT / PAT Protocols"]
+                },
+                {
+                    title: "Wireless Networking",
+                    desc: "Master the invisible waves that connect our modern mobile workforce.",
+                    topics: ["Wi-Fi 6 Standards", "WAP Controllers", "RF Site Surveys", "Radius Authentication"]
+                },
+                {
+                    title: "Infra Troubleshooting",
+                    desc: "Master the tools required to find needles in a haystack of network data.",
+                    topics: ["Wireshark Analysis", "Ping / Traceroute Lab", "Port Mirroring", "Diagnostic Commands"]
+                },
+                {
+                    title: "Network Monitoring",
+                    desc: "Ensure complete visibility into the health and speed of your global network.",
+                    topics: ["SNMP Protocols", "SolarWinds / Nagios", "Traffic Flow Analysis", "Link Performance"]
+                },
+                {
+                    title: "Network Automation",
+                    desc: "Learn to manage thousands of devices at once with modern code.",
+                    topics: ["Python for NetEng", "Cisco DNA Center", "Network APIs", "Ansible for Networks"]
+                }
+            ]
+        },
+        { 
+            title: "System Administrator", 
+            desc: "Server Management & Linux", 
+            icon: "🖥️", 
+            color: "rgba(31, 41, 55, 0.1)",
+            steps: [
+                {
+                    title: "Linux Server Core",
+                    desc: "Master the operating system that runs most of the world's production servers.",
+                    topics: ["Bash Mastery", "Permission Systems", "Package Management", "Systemd Services"]
+                },
+                {
+                    title: "Windows Server Ops",
+                    desc: "Master the central nervous system of corporate IT: Windows Server.",
+                    topics: ["Active Directory", "Group Policy (GPO)", "PowerShell Scripting", "Domain Management"]
+                },
+                {
+                    title: "Virtualization & Hypervisor",
+                    desc: "Learn to run dozens of virtual servers on a single physical machine.",
+                    topics: ["VMware / Hyper-V", "Resource Virtualization", "Snapshot Management", "V-Motion / Migration"]
+                },
+                {
+                    title: "Storage & Data Mgmt",
+                    desc: "Master how massive amounts of company data are stored and protected.",
+                    topics: ["RAID Configurations", "NAS / SAN Storage", "File Permissions Audits", "Data Deduplication"]
+                },
+                {
+                    title: "Backups & Recovery",
+                    desc: "Ensure the organization can survive any disaster with robust recovery plans.",
+                    topics: ["Backup 3-2-1 Strategy", "Disaster Recovery Lab", "Restore Validation", "Offsite Storage"]
+                },
+                {
+                    title: "Cloud Admin Basics",
+                    desc: "Extend your local server management skills into the modern cloud.",
+                    topics: ["AWS EC2 / Azure VM", "Hybrid Cloud Setup", "Cloud Storage Sync", "IaaS Administration"]
+                },
+                {
+                    title: "Security Hardening",
+                    desc: "Learn to lock down servers and protect them from internal and external threats.",
+                    topics: ["Patch Management", "Automated Auditing", "Local Firewalls", "Endpoint Security Caps"]
+                }
+            ]
+        }
     ];
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -123,10 +1913,12 @@
             noResults.style.display = 'none';
 
             data.forEach((item, index) => {
-                const card = document.createElement('a');
-                card.href = "#";
+                const card = document.createElement('div');
                 card.className = "service-card glass animate-fade-up";
                 card.style.animationDelay = `${index * 0.05}s`;
+                card.style.cursor = "pointer";
+                card.onclick = () => showRoadmapDetail(item);
+                
                 card.innerHTML = `
                     <div class="service-icon-wrapper" style="background: ${item.color};">
                         <div style="font-size: 1.8rem;">${item.icon}</div>
@@ -138,6 +1930,57 @@
                 grid.appendChild(card);
             });
         }
+
+        function showRoadmapDetail(roadmap) {
+            const modal = document.getElementById('roadmapModal');
+            document.getElementById('modalTitle').innerText = roadmap.title + " Roadmap";
+            document.getElementById('modalIcon').innerText = roadmap.icon;
+            document.getElementById('modalDesc').innerText = roadmap.desc || "Step-by-step master plan";
+            
+            const timeline = document.getElementById('modalTimeline');
+            timeline.innerHTML = '';
+
+            if (roadmap.steps && roadmap.steps.length > 0) {
+                roadmap.steps.forEach((step, idx) => {
+                    const stepEl = document.createElement('div');
+                    stepEl.className = 'timeline-step';
+                    stepEl.innerHTML = `
+                        <div class="step-number">${idx + 1}</div>
+                        <div class="step-info">
+                            <h4>${step.title}</h4>
+                            <p>${step.desc}</p>
+                            <div class="step-topics">
+                                ${step.topics.map(t => `<span class="topic-tag">${t}</span>`).join('')}
+                            </div>
+                        </div>
+                    `;
+                    timeline.appendChild(stepEl);
+                });
+            } else {
+                timeline.innerHTML = `
+                    <div style="text-align:center; padding: 2rem; color: var(--text-muted);">
+                        <i class="fas fa-hammer" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <p>Detailed roadmap for <strong>${roadmap.title}</strong> is currently being curated by our experts.</p>
+                        <p style="font-size: 0.85rem; margin-top: 0.5rem;">Check back soon or contact 1-to-1 mentorship for early access.</p>
+                    </div>
+                `;
+            }
+
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        document.getElementById('closeModal').onclick = () => {
+            document.getElementById('roadmapModal').classList.remove('open');
+            document.body.style.overflow = 'auto';
+        };
+
+        window.onclick = (event) => {
+            if (event.target == document.getElementById('roadmapModal')) {
+                document.getElementById('roadmapModal').classList.remove('open');
+                document.body.style.overflow = 'auto';
+            }
+        };
 
         // Initial Render
         setTimeout(() => {
@@ -214,6 +2057,196 @@
         }
         .service-card h3 {
             font-size: 0.9rem !important;
+        }
+    }
+
+    /* Roadmap Modal Styles */
+    .roadmap-modal-overlay {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(15, 23, 42, 0.9);
+        backdrop-filter: blur(8px);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        padding: 1.5rem;
+    }
+
+    .roadmap-modal-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .roadmap-modal-content {
+        background: var(--bg-surface);
+        max-width: 800px;
+        width: 100%;
+        max-height: 85vh;
+        border-radius: var(--radius-xl);
+        padding: 3rem;
+        position: relative;
+        transform: translateY(30px);
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        overflow-y: auto;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .roadmap-modal-overlay.open .roadmap-modal-content {
+        transform: translateY(0);
+    }
+
+    .modal-close-btn {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        background: rgba(0,0,0,0.05);
+        border: none;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: var(--text-muted);
+    }
+
+    .modal-close-btn:hover {
+        background: rgba(239, 68, 68, 0.1);
+        color: var(--error);
+    }
+
+    .modal-header {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .modal-icon-large {
+        font-size: 3rem;
+        width: 80px;
+        height: 80px;
+        background: rgba(99, 102, 241, 0.1);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-header h2 {
+        font-size: 2rem;
+        margin: 0;
+        color: var(--text-main);
+    }
+
+    .modal-header p {
+        color: var(--text-muted);
+        margin: 0.25rem 0 0;
+    }
+
+    .roadmap-timeline {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        position: relative;
+    }
+
+    .roadmap-timeline::before {
+        content: '';
+        position: absolute;
+        left: 20px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(to bottom, var(--primary), var(--success));
+        opacity: 0.2;
+    }
+
+    .timeline-step {
+        display: flex;
+        gap: 2rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .step-number {
+        width: 42px;
+        height: 42px;
+        background: white;
+        border: 2px solid var(--primary);
+        color: var(--primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        flex-shrink: 0;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .step-info h4 {
+        font-size: 1.25rem;
+        margin: 0 0 0.5rem;
+        color: var(--text-main);
+    }
+
+    .step-info p {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+        margin: 0 0 1rem;
+    }
+
+    .step-topics {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .topic-tag {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.75rem;
+        background: rgba(99, 102, 241, 0.05);
+        color: var(--primary);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        border-radius: 20px;
+        font-weight: 600;
+    }
+
+    .modal-footer {
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(0,0,0,0.05);
+        text-align: center;
+    }
+
+    @media (max-width: 600px) {
+        .roadmap-modal-content {
+            padding: 1.5rem;
+        }
+        .modal-header {
+            flex-direction: column;
+            text-align: center;
+            gap: 1rem;
+        }
+        .roadmap-timeline::before {
+            left: 15px;
+        }
+        .step-number {
+            width: 30px;
+            height: 30px;
+            font-size: 0.8rem;
+        }
+        .timeline-step {
+            gap: 1rem;
         }
     }
 </style>

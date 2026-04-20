@@ -415,6 +415,34 @@ def resume_save(request):
             "org": cert_orgs[i] if i < len(cert_orgs) else "",
         })
 
+    # ---------- ACHIEVEMENTS ----------
+    achievements = []
+    ach_titles = get_list("ach_title[]")
+    ach_orgs = get_list("ach_org[]")
+    ach_dates = get_list("ach_date[]")
+    ach_descs = get_list("ach_desc[]")
+
+    for i in range(len(ach_titles)):
+        if i >= len(ach_titles): break
+        achievements.append({
+            "title": ach_titles[i],
+            "org": ach_orgs[i] if i < len(ach_orgs) else "",
+            "date": format_month_year(ach_dates[i]) if i < len(ach_dates) else "",
+            "desc": ach_descs[i] if i < len(ach_descs) else "",
+        })
+
+    # ---------- HOBBIES ----------
+    hobbies = []
+    hobby_names = get_list("hobby_name[]")
+    hobby_descs = get_list("hobby_desc[]")
+
+    for i in range(len(hobby_names)):
+        if i >= len(hobby_names): break
+        hobbies.append({
+            "name": hobby_names[i],
+            "desc": hobby_descs[i] if i < len(hobby_descs) else "",
+        })
+
     # ---------- CONTEXT ASSEMBLY ----------
     context = {
         "full_name": request.POST.get("full_name"),
@@ -432,6 +460,8 @@ def resume_save(request):
         "experience": experience,
         "projects": projects,
         "certifications": certifications,
+        "achievements": achievements,
+        "hobbies": hobbies,
     }
 
     # Store in session as the single source of truth
