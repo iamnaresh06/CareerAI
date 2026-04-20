@@ -98,6 +98,19 @@
 
             <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.8rem; font-size: 1.05rem;"><i class="fas fa-save" style="margin-right:0.5rem"></i> Save Changes</button>
         </form>
+
+        <!-- Danger Zone: Delete Account -->
+        <div class="danger-zone" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(239, 68, 68, 0.2); text-align: left; position: relative; z-index: 1;">
+            <h3 style="color: #ef4444; font-size: 1.2rem; margin-bottom: 0.5rem;"><i class="fas fa-exclamation-triangle"></i> Danger Zone</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; line-height: 1.5;">Once you delete your account, there is no going back. All your profile data, mock interview scores, resumes, and service bookings will be permanently wiped from our secure servers.</p>
+            
+            <form action="{% url 'delete_account' %}" method="POST" onsubmit="return confirm('FINAL WARNING: Are you absolutely sure you want to permanently delete your CareerAI account? This action cannot be reversed and ALL your data will be immediately lost.');">
+                {% csrf_token %}
+                <button type="submit" class="btn delete-btn" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); width: 100%; border-radius: 8px; transition: all 0.3s ease; padding: 0.8rem;">
+                    <i class="fas fa-trash-alt" style="margin-right: 5px;"></i> Permanently Delete Account
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 

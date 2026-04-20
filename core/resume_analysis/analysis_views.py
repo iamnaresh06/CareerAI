@@ -131,6 +131,9 @@ def stream_audio(request, filename):
 def career_chatbot_api(request):
     # ... (same) ...
     if request.method == "POST":
+        if not request.user.is_authenticated:
+            return JsonResponse({"reply": "⚠️ Please [login](/login/) or [create an account](/register/) to use the CareerAI Assistant."})
+            
         message = request.POST.get("message")
 
         # Context-aware responses using session data

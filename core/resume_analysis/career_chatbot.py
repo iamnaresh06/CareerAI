@@ -205,6 +205,15 @@ def get_chatbot_response(user_message, resume_score=None, missing_skills=None):
     if client is None:
         client = get_ai_client()
 
+    # 0. Intercept Basic Greetings Instantly (Saves API Quota)
+    msg_clean = msg.lower().strip()
+    if msg_clean in ['hi', 'hai', 'hello', 'hey', 'hii', 'heyy']:
+        return "👋 Hello! I'm CareerAI. How can I help you with your career path, technical skills, or capstone projects today?"
+    if msg_clean in ['bye', 'goodbye', 'exit', 'quit']:
+        return "👋 Goodbye! Keep building your skills, and feel free to reach out anytime you need career advice."
+    if msg_clean in ['thanks', 'thank you', 'tq', 'thank u']:
+        return "✅ You're very welcome! Let me know if you need help with anything else."
+
     # 1. Local Search
     local_answer, confidence = search_local_kb(msg)
     if local_answer:

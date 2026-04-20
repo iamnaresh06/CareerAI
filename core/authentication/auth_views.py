@@ -272,3 +272,18 @@ def book_service(request):
         return redirect("dashboard")
 
     return redirect("dashboard")
+
+
+@login_required(login_url='login')
+def delete_account(request):
+    """
+    Permanently deletes the user's account and all associated data.
+    """
+    if request.method == "POST":
+        user = request.user
+        logout(request)
+        user.delete()
+        messages.success(request, "Your account has been permanently deleted.")
+        return redirect('home')
+    return redirect('profile')
+

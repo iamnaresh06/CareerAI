@@ -117,18 +117,25 @@
 
     @media (max-width: 768px) {
         .roadmap-line {
-            left: 30px;
+            left: 20px;
         }
         .roadmap-step {
             flex-direction: row !important;
             justify-content: flex-start;
-            padding-left: 60px;
+            padding-left: 50px;
+            margin-bottom: 2rem;
         }
         .step-content {
             width: 100%;
+            padding: 1.25rem;
         }
         .step-icon {
-            left: 30px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+        }
+        .step-icon i {
+            font-size: 1rem;
         }
     }
 
@@ -309,22 +316,9 @@
 </div>
 
 <div class="info-bar">
-    <div class="info-item"><i class="fas fa-calendar-alt"></i> 4 Months Duration</div>
-    <div class="info-item"><i class="fas fa-credit-card"></i> Pay Monthly (EMI Available)</div>
-    <div class="info-item"><i class="fas fa-gift" style="color: #f59e0b;"></i> FREE Placement Bundle</div>
+    <div class="info-item"><i class="fas fa-laptop-code"></i> End-to-End Development</div>
+    <div class="info-item"><i class="fas fa-file-alt"></i> Research Publication Support</div>
     <div class="info-item"><i class="fas fa-certificate"></i> Verified Certification</div>
-</div>
-
-<div class="container" style="margin-top: 3rem;">
-    <div style="background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%); padding: 1.5rem; border-radius: 15px; color: white; display: flex; align-items: center; gap: 2rem; box-shadow: var(--shadow-glow-yellow);">
-        <div style="width: 70px; height: 70px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 2rem;">
-            <i class="fas fa-gem"></i>
-        </div>
-        <div>
-            <h3 style="margin-bottom: 0.3rem; font-size: 1.4rem;">Special Student Benefit</h3>
-            <p style="font-size: 1.05rem; opacity: 0.9;">Enroll in any Project Plan today and get our <strong>Placement Success Bundle</strong> (Resume, LinkedIn & Portfolio) worth ₹499 for <strong>FREE</strong>.</p>
-        </div>
-    </div>
 </div>
 
 <div class="container py-16">
@@ -336,20 +330,7 @@
     <div class="roadmap-container">
         <div class="roadmap-line"></div>
         
-        <!-- Step 1 -->
-        <div class="roadmap-step">
-            <div class="step-icon">
-                <i class="fas fa-lightbulb"></i>
-            </div>
-            <div class="step-content">
-                <span class="badge-step">MONTH 01 - 03</span>
-                <h3>Course Mastery & Training</h3>
-                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
-                    Intensive training in your chosen domain (AI, Web, IoT, etc.). Master the core logic and technical skills required to build production-level solutions.
-                </p>
-            </div>
-            <div style="width: 45%;"></div>
-        </div>
+        <!-- Step Removed: Training Phase -->
 
         <!-- Step 2 -->
         <div class="roadmap-step">
@@ -357,7 +338,7 @@
                 <i class="fas fa-laptop-code"></i>
             </div>
             <div class="step-content">
-                <span class="badge-step">MONTH 04</span>
+                <span class="badge-step">PHASE 1</span>
                 <h3>Project Implementation</h3>
                 <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
                     Purely focused on building your final year project. We handle the architecture, clean code development, and ensure a bug-free functional product.
@@ -372,10 +353,10 @@
                 <i class="fas fa-file-alt"></i>
             </div>
             <div class="step-content">
-                <span class="badge-step">FINAL PHASE</span>
-                <h3>Documentation & Handover</h3>
+                <span class="badge-step">PHASE 2</span>
+                <h3>Documentation & 1-to-1 Handover</h3>
                 <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
-                    Receive your detailed project report, diagrams, and completion certificate. We provide a full walkthrough so you're ready for your college viva.
+                    Receive your detailed project report and architecture diagrams. We conduct an exclusive 1-to-1 live session with our expert team to clear all doubts, providing a detailed codebase walkthrough on how it was implemented and exactly how to run it locally for your viva.
                 </p>
             </div>
             <div style="width: 45%;"></div>
@@ -392,87 +373,40 @@
 
         <div class="pricing-grid">
             <!-- One Time Payment -->
-            <div class="pricing-card">
-                <div class="badge-step" style="background: rgba(99, 102, 241, 0.1); color: var(--primary);">SAVINGS PACK</div>
+            <div class="pricing-card popular" style="display: flex; flex-direction: column;">
+                <div class="badge-step" style="background: rgba(99, 102, 241, 0.1); color: var(--primary);">COMPLETE PROJECT</div>
                 <h3 style="font-size: 1.6rem; margin-top: 0.8rem;">One Time Payment</h3>
-                <div class="price-value">₹7,999 <span>total</span></div>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">The most economical way to complete your project.</p>
+                <div class="price-value">₹4,999 <span>total</span></div>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Complete final year project implementation.</p>
                 
                 <ul class="feature-list">
                     <li><i class="fas fa-check-circle"></i> <span><strong>₹999</strong> Upfront Booking Fee</span></li>
-                    <li><i class="fas fa-check-circle"></i> <span><strong>₹7,000</strong> Before Project Start</span></li>
-                    <li><i class="fas fa-check-circle"></i> <span>3 Months Training + 1 Month Build</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span><strong>₹4,000</strong> within one week naturally</span></li>
                     <li><i class="fas fa-check-circle"></i> <span>Architecture & Full Documentation</span></li>
                     <li><i class="fas fa-check-circle"></i> <span>Plagiarism Check (Turnitin)</span></li>
-                    <li><i class="fas fa-check-circle"></i> <span>FREE Placement Success Bundle</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span>International Research Paper Support</span></li>
                     <li><i class="fas fa-check-circle"></i> <span>Hands-on Code Walkthrough</span></li>
                 </ul>
 
-                <a href="#enroll-form" class="btn btn-outline-primary" style="width: 100%; border-radius: 12px; padding: 0.8rem;">Select This Plan</a>
+                <a href="#enroll-form" class="btn btn-primary" style="width: 100%; border-radius: 12px; padding: 0.8rem; margin-top: auto;">Select This Plan</a>
             </div>
 
-            <!-- EMI Plan -->
-            <div class="pricing-card popular">
-                <div class="badge-step" style="background: rgba(79, 70, 229, 0.1); color: var(--primary);">FLEXIBLE EMI</div>
-                <h3 style="font-size: 1.6rem; margin-top: 0.8rem;">4-Month EMI Plan</h3>
-                <div class="price-value">₹8,999 <span>total</span></div>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Spread the cost over the entire project duration.</p>
+            <!-- Research Publication Add-on -->
+            <div class="pricing-card addon-card" style="display: flex; flex-direction: column;">
+                <div class="badge-step" style="background: rgba(236, 72, 153, 0.1); color: #ec4899;">OPTIONAL ADD-ON</div>
+                <h3 style="font-size: 1.6rem; margin-top: 0.8rem;">Research Publication</h3>
+                <div class="price-value" style="color: #ec4899;">₹1,999 <span>extra</span></div>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Ideal for students aiming for premium R&D roles (MS/Ph.D).</p>
                 
-                <ul class="feature-list" style="margin-bottom: 1rem;">
-                    <li><i class="fas fa-check-circle"></i> <span><strong>₹999</strong> Upfront Booking Fee</span></li>
-                    <li><i class="fas fa-check-circle"></i> <span><strong>₹2,000/mo</strong> for 4 Month tenure</span></li>
-                    <li><i class="fas fa-check-circle"></i> <span>3 Months Training + 1 Month Build</span></li>
-                    <li><i class="fas fa-check-circle"></i> <span>Architecture & Full Documentation</span></li>
-                    <li><i class="fas fa-check-circle"></i> <span>Plagiarism Check (Turnitin)</span></li>
-                    <li><i class="fas fa-check-circle"></i> <span>FREE Placement Success Bundle</span></li>
-                    <li><i class="fas fa-check-circle"></i> <span>Hands-on Code Walkthrough</span></li>
+                <ul class="feature-list">
+                    <li><i class="fas fa-plus-circle" style="color: #ec4899;"></i> <span>Abstract & Full Paper Writing</span></li>
+                    <li><i class="fas fa-plus-circle" style="color: #ec4899;"></i> <span>Plagiarism Check (Turnitin)</span></li>
+                    <li><i class="fas fa-plus-circle" style="color: #ec4899;"></i> <span>Journal Formatting & Design</span></li>
+                    <li><i class="fas fa-plus-circle" style="color: #ec4899;"></i> <span>Expert Co-authoring Guidance</span></li>
+                    <li><i class="fas fa-plus-circle" style="color: #ec4899;"></i> <span>Fast-track Review Assistance</span></li>
                 </ul>
 
-                <div class="emi-steps">
-                    <div class="emi-step">
-                        <div class="step-dot"></div>
-                        <span class="step-label" style="font-size: 0.6rem;">MONTH 1</span>
-                        <span class="step-amount" style="font-size: 0.7rem;">₹2,000</span>
-                    </div>
-                    <div class="emi-step">
-                        <div class="step-dot"></div>
-                        <span class="step-label" style="font-size: 0.6rem;">MONTH 2</span>
-                        <span class="step-amount" style="font-size: 0.7rem;">₹2,000</span>
-                    </div>
-                    <div class="emi-step">
-                        <div class="step-dot"></div>
-                        <span class="step-label" style="font-size: 0.6rem;">MONTH 3</span>
-                        <span class="step-amount" style="font-size: 0.7rem;">₹2,000</span>
-                    </div>
-                    <div class="emi-step">
-                        <div class="step-dot"></div>
-                        <span class="step-label" style="font-size: 0.6rem;">MONTH 4</span>
-                        <span class="step-amount" style="font-size: 0.7rem;">₹2,000</span>
-                    </div>
-                </div>
-
-                <a href="#enroll-form" class="btn btn-primary" style="width: 100%; border-radius: 12px; padding: 0.8rem; margin-top: 1.5rem;">Select This Plan</a>
-            </div>
-        </div>
-
-        <!-- Research Publication Add-on at the Bottom -->
-        <div style="max-width: 900px; margin: 3rem auto 0;">
-            <div class="pricing-card addon-card" style="display: flex; flex-direction: row; gap: 2rem; align-items: center; padding: 2rem; flex-wrap: wrap; box-shadow: 0 4px 20px rgba(236, 72, 153, 0.1);">
-                <div style="flex: 1.2; min-width: 300px;">
-                    <span style="background: #ec4899; color: white; padding: 0.25rem 0.8rem; border-radius: 20px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase;">Optional Research Add-on</span>
-                    <h3 style="font-size: 1.6rem; margin: 1rem 0 0.5rem;">Research Paper Publication</h3>
-                    <div style="font-size: 2.2rem; font-weight: 800; color: #ec4899;">₹1,999 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">EXTRA</span></div>
-                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin-top: 1rem;">Ideal for students aiming for premium R&D roles or higher studies (MS/Ph.D). We handle the complete technical writing and journal submission process.</p>
-                </div>
-                
-                <div style="flex: 1; min-width: 280px; border-left: 2px dashed rgba(236, 72, 153, 0.1); padding-left: 2rem;">
-                    <ul class="feature-list" style="margin: 0;">
-                        <li style="margin-bottom: 0.8rem;"><i class="fas fa-plus-circle" style="color: #ec4899;"></i> <span>Abstract & Full Paper Writing</span></li>
-                        <li style="margin-bottom: 0.8rem;"><i class="fas fa-plus-circle" style="color: #ec4899;"></i> <span>Plagiarism Check (Turnitin)</span></li>
-                        <li style="margin-bottom: 0.8rem;"><i class="fas fa-plus-circle" style="color: #ec4899;"></i> <span>Journal Formatting & Design</span></li>
-                        <li style="margin-bottom: 0.8rem;"><i class="fas fa-plus-circle" style="color: #ec4899;"></i> <span>Expert Co-authoring Guidance</span></li>
-                    </ul>
-                </div>
+                <a href="#enroll-form" class="btn btn-outline" style="width: 100%; border-radius: 12px; padding: 0.8rem; margin-top: auto; border-color: #ec4899; color: #ec4899;">Add to Project Plan</a>
             </div>
         </div>
 
@@ -486,7 +420,7 @@
                 <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; font-weight: 700; letter-spacing: 1px;">Booking Fee</div>
                 <div style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); line-height: 1;">₹999 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">Upfront Slot Fee</span></div>
                 <div style="margin-top: 1rem; padding: 0.5rem; background: rgba(37, 99, 235, 0.1); border-radius: 8px; display: inline-block;">
-                    <span style="font-size: 0.85rem; color: var(--primary); font-weight: 700;">₹7,000 balance to be paid before project start</span>
+                    <span style="font-size: 0.85rem; color: var(--primary); font-weight: 700;">₹4,000 balance to be paid within 1 week naturally</span>
                 </div>
             </div>
 
@@ -513,8 +447,7 @@
                     <div class="input-group" style="margin-bottom: 0;">
                         <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem;">Payment Mode Preference</label>
                         <select name="payment_mode" required style="width: 100%; padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1); background: white;">
-                            <option value="ONE_TIME">One-time Payment (₹7,999)</option>
-                            <option value="EMI">4-Month EMI Plan (₹2,000/mo)</option>
+                            <option value="ONE_TIME">One-time Payment (₹4,999)</option>
                         </select>
                     </div>
                 </div>

@@ -26,6 +26,7 @@ urlpatterns = [
     path('login/', auth_views.login_view, name='login'),
     path('logout/', auth_views.logout_view, name='logout'),
     path('profile/', auth_views.profile_view, name='profile'),
+    path('delete-account/', auth_views.delete_account, name='delete_account'),
     path('privacy-policy/', auth_views.privacy_policy, name='privacy_policy'),
     path('terms-conditions/', auth_views.terms_conditions, name='terms_conditions'),
     path('refund-policy/', auth_views.refund_policy, name='refund_policy'),

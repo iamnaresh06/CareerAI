@@ -22,5 +22,9 @@
     {
         "question": "To get a first siftware job,what should a fresher must have in thier skill set.",
         "answer": "Hi there! It\u2019s great to meet you. To land your first software role, focus on these essentials:\n\n*   **Master one language:** Become proficient in a core language like Python, Java, or JavaScript.\n*   **Build a portfolio:** Create 2\u20133 meaningful projects (e.g., a web app or data tool) and host the code on GitHub.\n*   **Understand Data Structures & Algorithms:** Practice problem-solving on sites like LeetCode to prepare for technical interviews.\n*   **Learn Git:** Get comfortable with version control; it\u2019s a standard requirement for all collaborative development teams.\n\nYou've got this! Keep practicing, and let me know if you need help with your resume or interview prep."
+    },
+    {
+        "question": "what are you doing?",
+        "answer": "Hello! I am here to help you navigate your career journey, explore tech paths, and make the most of your education. How can I assist you with your career goals today?"
     }
 ]
