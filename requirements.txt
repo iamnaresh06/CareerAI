@@ -9,3 +9,4 @@ xhtml2pdf
 pdfplumber
 python-docx
 python-dotenv
+google-genai

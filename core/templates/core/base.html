@@ -233,8 +233,8 @@
         position: absolute;
         bottom: 80px;
         right: 0;
-        width: 350px;
-        height: min(500px, calc(100vh - 140px));
+        width: 420px;
+        height: min(580px, calc(100vh - 140px));
         display: flex;
         flex-direction: column;
         transform-origin: bottom right;
@@ -264,7 +264,8 @@
         background: #f1f5f9; /* Light grey for bot messages */
         padding: 0.75rem 1rem;
         border-radius: var(--radius-md);
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+        line-height: 1.5;
         color: var(--text-main);
         border: 1px solid rgba(0,0,0,0.03);
       }
@@ -356,22 +357,46 @@
         })
           .then((res) => res.json())
           .then((data) => {
-            const reply = data.reply;
+            let reply = data.reply;
+            
+            // Safe Markdown Parsing
+            reply = reply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Bold
+            reply = reply.replace(/\*(.*?)(?=\n|$)/g, '<li>$1</li>'); // Bullets
+            reply = reply.replace(/### (.*?)\n/g, '<h4 style="margin: 5px 0;">$1</h4>\n'); // Headers
+
             const botMsg = document.createElement("div");
-            botMsg.innerHTML = "<strong>AI:</strong><br>";
-            botMsg.style.whiteSpace = "pre-line";
+            botMsg.style.whiteSpace = "pre-wrap"; 
             box.appendChild(botMsg);
 
             let i = 0;
+            let currentText = "";
+            let insideHTMLTag = false;
+            
+            // HTML-safe Typing Animation
             const typing = setInterval(() => {
-              if (i < reply.length) {
-                botMsg.innerHTML += reply.charAt(i);
-                i++;
-                box.scrollTop = box.scrollHeight;
-              } else {
-                clearInterval(typing);
-              }
-            }, 10);
+                if (i < reply.length) {
+                    let char = reply.charAt(i);
+                    currentText += char;
+                    
+                    if (char === '<') insideHTMLTag = true;
+                    if (char === '>') insideHTMLTag = false;
+                    
+                    if (insideHTMLTag) {
+                        let nextEnd = reply.indexOf('>', i);
+                        if (nextEnd !== -1) {
+                            currentText += reply.substring(i + 1, nextEnd + 1);
+                            i = nextEnd;
+                        }
+                        insideHTMLTag = false;
+                    }
+                    
+                    botMsg.innerHTML = "<strong>AI:</strong><br>" + currentText;
+                    box.scrollTop = box.scrollHeight;
+                    i++;
+                } else {
+                    clearInterval(typing);
+                }
+            }, 15);
           })
           .catch((err) => {
             box.innerHTML += `<div style="color: var(--error);">Error contacting AI.</div>`;

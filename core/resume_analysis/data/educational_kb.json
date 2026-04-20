@@ -1,0 +1,26 @@
+[
+    {
+        "question": "What is the best way to learn Python for a fresher?",
+        "answer": "* Start with basics (variables, loops, data types).\n* Move to OOP concepts.\n* Practice on platforms like LeetCode or HackerRank.\n* Build 2-3 small projects like a Calculator or To-Do list."
+    },
+    {
+        "question": "How can I improve my resume for internships?",
+        "answer": "* Highlight your technical skills first.\n* Include academic projects or open-source contributions.\n* Use action verbs like 'Developed', 'Implemented', or 'Designed'.\n* Keep it clean and limited to one page."
+    },
+    {
+        "question": "What are the core subjects for a computer science student?",
+        "answer": "* Data Structures and Algorithms (DSA)\n* Operating Systems (OS)\n* Database Management Systems (DBMS)\n* Computer Networks (CN)"
+    },
+    {
+        "question": "How to handle technical interview pressure?",
+        "answer": "* Think out loud so the interviewer knows your logic.\n* Start with a brute-force solution then optimize.\n* Don't be afraid to ask clarifying questions.\n* Practice mock interviews beforehand."
+    },
+    {
+        "question": "Which skill set a fresher must have to get their first job???",
+        "answer": "Hello! It's great to see you planning your career path. Here are the essential skills to help you land your first role:\n\n*   **Core Technical Proficiency:** Master the fundamental tools and languages specific to your chosen field (e.g., Python for data, HTML/CSS for web).\n*   **Effective Communication:** Focus on clear written and verbal skills, as articulating your ideas is just as important as the work itself.\n*   **Problem-Solving Mindset:** Show you can break down complex issues into manageable steps; employers love a logical approach.\n*   **Professional Reliability:** Demonstrate a \"growth mindset\"\u2014be eager to learn, punctual, and consistent in your output.\n\nYou've got this! What field are you looking to enter?"
+    },
+    {
+        "question": "To get a first siftware job,what should a fresher must have in thier skill set.",
+        "answer": "Hi there! It\u2019s great to meet you. To land your first software role, focus on these essentials:\n\n*   **Master one language:** Become proficient in a core language like Python, Java, or JavaScript.\n*   **Build a portfolio:** Create 2\u20133 meaningful projects (e.g., a web app or data tool) and host the code on GitHub.\n*   **Understand Data Structures & Algorithms:** Practice problem-solving on sites like LeetCode to prepare for technical interviews.\n*   **Learn Git:** Get comfortable with version control; it\u2019s a standard requirement for all collaborative development teams.\n\nYou've got this! Keep practicing, and let me know if you need help with your resume or interview prep."
+    }
+]

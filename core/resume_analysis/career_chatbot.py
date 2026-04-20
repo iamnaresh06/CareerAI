@@ -1,13 +1,41 @@
 """
 Career Chatbot Logic for CareerAI.
 
-This module implements a rule-based chatbot that guides freshers through career choices,
-provides learning roadmaps, suggests projects, and answers common interview questions.
+This module implements a hybrid chatbot using the modern Google GenAI SDK (v2).
+It searches a local knowledge base (JSON) first and falls back to Gemini AI.
 
-It is designed to be deterministic and helpful for specific fresher-level queries.
-
-Author: Naresh Reddy
+Author: Naresh Reddy (Updated April 2026)
 """
+
+import os
+import json
+from google import genai
+from dotenv import load_dotenv
+from .ml_engine import calculate_text_similarity
+
+# Load environment variables
+env_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", ".env"))
+load_dotenv(dotenv_path=env_path)
+
+# Path to the local knowledge base
+KB_FILE_PATH = os.path.join(os.path.dirname(__file__), 'data', 'educational_kb.json')
+
+# Configure Gemini Client
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+
+def get_ai_client():
+    """Initializes the new Google GenAI client."""
+    if not GEMINI_API_KEY or GEMINI_API_KEY == "your_gemini_api_key_here":
+        return None
+    try:
+        # Using the modern GenAI Client (v2 SDK)
+        return genai.Client(api_key=GEMINI_API_KEY)
+    except Exception as e:
+        print(f"DEBUG: GenAI Client Init Error: {e}")
+        return None
+
+# Initial client setup
+client = get_ai_client()
 
 CAREER_ROLES = {
     "python developer": {
@@ -105,173 +133,133 @@ CAREER_ROLES = {
 }
 
 
+def search_local_kb(query, threshold=70.0):
+    """
+    Searches the local JSON knowledge base for a similar question.
+    """
+    if not os.path.exists(KB_FILE_PATH):
+        return None, 0
+
+    try:
+        with open(KB_FILE_PATH, 'r') as f:
+            kb_data = json.load(f)
+        
+        best_match = None
+        highest_score = 0
+
+        for item in kb_data:
+            score = calculate_text_similarity(query, item['question'])
+            if score > highest_score:
+                highest_score = score
+                best_match = item['answer']
+        
+        if highest_score >= threshold:
+            return best_match, highest_score
+            
+    except Exception as e:
+        print(f"Error reading KB: {e}")
+    
+    return None, 0
+
+
+def add_to_local_kb(question, answer):
+    """
+    Auto-learning: Saves new AI answers to the local knowledge base to reduce API calls.
+    Only saves meaningful questions (more than 2 words).
+    """
+    if len(question.strip().split()) < 3:
+        return
+
+    try:
+        kb_data = []
+        if os.path.exists(KB_FILE_PATH):
+            with open(KB_FILE_PATH, 'r') as f:
+                kb_data = json.load(f)
+        
+        # Avoid semantic duplicates using our AI similarity engine
+        for item in kb_data:
+            score = calculate_text_similarity(question.strip(), item['question'])
+            if score > 85.0:  # If we already have a 85% similar question, don't duplicate
+                return
+                
+        kb_data.append({
+            "question": question.strip(),
+            "answer": answer.strip()
+        })
+        
+        with open(KB_FILE_PATH, 'w', encoding='utf-8') as f:
+            json.dump(kb_data, f, indent=4)
+    except Exception as e:
+        print(f"DEBUG: Failed to update KB: {e}")
+
+
+
 def get_chatbot_response(user_message, resume_score=None, missing_skills=None):
     """
-    Generates a response based on keywords in the user's message.
-    
-    Args:
-        user_message (str): The input text from the user.
-        resume_score (float, optional): Context from resume analysis session.
-        missing_skills (list, optional): Context from resume analysis session.
-        
-    Returns:
-        str: The chatbot's response text.
+    Main response logic using GenAI Fallback.
     """
-    msg = user_message.lower().strip()
+    global client
+    msg = user_message.strip()
 
-    # -------------------------------------------------------------------------
-    # Intent: Roadmap / Learning Path
-    # -------------------------------------------------------------------------
-    if any(word in msg for word in ["roadmap", "road map", "learning path", "path"]):
-        for role in CAREER_ROLES:
-            if role in msg:
-                data = CAREER_ROLES[role]
-                return (
-                    f"📌 Roadmap for {role.title()} (Fresher Level):\n\n"
-                    f"1 Required Skills:\n"
-                    f"- " + "\n- ".join(data["skills"]) + "\n\n"
-                    f"2 Step-by-Step Learning Path:\n"
-                    f"{data['path']}\n\n"
-                    f"3 Practical Advice:\n"
-                    f"- Build small projects at each step\n"
-                    f"- Focus more on fundamentals\n"
-                    f"- Avoid jumping into advanced topics too early\n\n"
-                    f"If you want, I can also give interview questions or project ideas for this role."
-                )
+    # Runtime initialization check
+    if client is None:
+        client = get_ai_client()
 
-        return (
-            "Sure 👍 I can help you with a career roadmap.\n\n"
-            "Please tell me **which role** you are interested in.\n\n"
-            "Popular fresher roles:\n"
-            "- Python Developer\n"
-            "- Data Analyst\n"
-            "- Frontend Developer"
-        )
+    # 1. Local Search
+    local_answer, confidence = search_local_kb(msg)
+    if local_answer:
+        return f"{local_answer}\n\n✅ Verified Educational Answer"
 
-    # -------------------------------------------------------------------------
-    # Intent: Interview Questions
-    # -------------------------------------------------------------------------
-    if "interview" in msg:
-        for role in CAREER_ROLES:
-            if role in msg:
-                questions = CAREER_ROLES[role]["interview"]
-                return (
-                    f"🧠 Interview Questions for {role.title()} (Freshers):\n\n"
-                    + "\n".join([f"{i+1}. {q}" for i, q in enumerate(questions)]) +
-                    "\n\n📌 Tip:\n"
-                    "- Understand concepts, don’t memorize answers\n"
-                    "- Try explaining answers in your own words\n\n"
-                    "If you want, I can also help you with answers or mock interview tips."
-                )
-
-        return (
-            "I can share interview questions \n\n"
-            "Please mention the role.\n"
-            "Example:\n"
-            "- Django interview questions for freshers\n"
-            "- Data Analyst interview questions"
-        )
-
-    # -------------------------------------------------------------------------
-    # Intent: General Career / Role Guidance
-    # -------------------------------------------------------------------------
-    if any(word in msg for word in ["career", "role", "job", "future"]):
-        response = "🎯 Career Guidance for Freshers:\n\n"
-
-        if resume_score:
-            if resume_score >= 75:
-                response += (
-                    "Your resume score is good \n"
-                    "You are ready to apply for entry-level developer roles.\n\n"
-                )
-            else:
-                response += (
-                    "Your resume needs some improvement, which is normal for freshers.\n"
-                    "Focus on skills and projects before applying.\n\n"
-                )
-
-        response += (
-            "Recommended fresher-friendly roles:\n"
-            "- Python Developer\n"
-            "- Data Analyst\n"
-            "- Frontend Developer\n\n"
-            "Tell me which role you like, and I’ll guide you step-by-step."
-        )
-
-        return response
-
-    # -------------------------------------------------------------------------
-    # Intent: Skill Improvement
-    # -------------------------------------------------------------------------
-    if "skill" in msg or "improve" in msg:
-        if missing_skills:
-            return (
-                "Skill Improvement Guidance:\n\n"
-                "Based on your resume, you should focus on these skills:\n"
-                "- " + "\n- ".join(missing_skills) + "\n\n"
-                "How to improve:\n"
-                "- Start with basics\n"
-                "- Practice daily (even 30–60 mins)\n"
-                "- Build 1–2 small projects\n\n"
-                "If you want, I can create a learning plan for any one skill."
+    # 2. AI Fallback (New GenAI API)
+    if client:
+        try:
+            # Construct the system instruction and prompt
+            system_instruction = (
+                "You are CareerAI, a friendly and encouraging career mentor for students. "
+                "RULES: "
+                "1. If the user simply says a greeting (e.g., 'Hi', 'Hello'), politely say hello back and ask how you can help them with their career. "
+                "2. For specific career/tech questions, give direct, actionable advice using 3-4 short bullet points. Do not write long essays. "
+                "3. Be warm and supportive, but keep answers extremely concise. "
+                "4. Only answer tech, career, and education-related questions."
             )
+            
+            context = ""
+            if resume_score:
+                context += f"- Resume Score: {resume_score}%.\n"
+            if missing_skills:
+                context += f"- Missing Skills: {', '.join(missing_skills)}.\n"
 
-        return (
-            "To improve skills, choose a target role first.\n"
-            "Then I can suggest exact skills and a learning plan."
-        )
-    
-    # -------------------------------------------------------------------------
-    # Intent: Project Ideas
-    # -------------------------------------------------------------------------
-    if "project" in msg or "build" in msg:
-        for role in CAREER_ROLES:
-            if role in msg:
-                projects = CAREER_ROLES[role]["projects"]
-                return (
-                    f"💡 Project Suggestions for {role.title()} (Freshers):\n\n"
-                    + "\n".join([f"{i+1}. {p}" for i, p in enumerate(projects)])
-                    + "\n\n📌 Advice:\n"
-                    "- Start with simple projects\n"
-                    "- Focus on logic, not UI\n"
-                    "- Push projects to GitHub\n\n"
-                    "If you want, I can suggest projects based on your current skills."
+            # STEP 2.1: Try the most efficient model for Free Tier (3.1 Lite)
+            try:
+                response = client.models.generate_content(
+                    model="gemini-3.1-flash-lite-preview",
+                    contents=f"{system_instruction}\n\n{context}\nQuestion: {msg}"
                 )
+                answer = response.text
+                add_to_local_kb(msg, answer)
+                return answer
+            except Exception as e:
+                # STEP 2.2: Second AI Fallback (2.0 Flash)
+                print(f"DEBUG: 3.1 Lite Failed, trying 2.0 Flash: {e}")
+                response = client.models.generate_content(
+                    model="gemini-2.0-flash",
+                    contents=f"{system_instruction}\n\n{context}\nQuestion: {msg}"
+                )
+                answer = response.text
+                add_to_local_kb(msg, answer)
+                return answer
+        except Exception as e:
+            print(f"DEBUG: All AI Models Failed: {e}")
 
-        return (
-            "Sure 👍 I can suggest projects.\n\n"
-            "Please mention the role.\n"
-            "Example:\n"
-            "- Projects for Python Developer\n"
-            "- Frontend projects for freshers"
-        )
+    # 3. Last Fallback: Role Logic
+    msg_lower = msg.lower()
+    if any(word in msg_lower for word in ["roadmap", "road map", "path"]):
+        for role in CAREER_ROLES:
+            if role in msg_lower:
+                data = CAREER_ROLES[role]
+                return f"📌 Roadmap for {role.title()}:\n\n- Skills: {', '.join(data['skills'])}\n- Path: {data['path']}"
 
-    # -------------------------------------------------------------------------
-    # Intent: Emotional / Confusion Support
-    # -------------------------------------------------------------------------
-    if any(word in msg for word in ["confused", "don’t know", "not sure", "help"]):
-        return (
-            "That’s completely normal 🙂 Many freshers feel the same.\n\n"
-            "Let’s do this step-by-step:\n"
-            "1 Choose a role you like\n"
-            "2 Learn required skills\n"
-            "3 Build small projects\n"
-            "4 Prepare for interviews\n\n"
-            "Tell me what you are confused about, I’ll help you."
-        )
-
-    # -------------------------------------------------------------------------
-    # Default Response
-    # -------------------------------------------------------------------------
     return (
-        "👋 Hi! I’m your CareerAI Assistant.\n\n"
-        "I can help you with:\n"
-        "- Career roadmaps\n"
-        "- Learning paths\n"
-        "- Skill improvement\n"
-        "- Interview questions\n\n"
-        "Try asking:\n"
-        "• Roadmap for Python Developer\n"
-        "• What skills should I learn next?\n"
-        "• Interview questions for Django fresher"
+        "👋 Hi! I'm your CareerAI Assistant. I'm currently optimizing my AI connection. "
+        "Try asking: 'Roadmap for Python Developer' or specialized tech career questions!"
     )
