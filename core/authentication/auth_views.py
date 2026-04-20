@@ -12,7 +12,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from core.models import UserProfile
+from core.models import UserProfile, JobPosting
 
 
 def landing_page(request):
@@ -157,9 +157,10 @@ def refund_policy(request):
 @login_required(login_url='login')
 def careers_page(request):
     """
-    Renders the Careers page.
+    Renders the Careers page with active job openings from CareerAI.
     """
-    return render(request, 'core/authentication/careers.html')
+    jobs = JobPosting.objects.filter(company_name__iexact="CareerAI", is_active=True)
+    return render(request, 'core/authentication/careers.html', {'jobs': jobs})
 
 def roadmaps_view(request):
     """

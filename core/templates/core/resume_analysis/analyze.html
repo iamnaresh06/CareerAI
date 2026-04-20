@@ -65,15 +65,18 @@
                 </h3>
                 <p class="my-6" style="line-height: 1.8; font-size: 1.1rem; color: var(--text-main);">{{ feedback_message }}</p>
                 
-                {% if audio_url %}
-                <div class="mt-8 p-6 rounded-2xl" style="background: var(--bg-surface); border: 1px solid rgba(0,0,0,0.05);">
-                    <p class="mb-3 font-bold" style="font-size: 0.9rem; color: var(--text-muted);"><i class="fas fa-volume-up mr-2 text-primary"></i> LISTEN TO ANALYSIS:</p>
-                    <audio controls style="width: 100%; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));">
-                        <source src="{{ audio_url }}" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
+                <div class="mt-8 p-6 rounded-2xl" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(37, 99, 235, 0.05) 100%); border: 1px dashed rgba(245, 158, 11, 0.3);">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i class="fas fa-crown text-warning text-xl"></i>
+                        <h4 class="font-bold" style="color: var(--text-main); font-size: 1.05rem;">Need Expert Help?</h4>
+                    </div>
+                    <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.2rem;">
+                        Struggling to bypass the ATS? Let our experts completely redesign your Resume, optimize your LinkedIn, and build your custom Portfolio to guarantee interview shortlists.
+                    </p>
+                    <a href="{% url 'expert_bundle' %}" class="btn shadow-md" style="width: 100%; text-align: center; justify-content: center; padding: 0.8rem; border-radius: 8px; font-weight: 700; display: inline-flex; align-items: center; background: #f59e0b; color: white; border: none;">
+                        <i class="fas fa-rocket mr-2"></i> Get Placement Success Bundle
+                    </a>
                 </div>
-                {% endif %}
             </div>
 
             <!-- Missing Skills & Advice -->

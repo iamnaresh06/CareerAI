@@ -83,22 +83,12 @@ def analyze_resume(request):
                 missing_skills
             )
 
-            # Step 6: Audio Feedback Generation
-            audio_filename = generate_voice(
-                feedback_message,
-                settings.MEDIA_ROOT,
-                request.user.username
-            )
-
-            audio_url = reverse('stream_audio', args=[audio_filename])
-
             context = {
                 'match_score': final_score,
                 'skill_score': skill_score,
                 'text_score': text_score,
                 'missing_skills': missing_skills,
                 'feedback_message': feedback_message,
-                'audio_url': audio_url,
                 "skill_guidance" : skill_guidance
             }
 
