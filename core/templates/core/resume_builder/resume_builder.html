@@ -111,7 +111,7 @@
         <div class="mb-8">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-accent"><i class="fas fa-graduation-cap"></i> Education <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted); margin-left: 0.5rem; text-transform: none;">(Add only recent 2 educations)</span></h3>
-                <button type="button" onclick="addEducation()" class="btn btn-sm btn-outline" style="border-radius: 6px; padding: 0.3rem 0.8rem !important; display: flex; align-items: center; gap: 4px; border-color: rgba(var(--primary-rgb), 0.3);"><i class="fas fa-plus" style="font-size: 0.7rem;"></i> Add</button>
+                <button type="button" onclick="window.addEducation()" class="btn btn-sm btn-outline" style="border-radius: 6px; padding: 0.3rem 0.8rem !important; display: flex; align-items: center; gap: 4px; border-color: rgba(var(--primary-rgb), 0.3);"><i class="fas fa-plus" style="font-size: 0.7rem;"></i> Add</button>
             </div>
             <div id="education-container">
                 {% if education %}
@@ -135,9 +135,11 @@
                             <div class="input-group mb-0">
                                 <label>End Date</label>
                                 <div class="flex gap-2 items-center">
-                                    <input type="month" name="edu_end[]" value="{{ edu.end|default:'' }}" style="flex: 1;" {% if edu.end == 'Present' %}disabled style="background-color: #e2e8f0; opacity: 0.7; cursor: not-allowed;"{% endif %}>
+                                    <input type="month" name="edu_end[]" value="{{ edu.end|default:'' }}" 
+                                           style="flex: 1; {% if edu.end == 'Present' %}background-color: #e2e8f0; opacity: 0.7; cursor: not-allowed;{% endif %}" 
+                                           {% if edu.end == 'Present' %}disabled{% endif %}>
                                     <label class="flex items-center gap-1" style="white-space: nowrap; cursor: pointer; margin-bottom: 0;">
-                                        <input type="checkbox" onchange="togglePresent(this, 'edu_end[]')" style="width: auto;" {% if edu.end == 'Present' %}checked{% endif %}>
+                                        <input type="checkbox" onchange="window.togglePresent(this, 'edu_end[]')" style="width: auto;" {% if edu.end == 'Present' %}checked{% endif %}>
                                         <span>Present</span>
                                     </label>
                                 </div>
@@ -159,7 +161,7 @@
             <div class="dynamic-section-group mb-10" id="section-group-1" data-default-type="experience">
                 <div class="flex justify-between items-center mb-4 gap-4 flex-wrap">
                     <div class="flex items-center gap-3">
-                        <select class="section-type-select" onchange="changeSectionType(1, this.value)" style="font-weight: 700; color: var(--accent); border: none; background: transparent; font-size: 1.15rem; padding: 0; width: auto; cursor: pointer;">
+                        <select class="section-type-select" onchange="window.changeSectionType(1, this.value)" style="font-weight: 700; color: var(--accent); border: none; background: transparent; font-size: 1.15rem; padding: 0; width: auto; cursor: pointer;">
                             <option value="experience" selected>Experience</option>
                             <option value="projects">Projects</option>
                             <option value="certifications">Certifications</option>
@@ -169,7 +171,7 @@
                         <span class="text-muted section-hint" style="font-size: 0.8rem;">(Max 2 recent)</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button type="button" onclick="addItemToSection(1)" class="btn btn-sm btn-outline" style="border-radius: 6px; padding: 0.3rem 0.8rem !important; display: flex; align-items: center; gap: 4px; border-color: rgba(var(--primary-rgb), 0.3);"><i class="fas fa-plus" style="font-size: 0.7rem;"></i> Add Item</button>
+                        <button type="button" onclick="window.addItemToSection(1)" class="btn btn-sm btn-outline" style="border-radius: 6px; padding: 0.3rem 0.8rem !important; display: flex; align-items: center; gap: 4px; border-color: rgba(var(--primary-rgb), 0.3);"><i class="fas fa-plus" style="font-size: 0.7rem;"></i> Add Item</button>
                     </div>
                 </div>
                 <div id="section-items-1" class="section-items-container">
@@ -219,7 +221,7 @@
             <div class="dynamic-section-group mb-10" id="section-group-2" data-default-type="projects">
                 <div class="flex justify-between items-center mb-4 gap-4 flex-wrap">
                     <div class="flex items-center gap-3">
-                        <select class="section-type-select" onchange="changeSectionType(2, this.value)" style="font-weight: 700; color: var(--accent); border: none; background: transparent; font-size: 1.15rem; padding: 0; width: auto; cursor: pointer;">
+                        <select class="section-type-select" onchange="window.changeSectionType(2, this.value)" style="font-weight: 700; color: var(--accent); border: none; background: transparent; font-size: 1.15rem; padding: 0; width: auto; cursor: pointer;">
                             <option value="experience">Experience</option>
                             <option value="projects" selected>Projects</option>
                             <option value="certifications">Certifications</option>
@@ -229,7 +231,7 @@
                         <span class="text-muted section-hint" style="font-size: 0.8rem;">(Max 2 recent)</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button type="button" onclick="addItemToSection(2)" class="btn btn-sm btn-outline" style="border-radius: 6px; padding: 0.3rem 0.8rem !important; display: flex; align-items: center; gap: 4px; border-color: rgba(var(--primary-rgb), 0.3);"><i class="fas fa-plus" style="font-size: 0.7rem;"></i> Add Item</button>
+                        <button type="button" onclick="window.addItemToSection(2)" class="btn btn-sm btn-outline" style="border-radius: 6px; padding: 0.3rem 0.8rem !important; display: flex; align-items: center; gap: 4px; border-color: rgba(var(--primary-rgb), 0.3);"><i class="fas fa-plus" style="font-size: 0.7rem;"></i> Add Item</button>
                     </div>
                 </div>
                 <div id="section-items-2" class="section-items-container">
@@ -263,7 +265,7 @@
             <div class="dynamic-section-group mb-10" id="section-group-3" data-default-type="certifications">
                 <div class="flex justify-between items-center mb-4 gap-4 flex-wrap">
                     <div class="flex items-center gap-3">
-                        <select class="section-type-select" onchange="changeSectionType(3, this.value)" style="font-weight: 700; color: var(--accent); border: none; background: transparent; font-size: 1.15rem; padding: 0; width: auto; cursor: pointer;">
+                        <select class="section-type-select" onchange="window.changeSectionType(3, this.value)" style="font-weight: 700; color: var(--accent); border: none; background: transparent; font-size: 1.15rem; padding: 0; width: auto; cursor: pointer;">
                             <option value="experience">Experience</option>
                             <option value="projects">Projects</option>
                             <option value="certifications" selected>Certifications</option>
@@ -273,7 +275,7 @@
                         <span class="text-muted section-hint" style="font-size: 0.8rem;">(Max 2 recent)</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button type="button" onclick="addItemToSection(3)" class="btn btn-sm btn-outline" style="border-radius: 6px; padding: 0.3rem 0.8rem !important; display: flex; align-items: center; gap: 4px; border-color: rgba(var(--primary-rgb), 0.3);"><i class="fas fa-plus" style="font-size: 0.7rem;"></i> Add Item</button>
+                        <button type="button" onclick="window.addItemToSection(3)" class="btn btn-sm btn-outline" style="border-radius: 6px; padding: 0.3rem 0.8rem !important; display: flex; align-items: center; gap: 4px; border-color: rgba(var(--primary-rgb), 0.3);"><i class="fas fa-plus" style="font-size: 0.7rem;"></i> Add Item</button>
                     </div>
                 </div>
                 <div id="section-items-3" class="section-items-container">

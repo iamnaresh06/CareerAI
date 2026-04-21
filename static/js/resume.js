@@ -117,10 +117,21 @@ const SECTION_TEMPLATES = {
 // CORE FUNCTIONS
 // ===============================
 
-function addItemToSection(slotNum) {
+window.addItemToSection = function(slotNum) {
     const container = document.getElementById(`section-items-${slotNum}`);
     const sectionGroup = document.getElementById(`section-group-${slotNum}`);
-    const type = sectionGroup.querySelector('.section-type-select').value;
+    
+    if (!container || !sectionGroup) {
+        console.error(`Container or Group for slot ${slotNum} not found.`);
+        return;
+    }
+
+    const select = sectionGroup.querySelector('.section-type-select');
+    if (!select) {
+        console.error(`Select dropdown for slot ${slotNum} not found.`);
+        return;
+    }
+    const type = select.value;
     
     // Enforce 2 item limit
     if (container.children.length >= 2) {
@@ -136,34 +147,45 @@ function addItemToSection(slotNum) {
         <button type="button" onclick="this.parentElement.remove()" class="absolute top-2 right-2 text-muted hover:text-red-500" style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">
             <i class="fas fa-times-circle"></i>
         </button>
-        ${SECTION_TEMPLATES[type].html}
+        ${SECTION_TEMPLATES[type] ? SECTION_TEMPLATES[type].html : ''}
     `;
+
+    if (!SECTION_TEMPLATES[type]) {
+        console.error(`Template for type ${type} not found.`);
+        return;
+    }
 
     container.appendChild(div);
 }
 
-function changeSectionType(slotNum, newType) {
+window.changeSectionType = function(slotNum, newType) {
     const container = document.getElementById(`section-items-${slotNum}`);
+    const sectionGroup = document.getElementById(`section-group-${slotNum}`);
+    const select = sectionGroup ? sectionGroup.querySelector('.section-type-select') : null;
     
     // Confirm if they want to switch type (as it clears data)
-    if (container.children.length > 0) {
+    if (container && container.children.length > 0) {
         if (!confirm("Changing section type will clear current items in this slot. Continue?")) {
-            // Revert select value
-            const select = container.closest('.dynamic-section-group').querySelector('.section-type-select');
-            // This is a bit tricky, but for now we just clear it if they proceed.
+            // Revert select value to previous (we don't track prev, but we can infer from items if needed)
+            // For now, just reload the page or let it be. 
+            // Better: don't call addItemToSection.
             return;
         }
     }
     
-    container.innerHTML = "";
-    addItemToSection(slotNum);
+    if (container) {
+        container.innerHTML = "";
+        window.addItemToSection(slotNum);
+    }
 }
 
 // ===============================
 // EDUCATION (Separate as it's not interchangeable)
 // ===============================
-function addEducation() {
+window.addEducation = function() {
     const container = document.getElementById("education-container");
+    if (!container) return;
+    
     if (container.children.length >= 2) {
         alert("You can only add up to 2 recent educations.");
         return;
@@ -197,7 +219,7 @@ function addEducation() {
                 <div class="flex gap-2 items-center">
                     <input type="month" name="edu_end[]" style="flex: 1;">
                     <label class="flex items-center gap-1" style="white-space: nowrap; cursor: pointer; margin-bottom: 0;">
-                        <input type="checkbox" onchange="togglePresent(this, 'edu_end[]')" style="width: auto;">
+                        <input type="checkbox" onchange="window.togglePresent(this, 'edu_end[]')" style="width: auto;">
                         <span>Present</span>
                     </label>
                 </div>
@@ -213,9 +235,12 @@ function addEducation() {
     container.appendChild(div);
 }
 
-function togglePresent(checkbox, endFieldName) {
+window.togglePresent = function(checkbox, endFieldName) {
     const parentContainer = checkbox.closest(".input-group");
+    if (!parentContainer) return;
+    
     const endInput = parentContainer.querySelector(`input[name="${endFieldName}"]`);
+    if (!endInput) return;
 
     if (checkbox.checked) {
         endInput.value = "";
@@ -235,14 +260,18 @@ function togglePresent(checkbox, endFieldName) {
 // INITIALIZATION
 // ===============================
 document.addEventListener("DOMContentLoaded", () => {
-    const edu = document.getElementById("education-container");
-    if(edu && edu.children.length === 0) addEducation();
+    try {
+        const edu = document.getElementById("education-container");
+        if(edu && edu.children.length === 0) window.addEducation();
 
-    // Init dynamic slots only if they are empty
-    [1, 2, 3].forEach(slot => {
-        const container = document.getElementById(`section-items-${slot}`);
-        if(container && container.children.length === 0) {
-            addItemToSection(slot);
-        }
-    });
+        // Init dynamic slots only if they are empty
+        [1, 2, 3].forEach(slot => {
+            const container = document.getElementById(`section-items-${slot}`);
+            if(container && container.children.length === 0) {
+                window.addItemToSection(slot);
+            }
+        });
+    } catch (e) {
+        console.error("Resume JS initialization failed:", e);
+    }
 });
