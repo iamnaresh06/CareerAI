@@ -1,7 +1,8 @@
+console.log("CareerAI: Resume Builder JS v1.0.3 Initializing...");
 // ===============================
 // DYNAMIC SECTION CONFIGURATION
 // ===============================
-const SECTION_TEMPLATES = {
+var SECTION_TEMPLATES = {
     experience: {
         title: "Experience",
         html: `
@@ -118,20 +119,20 @@ const SECTION_TEMPLATES = {
 // ===============================
 
 window.addItemToSection = function(slotNum) {
-    const container = document.getElementById(`section-items-${slotNum}`);
-    const sectionGroup = document.getElementById(`section-group-${slotNum}`);
+    var container = document.getElementById("section-items-" + slotNum);
+    var sectionGroup = document.getElementById("section-group-" + slotNum);
     
     if (!container || !sectionGroup) {
-        console.error(`Container or Group for slot ${slotNum} not found.`);
+        console.error("CareerAI: Container or Group for slot " + slotNum + " not found.");
         return;
     }
 
-    const select = sectionGroup.querySelector('.section-type-select');
+    var select = sectionGroup.querySelector('.section-type-select');
     if (!select) {
-        console.error(`Select dropdown for slot ${slotNum} not found.`);
+        console.error("CareerAI: Select dropdown for slot " + slotNum + " not found.");
         return;
     }
-    const type = select.value;
+    var type = select.value;
     
     // Enforce 2 item limit
     if (container.children.length >= 2) {
@@ -139,19 +140,14 @@ window.addItemToSection = function(slotNum) {
         return;
     }
 
-    const div = document.createElement("div");
+    var div = document.createElement("div");
     div.className = "card mb-4 p-6 relative";
     
     // Add remove button
-    div.innerHTML = `
-        <button type="button" onclick="this.parentElement.remove()" class="absolute top-2 right-2 text-muted hover:text-red-500" style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">
-            <i class="fas fa-times-circle"></i>
-        </button>
-        ${SECTION_TEMPLATES[type] ? SECTION_TEMPLATES[type].html : ''}
-    `;
+    div.innerHTML = '<button type="button" onclick="this.parentElement.remove()" class="absolute top-2 right-2 text-muted hover:text-red-500" style="background: none; border: none; font-size: 1.2rem; cursor: pointer;"><i class="fas fa-times-circle"></i></button>' + (SECTION_TEMPLATES[type] ? SECTION_TEMPLATES[type].html : '');
 
     if (!SECTION_TEMPLATES[type]) {
-        console.error(`Template for type ${type} not found.`);
+        console.error("CareerAI: Template for type " + type + " not found.");
         return;
     }
 
@@ -183,7 +179,7 @@ window.changeSectionType = function(slotNum, newType) {
 // EDUCATION (Separate as it's not interchangeable)
 // ===============================
 window.addEducation = function() {
-    const container = document.getElementById("education-container");
+    var container = document.getElementById("education-container");
     if (!container) return;
     
     if (container.children.length >= 2) {
@@ -191,46 +187,40 @@ window.addEducation = function() {
         return;
     }
 
-    const div = document.createElement("div");
+    var div = document.createElement("div");
     div.className = "card mb-4 p-6 relative";
 
-    div.innerHTML = `
-        <button type="button" onclick="this.parentElement.remove()" class="absolute top-2 right-2 text-muted hover:text-red-500" style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">
-            <i class="fas fa-times-circle"></i>
-        </button>
-        <div class="grid grid-2 gap-4 mb-4">
-            <div class="input-group mb-0">
-                <label>Degree</label>
-                <input name="edu_degree[]" placeholder="e.g. B.Tech Computer Science" required>
-            </div>
-            <div class="input-group mb-0">
-                <label>College / University</label>
-                <input name="edu_college[]" placeholder="e.g. IIT Madras" required>
-            </div>
-        </div>
-
-        <div class="grid grid-2 gap-4 mb-4 items-end">
-            <div class="input-group mb-0">
-                <label>Start Date</label>
-                <input type="month" name="edu_start[]" required>
-            </div>
-            <div class="input-group mb-0">
-                <label>End Date</label>
-                <div class="flex gap-2 items-center">
-                    <input type="month" name="edu_end[]" style="flex: 1;">
-                    <label class="flex items-center gap-1" style="white-space: nowrap; cursor: pointer; margin-bottom: 0;">
-                        <input type="checkbox" onchange="window.togglePresent(this, 'edu_end[]')" style="width: auto;">
-                        <span>Present</span>
-                    </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="input-group mb-0">
-            <label>Score (CGPA/%)</label>
-            <input name="edu_score[]" placeholder="e.g. 8.5">
-        </div>
-    `;
+    div.innerHTML = '<button type="button" onclick="this.parentElement.remove()" class="absolute top-2 right-2 text-muted hover:text-red-500" style="background: none; border: none; font-size: 1.2rem; cursor: pointer;"><i class="fas fa-times-circle"></i></button>' +
+        '<div class="grid grid-2 gap-4 mb-4">' +
+            '<div class="input-group mb-0">' +
+                '<label>Degree</label>' +
+                '<input name="edu_degree[]" placeholder="e.g. B.Tech Computer Science" required>' +
+            '</div>' +
+            '<div class="input-group mb-0">' +
+                '<label>College / University</label>' +
+                '<input name="edu_college[]" placeholder="e.g. IIT Madras" required>' +
+            '</div>' +
+        '</div>' +
+        '<div class="grid grid-2 gap-4 mb-4 items-end">' +
+            '<div class="input-group mb-0">' +
+                '<label>Start Date</label>' +
+                '<input type="month" name="edu_start[]" required>' +
+            '</div>' +
+            '<div class="input-group mb-0">' +
+                '<label>End Date</label>' +
+                '<div class="flex gap-2 items-center">' +
+                    '<input type="month" name="edu_end[]" style="flex: 1;">' +
+                    '<label class="flex items-center gap-1" style="white-space: nowrap; cursor: pointer; margin-bottom: 0;">' +
+                        '<input type="checkbox" onchange="window.togglePresent(this, \'edu_end[]\')" style="width: auto;">' +
+                        '<span>Present</span>' +
+                    '</label>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
+        '<div class="input-group mb-0">' +
+            '<label>Score (CGPA/%)</label>' +
+            '<input name="edu_score[]" placeholder="e.g. 8.5">' +
+        '</div>';
 
     container.appendChild(div);
 }
@@ -259,19 +249,21 @@ window.togglePresent = function(checkbox, endFieldName) {
 // ===============================
 // INITIALIZATION
 // ===============================
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function() {
     try {
-        const edu = document.getElementById("education-container");
+        console.log("CareerAI: DOMContentLoaded fired.");
+        var edu = document.getElementById("education-container");
         if(edu && edu.children.length === 0) window.addEducation();
 
         // Init dynamic slots only if they are empty
-        [1, 2, 3].forEach(slot => {
-            const container = document.getElementById(`section-items-${slot}`);
+        [1, 2, 3].forEach(function(slot) {
+            var container = document.getElementById("section-items-" + slot);
             if(container && container.children.length === 0) {
                 window.addItemToSection(slot);
             }
         });
+        console.log("CareerAI: Initialization complete.");
     } catch (e) {
-        console.error("Resume JS initialization failed:", e);
+        console.error("CareerAI: Resume JS initialization failed:", e);
     }
 });
